@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "createdAt": "2026-11-04T19:20:59.867Z",
+        "reason": "Agent: DESIGN.md intentionally specifies Arial for readable demo controls and body text; Georgia provides the display identity, with no external font dependency."
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "frontend/app/style.css"
+        ],
+        "createdAt": "2026-11-04T19:21:12.241Z",
+        "reason": "Agent: verified the only 4px border is .timeline li, a square status-progress segment with no border-radius. Rounded cards have only 1px borders; the single-line CSS causes an unrelated-selector false positive."
+      }
+    ]
+  }
+}
