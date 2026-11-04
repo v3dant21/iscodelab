@@ -1,216 +1,155 @@
 ---
 name: DumHouse
-description: Quiet, premium restaurant menu in forest and bone.
+description: Dark mobile delivery-inspired ordering for one Hyderabad restaurant chain.
 colors:
-  paper: "#f7f6f1"
-  white: "#fffefa"
-  ink: "#28372e"
-  muted: "#656b60"
-  brand: "#304c3a"
-  line: "#dcded3"
-  soft: "#eceee5"
-  green: "#476146"
-  brand-hover: "#203c2a"
-  focus: "#778556"
+  paper: "#0e1212"
+  white: "#181e1e"
+  ink: "#f5f6f2"
+  muted: "#aeb8b2"
+  brand: "#ff7c35"
+  brand-ink: "#211208"
+  line: "#303b38"
+  soft: "#202927"
+  green: "#a9d87d"
+  brand-hover: "#ff975d"
+  focus: "#ffb184"
+  field: "#111716"
 typography:
   display:
-    fontFamily: '"Cormorant", Georgia, serif'
-    fontSize: "clamp(64px, 6.7vw, 96px)"
-    fontWeight: 400
-    lineHeight: 0.96
-    letterSpacing: "-0.025em"
+    fontFamily: '"Manrope", sans-serif'
+    fontSize: "clamp(25px, 3vw, 40px)"
+    fontWeight: 800
+    lineHeight: 1.17
+    letterSpacing: "-0.03em"
   headline:
-    fontFamily: '"Cormorant", Georgia, serif'
-    fontSize: "36px"
-    fontWeight: 500
-    lineHeight: 1.05
-    letterSpacing: "-0.025em"
+    fontFamily: '"Manrope", sans-serif'
+    fontSize: "23px"
+    fontWeight: 750
+    lineHeight: 1.25
+    letterSpacing: "-0.03em"
   title:
-    fontFamily: '"Cormorant", Georgia, serif'
-    fontSize: "29px"
-    fontWeight: 500
-    lineHeight: 1.1
+    fontFamily: '"Manrope", sans-serif'
+    fontSize: "16px"
+    fontWeight: 750
+    lineHeight: 1.35
     letterSpacing: "-0.025em"
   body:
     fontFamily: '"Manrope", sans-serif'
     fontSize: "14px"
-    lineHeight: 1.65
+    lineHeight: 1.6
   label:
     fontFamily: '"Manrope", sans-serif'
-    fontSize: "11px"
-    fontWeight: 650
+    fontSize: "12px"
+    fontWeight: 600
   button:
     fontFamily: '"Manrope", sans-serif'
-    fontSize: "12px"
-    fontWeight: 650
+    fontSize: "13px"
+    fontWeight: 750
 rounded:
-  control: "5px"
-  surface: "12px"
-  filter: "24px"
-  mobile-bag: "8px"
+  field: "8px"
+  control: "9px"
+  category: "12px"
+  surface: "14px"
+  hero: "16px"
 spacing:
   compact: "8px"
-  control-gap: "10px"
   small: "12px"
-  medium: "20px"
-  large: "24px"
-  section: "30px"
+  medium: "18px"
+  large: "22px"
+  section: "32px"
 components:
   button-primary:
     backgroundColor: "{colors.brand}"
-    textColor: "{colors.white}"
+    textColor: "{colors.brand-ink}"
     typography: "{typography.button}"
     rounded: "{rounded.control}"
-    padding: "11px 18px"
-  button-primary-hover:
-    backgroundColor: "{colors.brand-hover}"
+    padding: "11px 16px"
   button-secondary:
-    backgroundColor: "transparent"
-    textColor: "{colors.brand}"
+    backgroundColor: "{colors.soft}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.control}"
-    padding: "11px 18px"
+    padding: "11px 16px"
   button-quiet:
     backgroundColor: "transparent"
-    textColor: "{colors.ink}"
+    textColor: "{colors.muted}"
     rounded: "{rounded.control}"
-    padding: "11px 18px"
+    padding: "11px 16px"
   button-add:
-    backgroundColor: "transparent"
-    textColor: "{colors.brand}"
+    backgroundColor: "{colors.brand}"
+    textColor: "{colors.brand-ink}"
     rounded: "{rounded.control}"
-    padding: "8px 13px"
+    padding: "8px 12px"
   input:
-    backgroundColor: "{colors.white}"
+    backgroundColor: "{colors.field}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.field}"
     padding: "11px 12px"
-  vegetarian-filter:
-    backgroundColor: "transparent"
-    textColor: "{colors.green}"
-    rounded: "{rounded.filter}"
-    padding: "8px 14px"
   bag-card:
     backgroundColor: "{colors.white}"
     textColor: "{colors.ink}"
     rounded: "{rounded.surface}"
-    padding: "24px"
-  mobile-bag:
-    backgroundColor: "{colors.brand}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.mobile-bag}"
-    padding: "15px"
+    padding: "22px"
 ---
 
 # Design System: DumHouse
 
 ## Overview
 
-**Creative North Star: "Quiet, premium restaurant menu"**
+**Creative North Star: "Dark, food-first Hyderabad ordering"**
 
-Quiet, premium restaurant menu is the user-selected visual direction. Bone paper, forest ink and softened olive details create a restrained restaurant identity. Cormorant display type supplies warmth; Manrope keeps ordering controls precise and compact.
-
-Fine rules and open dish rows carry the menu. A single atmospheric biryani image provides the expressive moment and is explicitly illustrative. Tonal surfaces separate the order summary without making every dish a raised card.
+The user-selected dark mobile delivery reference replaces the quiet-premium forest-and-bone direction. Charcoal surfaces, orange calls to action, bold Manrope and illustrative food photography define DumHouse, a fictional single restaurant chain in Hyderabad. The reference supplies visual inspiration, not marketplace features or delivery-service claims.
 
 **Key Characteristics:**
-- Bone paper and forest actions with softened olive accents.
-- Expressive serif headings paired with compact sans-serif controls.
-- Fine dividers, open dish rows and inline customization.
-- One illustrative food asset and a persistent route to the bag.
+- Charcoal layers, warm orange actions and rounded food cards.
+- Manrope throughout, with compact labels and prominent prices.
+- Photo categories, saved dishes, a dedicated bag and mobile bottom navigation.
+- Staff-reported kitchen progress with explicit test-payment and illustration disclosures.
 
-This is a source-derived record of the implemented replacement world, using `frontend/app/style.css`, `frontend/app/page.tsx` and `.impeccable/menu-direction.md`. Product truth remains in `PRODUCT.md`. No pixel-comp approval, fresh screenshot review or quality score is asserted here.
+Source-derived from `frontend/app/page.tsx`, `style.css`, `order-history.tsx` and `food-image.tsx`. This documentation refresh includes no runtime, screenshot or test verification.
 
 ## Colors
 
-Forest and olive sit against warm bone neutrals; the frontmatter contains normative reusable values.
-
-### Primary
-- **Forest action / brand:** primary buttons, selected controls and action text; the deeper hover tone signals interaction.
-
-### Secondary
-- **Leaf green:** vegetarian controls and completed order stages.
-- **Olive focus:** visible keyboard outlines; retain the two-pixel outline and four-pixel offset.
-
-### Neutral
-- **Bone paper:** page canvas.
-- **Warm white:** bag, inputs and order cards.
-- **Forest ink:** primary reading text.
-- **Muted sage:** descriptions and supporting labels.
-- **Fine divider:** row boundaries and card strokes.
-- **Soft sage:** demo strip, quiet hover and editor surface.
-
-Local error surfaces use warm clay tones; they are functional status exceptions, not a replacement brand accent. Sidecar tonal ramps are synthesized preview aids, not additional shipped CSS tokens.
+Orange is the primary action color with dark text; pale green supports vegetarian and completion states. Charcoal canvas, slightly lighter cards and fine muted borders establish hierarchy. Warm white is reading text, not a surface: the legacy CSS name `--white` now means dark card background. Frontmatter values match the implementation; sidecar tonal ramps are synthesized preview aids, not shipped tokens.
 
 ## Typography
 
-**Display Font:** self-hosted Cormorant Garamond, registered as "Cormorant", with Georgia and serif fallbacks.
-**Body Font:** self-hosted Manrope, with sans-serif fallback.
-
-The display face carries the wordmark, welcoming headlines and dish names. The UI face carries prices, labels and controls. Fonts load from `/fonts/cormorant-garamond.ttf` and `/fonts/manrope.ttf` with swap behavior.
-
-### Hierarchy
-- **Display:** hero title; italic emphasis retains the display family. At the intermediate breakpoint it becomes 76px, then 72px on mobile.
-- **Headline:** general section headings. Menu heading is 41px on wide screens, 36px at the intermediate breakpoint, and 38px on mobile.
-- **Title:** dish names, reducing to 27px on mobile. General h3 is 28px.
-- **Body:** general reading text; dish descriptions use 1.8 line-height, 1.7 on mobile, and a 48ch maximum. Paragraphs otherwise cap at 70ch.
-- **Label / button:** compact Manrope with semibold emphasis. Secondary annotations vary from 8–12px; these are observed implementation sizes, not an accessibility certification.
-
-Prices, totals and order information use tabular numerals. Do not apply the wordmark's expanded tagline tracking to ordinary controls.
+Self-hosted Manrope (`/fonts/manrope.ttf`, weights 200–800, swap) serves headings and controls with a sans-serif fallback. Cormorant is no longer used by the stylesheet. Hero headings use the display role; menu headings are 22px, dish names 16px and body copy 14px. On mobile these become 20px, 20px, 14px and 14px respectively; the Menu view hides its redundant menu heading, while Saved retains it. Dish descriptions are 11px and the visible preparation qualifier is 9px. Prices and order figures use tabular numerals. Small annotations are observed implementation choices, not an accessibility certification.
 
 ## Layout
 
-Main content caps at 1512px with 5vw horizontal padding. A sticky header (96px minimum, top 0, z-index 10) precedes the demo strip. The opening uses a .95fr/1.05fr split, 48px gap, and a 400px-tall image.
+Content caps at 1360px with 4vw gutters; the sticky header is at least 84px high. Delivery and kitchen selection precede a compact split hero (280px image height). Desktop has a two-column dish grid beside a 305px sticky bag, separated by 26px. The bag sticks at 104px; its dedicated view caps at 800px and removes sticky positioning.
 
-Delivery selection is a compact ruled grid (1.15fr 1.2fr .9fr auto), followed by the menu and a 310px bag column with a 56px gap. The bag is sticky at 120px. Dish rows remain open with bottom rules; search, vegetarian filtering and horizontally scrollable category controls precede them.
+At 1100px and below, the bag column becomes 275px and dish images 150px high. At 760px and below, gutters are 16px, the header is at least 72px, and the split hero and its image are 110px high, with a 14px bottom margin. The welcome subtitle, hero body and hero CTA are hidden; the welcome keeps its 23px heading with 14px/12px vertical margins. Only the Menu view hides the redundant menu-heading block. The preparation qualifier remains visible at 9px. Dish cards become single-column horizontal rows with a 112px image column; customization spans the row. Menu/Saved sidebars are hidden; checkout lives in the dedicated bag view. Orders and kitchen queues become single-column.
 
-At max-width 1100px, the image becomes 355px high; the bag column becomes 280px with a 30px gap. Delivery controls occupy three columns with the location action on its own row.
-
-At max-width 760px, the hero and menu/bag stack, main gutters become 20px, the image becomes 240px high, and delivery controls use two columns. The header wraps with an 84px minimum height. The bag becomes static in document flow. A nonempty customer bag exposes a fixed dock at bottom 12px and left/right 14px, z-index 20; the body gains 76px bottom padding while it exists. Kitchen queues change from three columns to one.
-
-Spacing values in the frontmatter are recurring extracted measurements, not a newly imposed modular scale.
+Mobile customer navigation is fixed at the bottom, 70px high, with Home, Search, Orders, Saved and Account. A nonempty bag on Menu/Saved adds a shortcut 80px above the bottom; main padding increases to avoid overlap. The dock opens and focuses the dedicated bag. Staff do not receive customer bottom navigation.
 
 ## Elevation & Depth
 
-Depth comes mainly from tonal surfaces and fine borders. Menu rows and the desktop bag have no outer shadow. The mobile bag dock alone uses a structural floating shadow (`0 8px 24px rgb(25 46 30 / 20%)`). The small diet marker uses an inset one-pixel paper edge, not surface elevation. The hero caption uses a dark translucent overlay to maintain legibility.
+Tonal layering and fine borders provide depth. Dish, bag and order cards have no outer shadow. The mobile bag alone uses `0 6px 22px #0005`; translucent dark image overlays support the heart, diet badge and illustration caption.
 
 ## Shapes
 
-Controls have modest corners; bag, order, editor and image surfaces use the larger surface radius. The vegetarian filter is a pill, while category selections and the hero link use square underline treatments. Bag counts are circular. Fine strokes carry boundaries without ornamental frames.
+Rounded rectangles define the system: 8px fields, 9px buttons, 12px category tiles, 14px dish/bag/order cards and a 16px desktop hero. Hearts and bag counts are circular. Category tiles use orange border/fill states rather than the former underline navigation.
 
 ## Components
 
-### Buttons
-Primary actions use forest fill and warm-white text. Secondary buttons have a muted border; quiet buttons are transparent. Both use soft-sage hover. Add buttons begin outlined, then fill forest on hover or the brief Added state. Standard buttons have a 44px minimum height. Disabled buttons use half opacity and a not-allowed cursor.
-
-Color, background and border transitions last 0.2s with ease. Global focus uses a visible olive outline. Reduced-motion disables transitions and animations and changes smooth scrolling to immediate scrolling.
-
-### Inputs / Fields
-Warm-white inputs use a fine sage border and the control radius. Search is a transparent underline field. Delivery selects are compact, borderless controls with a 32px minimum height; the vegetarian filter is 38px minimum. Do not claim every control meets the standard button height. Textareas resize vertically.
-
-### Navigation and filters
-Selected top navigation uses an underline, not a filled pill. Category buttons show counts, use a two-pixel selected underline and expose pressed state. Search, category and vegetarian filters combine. The vegetarian control uses a pale green active fill and a darker border.
-
-### Cards / Containers
-The desktop bag uses a warm-white surface, fine border and surface radius; padding reduces to 20px at the intermediate breakpoint and returns to 24px on mobile. Order cards share that surface language. Loading, no-results, no-menu and empty-bag messages remain explicit.
-
-### Illustrative food asset
-`/images/dumhouse-biryani.png` supplies the single focal image. It is cropped with object-fit cover and carries meaningful alt text plus the visible "Illustrative food image" caption. Its source dimensions are 1536 × 1024. It is neither an actual outlet photograph nor an approved UI specification.
-
-### Inline customization and bag
-Each dish uses a native details/summary disclosure for portion, extra raita and allergens. Price reflects the chosen options. Add feedback lasts 1600ms and includes a live status announcement. Header and mobile bag actions return to the menu, scroll to the bag and focus it. The dock appears only on the customer menu with at least one item, and shows count, estimated amount and View bag.
-
-### Status and supporting surfaces
-Errors use a dismissible alert; loading exposes busy/status semantics. Checkout distinguishes test payments. Order timelines reflect staff-reported stages, with preparation estimates separately labeled. Shared typography and controls carry through authentication, orders, kitchen queues and administrative editors.
+- **Actions and fields:** orange primary/Add buttons, tonal secondary buttons and transparent quiet buttons. Standard controls are at least 44px high; compact controls have smaller exceptions. Hover transitions take 180ms. Focus uses a 2px peach outline with 4px offset. CSS disables transitions/animations under reduced motion; some navigation handlers still explicitly request smooth scrolling.
+- **Menu:** combined text/category/vegetarian filters; photo category tiles; illustrative dish images, heart toggles, dietary badges, prices and inline native “Make it yours” disclosures for portion, extra raita and allergens. Added feedback and a live announcement last 1600ms.
+- **Saved dishes:** numeric dish IDs persist in this browser, not a server account. The view shows matching dishes available from the selected kitchen and retains menu filters; opening Saved resets filters.
+- **Bag/account:** thumbnails, quantity/remove controls, estimated total, address and test payment method. Header and mobile shortcuts open the dedicated bag. The account view links to orders, saved dishes and bag. Sign-in is required for checkout.
+- **Food imagery:** six name-mapped local assets cover chicken/mutton/paneer biryani, Chicken 65, mirchi ka salan and double ka meetha. Images recur in categories, cards, bag and orders; the hero uses the chicken biryani image. FoodImage uses illustrative alt text and lazy loading; an unknown name renders no image. Photos are illustrative, not evidence of actual outlet food.
+- **Orders:** All orders and Past (HANDED_OFF only), dish thumbnails, outlet, address, payment state, preparation estimate, late notice and staff-stage timeline. Orders poll every four seconds while the customer Orders view is active. NEW → PREPARING → READY → HANDED_OFF ends at kitchen handoff; no rider GPS or delivery completion is tracked. Pending payments expose simulated success/failure actions.
+- **Supporting states:** explicit loading, empty menu/saved/bag/order states, dismissible errors, demo notices and shared dark styling across authentication, kitchen queues and admin editors.
 
 ## Do's and Don'ts
 
-### Do:
-- Do use forest actions, bone surfaces and the Cormorant/Manrope pairing.
-- Do keep dish customization inline and preserve visible price and diet information.
-- Do label the food asset as illustrative and keep demo/payment disclosures visible.
-- Do preserve keyboard focus, loading and empty states, and reduced-motion behavior.
+### Do
+- Use charcoal surfaces, orange actions and Manrope throughout.
+- Keep dish prices, dietary labels, inline options and illustrative-photo disclosures visible.
+- Preserve loading, empty, error, keyboard-focus and test-payment states.
+- Describe estimates as preparation time and completed orders as kitchen handoffs.
 
-### Don't:
-- Don't restore the superseded burgundy/Arial visual system.
-- Don't turn each menu row into a raised card or introduce decorative shadows throughout.
-- Don't present the illustrative image as an actual outlet's food or invent ratings and awards.
-- Don't describe preparation estimates as delivery or automatic staff progress.
+### Don’t
+- Do not restore the superseded bone/forest palette, serif headings or open editorial dish rows.
+- Do not turn this single-chain menu into a restaurant marketplace.
+- Do not invent ratings, discounts, real outlet photography, rider GPS or delivery completion.

@@ -57,7 +57,9 @@ New accounts are customers and prepaid-only. Kitchen/admin roles cannot be selec
 
 The demo COD rule accepts trusted-account orders up to ₹1,500; larger orders require a 20% simulated deposit. The remaining balance is displayed, but no cash collection is implemented.
 
-The premium menu redesign adds combined text/category/vegetarian filtering, inline “Make it yours” customization, a compact delivery/kitchen selector, and a fixed mobile bag shortcut. Cormorant Garamond and Manrope fonts are self-hosted with their open-font licenses. The generated food image is explicitly labeled illustrative; its prompt is recorded under `frontend/public/images/README.md`.
+The current direction replaces the quiet-premium menu with a dark mobile delivery-inspired interface for one Hyderabad restaurant chain: charcoal surfaces, orange actions, self-hosted Manrope and rounded photo cards. Combined search/category/vegetarian filters and inline “Make it yours” customization remain. Hearts save dishes in this browser; Saved shows matches from the selected kitchen. A dedicated bag supports quantity changes, address and test checkout, with a mobile shortcut above Home/Search/Orders/Saved/Account navigation. Desktop retains a sticky bag alongside the menu. On mobile, a 110px hero and hidden welcome subtitle, hero body/CTA and redundant Menu heading bring dishes closer to the opening; the preparation qualifier remains visible.
+
+Orders include dish thumbnails, address, payment state and a kitchen timeline. All orders includes every status; Past includes kitchen handoffs only. Four-second polling reports staff updates, with preparation-only estimates and late notices. There is no rider GPS or delivery-completion tracking. Six local illustrative food images appear across the menu, categories, bag and orders; image notes are under `frontend/public/images/README.md`. Design guidance is in `DESIGN.md` and `.impeccable/menu-direction.md`. This documentation refresh did not run builds, tests or a rendered UI review.
 
 ## Architecture and invariants
 
@@ -92,7 +94,7 @@ Browser tests require both local servers already running and the initial demo ac
 
 ## Scope and remaining limitations
 
-Three synthetic outlets and six dishes demonstrate the single-chain model; the original 17-outlet production inventory was not available. No real payment gateway, rider GPS, address geocoding, delivery confirmation, refunds, real FSSAI/license data, notifications or public deployment is claimed. The model is trained on synthetic examples, not restaurant history. The menu uses text for live dish data and a locally stored, generated illustrative food photograph.
+Three synthetic outlets and six dishes demonstrate the single-chain model; the original 17-outlet production inventory was not available. No real payment gateway, rider GPS, address geocoding, delivery confirmation, refunds, real FSSAI/license data, notifications or public deployment is claimed. The model is trained on synthetic examples, not restaurant history. The menu uses live dish data alongside six locally stored illustrative food images. Saved dishes are browser-local and do not sync across accounts or devices.
 
 This is a local demo, not a production launch: public hosting still needs HTTPS, non-demo accounts, login throttling, identity/contact verification, real payment verification, operational monitoring, backups, and load/security review. Current cookies expire in one day; expired session cleanup is not scheduled. Polling is near-live, not push delivery. Seed startup assumes one initial writer. The API currently uses synchronous database access and a compact monolithic module appropriate to this scope.
 

@@ -71,5 +71,20 @@ test('menu search, vegetarian filter, categories, customization and mobile bag',
   await page.getByRole('button', { name: /1 item.*View bag/ }).click();
   await expect(page.locator('#cart')).toBeFocused();
   await expect(page.getByLabel('Delivery address')).toBeVisible();
+  await page.screenshot({ path: 'test-results/bag-mobile.png', fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+});
+
+test('saved dishes persist and mobile account navigation works', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Save Chicken 65', exact: true }).click();
+  await page.reload();
+  await page.locator('.bottom-nav').getByRole('button', { name: 'Saved', exact: true }).click();
+  await expect(page.locator('.dish')).toHaveCount(1);
+  await expect(page.getByRole('heading', { name: 'Chicken 65', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Unsave Chicken 65', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Make room for your favourites.' })).toBeVisible();
+  await page.locator('.bottom-nav').getByRole('button', { name: 'Account', exact: true }).click();
+  await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 });

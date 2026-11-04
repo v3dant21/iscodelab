@@ -1,170 +1,198 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-04T19:36:18.128Z",
+  "generatedAt": "2026-11-04T19:53:52.738413+00:00",
   "title": "Design System: DumHouse",
   "extensions": {
     "colorMeta": {
       "paper": {
         "role": "neutral",
-        "displayName": "Bone paper",
+        "displayName": "Charcoal canvas",
         "tonalRamp": [
-          "oklch(15% 0.015 95)",
-          "oklch(26% 0.015 95)",
-          "oklch(38% 0.015 95)",
-          "oklch(49% 0.015 95)",
-          "oklch(61% 0.015 95)",
-          "oklch(72% 0.015 95)",
-          "oklch(84% 0.015 95)",
-          "oklch(95% 0.015 95)"
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       },
       "white": {
         "role": "neutral",
-        "displayName": "Warm white",
+        "displayName": "Dark card surface",
         "tonalRamp": [
-          "oklch(15% 0.01 95)",
-          "oklch(26% 0.01 95)",
-          "oklch(38% 0.01 95)",
-          "oklch(49% 0.01 95)",
-          "oklch(61% 0.01 95)",
-          "oklch(72% 0.01 95)",
-          "oklch(84% 0.01 95)",
-          "oklch(95% 0.01 95)"
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       },
       "ink": {
         "role": "neutral",
-        "displayName": "Forest ink",
+        "displayName": "Warm white text",
         "tonalRamp": [
-          "oklch(15% 0.025 150)",
-          "oklch(26% 0.025 150)",
-          "oklch(38% 0.025 150)",
-          "oklch(49% 0.025 150)",
-          "oklch(61% 0.025 150)",
-          "oklch(72% 0.025 150)",
-          "oklch(84% 0.025 150)",
-          "oklch(95% 0.025 150)"
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       },
       "muted": {
         "role": "neutral",
-        "displayName": "Muted sage",
+        "displayName": "Muted",
         "tonalRamp": [
-          "oklch(15% 0.02 120)",
-          "oklch(26% 0.02 120)",
-          "oklch(38% 0.02 120)",
-          "oklch(49% 0.02 120)",
-          "oklch(61% 0.02 120)",
-          "oklch(72% 0.02 120)",
-          "oklch(84% 0.02 120)",
-          "oklch(95% 0.02 120)"
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       },
       "brand": {
         "role": "primary",
-        "displayName": "Forest action",
+        "displayName": "Orange action",
         "tonalRamp": [
-          "oklch(15% 0.045 150)",
-          "oklch(26% 0.045 150)",
-          "oklch(38% 0.045 150)",
-          "oklch(49% 0.045 150)",
-          "oklch(61% 0.045 150)",
-          "oklch(72% 0.045 150)",
-          "oklch(84% 0.045 150)",
-          "oklch(95% 0.045 150)"
+          "oklch(15% 0.12 50)",
+          "oklch(26% 0.12 50)",
+          "oklch(38% 0.12 50)",
+          "oklch(49% 0.12 50)",
+          "oklch(61% 0.12 50)",
+          "oklch(72% 0.12 50)",
+          "oklch(84% 0.12 50)",
+          "oklch(95% 0.12 50)"
+        ]
+      },
+      "brand-ink": {
+        "role": "primary",
+        "displayName": "Dark action text",
+        "tonalRamp": [
+          "oklch(15% 0.12 50)",
+          "oklch(26% 0.12 50)",
+          "oklch(38% 0.12 50)",
+          "oklch(49% 0.12 50)",
+          "oklch(61% 0.12 50)",
+          "oklch(72% 0.12 50)",
+          "oklch(84% 0.12 50)",
+          "oklch(95% 0.12 50)"
         ]
       },
       "line": {
         "role": "neutral",
-        "displayName": "Fine divider",
+        "displayName": "Line",
         "tonalRamp": [
-          "oklch(15% 0.015 110)",
-          "oklch(26% 0.015 110)",
-          "oklch(38% 0.015 110)",
-          "oklch(49% 0.015 110)",
-          "oklch(61% 0.015 110)",
-          "oklch(72% 0.015 110)",
-          "oklch(84% 0.015 110)",
-          "oklch(95% 0.015 110)"
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       },
       "soft": {
         "role": "neutral",
-        "displayName": "Soft sage",
+        "displayName": "Soft",
         "tonalRamp": [
-          "oklch(15% 0.015 110)",
-          "oklch(26% 0.015 110)",
-          "oklch(38% 0.015 110)",
-          "oklch(49% 0.015 110)",
-          "oklch(61% 0.015 110)",
-          "oklch(72% 0.015 110)",
-          "oklch(84% 0.015 110)",
-          "oklch(95% 0.015 110)"
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       },
       "green": {
         "role": "secondary",
-        "displayName": "Leaf green",
+        "displayName": "Green",
         "tonalRamp": [
-          "oklch(15% 0.045 140)",
-          "oklch(26% 0.045 140)",
-          "oklch(38% 0.045 140)",
-          "oklch(49% 0.045 140)",
-          "oklch(61% 0.045 140)",
-          "oklch(72% 0.045 140)",
-          "oklch(84% 0.045 140)",
-          "oklch(95% 0.045 140)"
+          "oklch(15% 0.1 130)",
+          "oklch(26% 0.1 130)",
+          "oklch(38% 0.1 130)",
+          "oklch(49% 0.1 130)",
+          "oklch(61% 0.1 130)",
+          "oklch(72% 0.1 130)",
+          "oklch(84% 0.1 130)",
+          "oklch(95% 0.1 130)"
         ]
       },
       "brand-hover": {
         "role": "primary",
-        "displayName": "Deep forest hover",
+        "displayName": "Brand hover",
         "tonalRamp": [
-          "oklch(15% 0.045 150)",
-          "oklch(26% 0.045 150)",
-          "oklch(38% 0.045 150)",
-          "oklch(49% 0.045 150)",
-          "oklch(61% 0.045 150)",
-          "oklch(72% 0.045 150)",
-          "oklch(84% 0.045 150)",
-          "oklch(95% 0.045 150)"
+          "oklch(15% 0.12 50)",
+          "oklch(26% 0.12 50)",
+          "oklch(38% 0.12 50)",
+          "oklch(49% 0.12 50)",
+          "oklch(61% 0.12 50)",
+          "oklch(72% 0.12 50)",
+          "oklch(84% 0.12 50)",
+          "oklch(95% 0.12 50)"
         ]
       },
       "focus": {
-        "role": "secondary",
-        "displayName": "Olive focus",
+        "role": "primary",
+        "displayName": "Focus",
         "tonalRamp": [
-          "oklch(15% 0.06 120)",
-          "oklch(26% 0.06 120)",
-          "oklch(38% 0.06 120)",
-          "oklch(49% 0.06 120)",
-          "oklch(61% 0.06 120)",
-          "oklch(72% 0.06 120)",
-          "oklch(84% 0.06 120)",
-          "oklch(95% 0.06 120)"
+          "oklch(15% 0.12 50)",
+          "oklch(26% 0.12 50)",
+          "oklch(38% 0.12 50)",
+          "oklch(49% 0.12 50)",
+          "oklch(61% 0.12 50)",
+          "oklch(72% 0.12 50)",
+          "oklch(84% 0.12 50)",
+          "oklch(95% 0.12 50)"
+        ]
+      },
+      "field": {
+        "role": "neutral",
+        "displayName": "Field",
+        "tonalRamp": [
+          "oklch(15% 0.015 160)",
+          "oklch(26% 0.015 160)",
+          "oklch(38% 0.015 160)",
+          "oklch(49% 0.015 160)",
+          "oklch(61% 0.015 160)",
+          "oklch(72% 0.015 160)",
+          "oklch(84% 0.015 160)",
+          "oklch(95% 0.015 160)"
         ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Hero title."
+        "purpose": "Hero heading; mobile override is 20px with -0.04em tracking and no bottom margin."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "General section headings; responsive menu overrides are in DESIGN.md."
+        "purpose": "General section headings; mobile Menu hides its menu-heading block, while Saved retains it."
       },
       "title": {
-        "displayName": "Dish title",
-        "purpose": "Menu dish names."
+        "displayName": "Title",
+        "purpose": "Desktop dish name."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Reading and ordering content."
+        "purpose": "Reading content."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Compact field labels."
+        "purpose": "Form labels."
       },
       "button": {
         "displayName": "Button",
@@ -174,20 +202,20 @@
     "shadows": [
       {
         "name": "mobile-bag",
-        "value": "0 8px 24px rgb(25 46 30 / 20%)",
-        "purpose": "Structural shadow beneath the floating mobile bag."
+        "value": "0 6px 22px #0005",
+        "purpose": "Floating bag shortcut above bottom navigation."
       }
     ],
     "motion": [
       {
         "name": "control-transition",
-        "value": "background .2s ease, color .2s ease, border-color .2s ease",
-        "purpose": "Button state changes; disabled by prefers-reduced-motion."
+        "value": "background .18s ease, border-color .18s ease, color .18s ease",
+        "purpose": "Control states; CSS disables transitions for reduced motion."
       },
       {
         "name": "added-feedback",
         "value": "1600ms",
-        "purpose": "Duration of the Added label and live status."
+        "purpose": "Added label and live announcement."
       }
     ],
     "breakpoints": [
@@ -206,102 +234,85 @@
       "name": "Primary button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Implemented action variant; native button semantics.",
+      "description": "Current desktop action styling.",
       "html": "<button class=\"ds-control\">Continue to payment</button>",
-      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:var(--brand,#304c3a);color:var(--white,#fffefa);}.ds-control:hover{background:#203c2a;}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}"
     },
     {
       "name": "Secondary button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Implemented action variant; native button semantics.",
+      "description": "Current desktop action styling.",
       "html": "<button class=\"ds-control\">Show full menu</button>",
-      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--brand,#304c3a);border-color:#bcc4b6;}.ds-control:hover{background:var(--soft,#eceee5);}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}.ds-control{background:var(--soft,#202927);color:var(--ink,#f5f6f2);border-color:var(--line,#303b38)}.ds-control:hover{background:var(--soft,#202927);border-color:#748277}"
     },
     {
       "name": "Quiet button",
       "kind": "button",
       "refersTo": "button-quiet",
-      "description": "Implemented action variant; native button semantics.",
+      "description": "Current desktop action styling.",
       "html": "<button class=\"ds-control\">Sign in</button>",
-      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--ink,#28372e);}.ds-control:hover{background:var(--soft,#eceee5);}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}.ds-control{background:transparent;color:var(--muted,#aeb8b2)}.ds-control:hover{background:var(--soft,#202927);color:var(--ink,#f5f6f2)}"
     },
     {
       "name": "Add button",
       "kind": "button",
       "refersTo": "button-add",
-      "description": "Implemented action variant; native button semantics.",
+      "description": "Current desktop action styling.",
       "html": "<button class=\"ds-control\">Add +</button>",
-      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--brand,#304c3a);border-color:#9dac93;padding:8px 13px;min-width:90px;}.ds-control:hover{background:var(--brand,#304c3a);color:var(--white,#fffefa);border-color:var(--brand,#304c3a);}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}.ds-control{min-height:40px;min-width:80px;padding:8px 12px}"
     },
     {
       "name": "Text field",
       "kind": "input",
       "refersTo": "input",
-      "description": "Standard labeled form field.",
+      "description": "Dark labeled form field.",
       "html": "<label class=\"ds-label\">Email<input class=\"ds-control\" type=\"email\" autocomplete=\"email\"></label>",
-      "css": ".ds-label{font:650 11px var(--body,\"Manrope\",sans-serif);color:var(--ink,#28372e)}.ds-control{display:block;width:100%;min-height:44px;margin:7px 0 14px;padding:11px 12px;background:var(--white,#fffefa);color:var(--ink,#28372e);border:1px solid #b9c0af;border-radius:5px;font:14px/1.65 var(--body,\"Manrope\",sans-serif);caret-color:var(--brand,#304c3a)}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}.ds-label{font:600 12px var(--body,\"Manrope\",sans-serif);color:var(--ink,#f5f6f2)}.ds-control{display:block;width:100%;margin:6px 0 14px;padding:11px 12px;background:#111716;color:var(--ink,#f5f6f2);border:1px solid #46534b;border-radius:8px;font-size:14px;font-weight:400;cursor:text}.ds-control:hover{background:#111716}"
     },
     {
-      "name": "Menu navigation",
+      "name": "Mobile navigation",
       "kind": "nav",
-      "description": "Underline identifies the selected view.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><button class=\"ds-control ds-selected\">Menu</button><button class=\"ds-control\">Sign in</button></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;gap:12px}.ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;padding:9px 14px;background:transparent;color:var(--ink,#28372e)}.ds-control:hover{background:var(--soft,#eceee5)}.ds-control.ds-selected{border-radius:0;border-bottom-color:var(--brand,#304c3a);background:transparent}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "description": "Normal-flow preview of the fixed customer bottom navigation.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"App navigation\"><button class=\"ds-control ds-active\">Home</button><button class=\"ds-control\">Search</button><button class=\"ds-control\">Orders</button><button class=\"ds-control\">Saved</button><button class=\"ds-control\">Account</button></nav>",
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}.ds-nav{display:flex;background:#151b19;border-top:1px solid #364038;padding:6px 10px;gap:4px}.ds-control{flex:1;min-height:52px;padding:6px 3px;background:transparent;color:#b5bfb7;font-size:9px;font-weight:500}.ds-control.ds-active{color:#ff914f;background:#2d231d}"
     },
     {
       "name": "Vegetarian filter",
       "kind": "chip",
-      "refersTo": "vegetarian-filter",
-      "description": "Pressed state uses a pale green fill.",
+      "description": "Pressed vegetarian filter.",
       "html": "<button class=\"ds-control\" aria-pressed=\"true\">Vegetarian</button>",
-      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--green,#476146);border:1px solid #bcc6b3;border-radius:24px;min-height:38px;padding:8px 14px;font-size:10px}.ds-control:hover,.ds-control[aria-pressed=true]{background:#e3eadc;color:#284231;border-color:#809575}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-control{font-family:var(--body,\"Manrope\",sans-serif);font-size:13px;font-weight:750;min-height:44px;padding:11px 16px;border:1px solid transparent;border-radius:9px;cursor:pointer;background:var(--brand,#ff7c35);color:var(--brand-ink,#211208);transition:background .18s ease,border-color .18s ease,color .18s ease}.ds-control:hover{background:#ff975d}.ds-control:focus-visible{outline:2px solid #ffb184;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none}}.ds-control{background:var(--white,#181e1e);color:#c2dea5;border-color:var(--line,#303b38);font-size:11px;padding:11px 12px}.ds-control:hover,.ds-control[aria-pressed=true]{background:#31452a;border-color:#72925f;color:#e2f1d1}"
     },
     {
       "name": "Bag card",
       "kind": "card",
       "refersTo": "bag-card",
-      "description": "Flat bordered order summary; preview omits page-level sticky positioning.",
+      "description": "Dark bordered bag; preview omits sticky positioning.",
       "html": "<aside class=\"ds-bag\"><h2>Your bag</h2><p>Add something you love.</p></aside>",
-      "css": ".ds-bag{background:var(--white,#fffefa);color:var(--ink,#28372e);border:1px solid var(--line,#dcded3);border-radius:12px;padding:24px}.ds-bag h2{font:500 30px/1.05 var(--display,\"Cormorant\",Georgia,serif);letter-spacing:-.025em;margin:0}.ds-bag p{font:11px/1.8 var(--body,\"Manrope\",sans-serif);color:var(--muted,#656b60)}"
-    },
-    {
-      "name": "Inline customization",
-      "kind": "custom",
-      "description": "Native disclosure retains options beneath the dish.",
-      "html": "<details class=\"ds-customize\"><summary class=\"ds-control\">Make it yours</summary><label class=\"ds-label\">Portion<select class=\"ds-select\"><option>Regular</option><option>Large</option></select></label></details>",
-      "css": ".ds-customize{font:12px/1.65 var(--body,\"Manrope\",sans-serif);color:var(--ink,#28372e)}.ds-control{width:fit-content;cursor:pointer;min-height:44px;padding:10px 0;font-weight:600;color:#5e694f}.ds-label{display:block;font-size:11px;font-weight:650}.ds-select{font:12px var(--body,\"Manrope\",sans-serif);min-height:44px;padding:11px 12px;border:1px solid #b9c0af;border-radius:5px;background:var(--white,#fffefa);color:var(--ink,#28372e)}.ds-select:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
-    },
-    {
-      "name": "Mobile bag dock",
-      "kind": "custom",
-      "refersTo": "mobile-bag",
-      "description": "Preview uses normal flow; live dock is fixed on mobile when the customer menu bag is nonempty.",
-      "html": "<button class=\"ds-control\"><span>1 item · ₹300</span><span>View bag</span></button>",
-      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;display:flex;justify-content:space-between;gap:30px;width:100%;padding:15px;border-radius:8px;background:var(--brand,#304c3a);color:var(--white,#fffefa);box-shadow:0 8px 24px rgb(25 46 30 / 20%);font-size:11px}.ds-control:hover{background:#203c2a}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+      "css": ".ds-bag{background:var(--white,#181e1e);color:var(--ink,#f5f6f2);border:1px solid var(--line,#303b38);border-radius:14px;padding:22px;font:14px/1.6 var(--body,\"Manrope\",sans-serif)}.ds-bag h2{font-size:21px;font-weight:750;letter-spacing:-.03em;margin:0}.ds-bag p{color:var(--muted,#aeb8b2);font-size:12px}"
     }
   ],
   "narrative": {
-    "northStar": "Quiet, premium restaurant menu",
-    "overview": "Quiet, premium restaurant menu is the user-selected visual direction. Bone paper, forest ink and softened olive details create a restrained restaurant identity. Cormorant display type supplies warmth; Manrope keeps ordering controls precise and compact.\n\nFine rules and open dish rows carry the menu. A single atmospheric biryani image provides the expressive moment and is explicitly illustrative. Tonal surfaces separate the order summary without making every dish a raised card.",
+    "northStar": "Dark, food-first Hyderabad ordering",
+    "overview": "The user-selected dark mobile delivery reference replaces the quiet-premium forest-and-bone direction. Charcoal surfaces, orange calls to action, bold Manrope and illustrative food photography define DumHouse, a fictional single restaurant chain in Hyderabad. The reference supplies visual inspiration, not marketplace features or delivery-service claims.",
     "keyCharacteristics": [
-      "Bone paper and forest actions with softened olive accents.",
-      "Expressive serif headings paired with compact sans-serif controls.",
-      "Fine dividers, open dish rows and inline customization.",
-      "One illustrative food asset and a persistent route to the bag."
+      "Charcoal layers, warm orange actions and rounded food cards.",
+      "Manrope throughout, with compact labels and prominent prices.",
+      "Photo categories, saved dishes, a dedicated bag and mobile bottom navigation.",
+      "Staff-reported kitchen progress with explicit test-payment and illustration disclosures."
     ],
     "rules": [],
     "dos": [
-      "Do use forest actions, bone surfaces and the Cormorant/Manrope pairing.",
-      "Do keep dish customization inline and preserve visible price and diet information.",
-      "Do label the food asset as illustrative and keep demo/payment disclosures visible.",
-      "Do preserve keyboard focus, loading and empty states, and reduced-motion behavior."
+      "Use charcoal surfaces, orange actions and Manrope throughout.",
+      "Keep dish prices, dietary labels, inline options and illustrative-photo disclosures visible.",
+      "Preserve loading, empty, error, keyboard-focus and test-payment states.",
+      "Describe estimates as preparation time and completed orders as kitchen handoffs."
     ],
     "donts": [
-      "Don't restore the superseded burgundy/Arial visual system.",
-      "Don't turn each menu row into a raised card or introduce decorative shadows throughout.",
-      "Don't present the illustrative image as an actual outlet's food or invent ratings and awards.",
-      "Don't describe preparation estimates as delivery or automatic staff progress."
+      "Do not restore the superseded bone/forest palette, serif headings or open editorial dish rows.",
+      "Do not turn this single-chain menu into a restaurant marketplace.",
+      "Do not invent ratings, discounts, real outlet photography, rider GPS or delivery completion."
     ]
   }
 }
