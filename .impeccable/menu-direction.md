@@ -2,6 +2,8 @@
 
 Mode: Operate.
 
+Food cards open inline customization when their image/body or keyboard-accessible title is activated. Save/Add remain separate actions. Bag items offer an Edit item disclosure for portion and extra raita, with quantity beside the line total. Edits save automatically, recalculate prices and merge identical choices within the quantity limit.
+
 The user replaced the quiet-premium direction with the attached dark mobile food-delivery inspiration (`/tmp/codex-clipboard-18182323-ff5e-4198-92a0-9ec10ca2093b.png`). Use charcoal surfaces, orange calls to action, Manrope, rounded cards and plentiful illustrative food photos. The reference is visual inspiration; DumHouse remains one fictional Hyderabad restaurant chain, not a marketplace.
 
 The opening places delivery/kitchen selection before a welcome and compact split biryani hero. Photo category tiles lead into search, vegetarian filtering and dish cards with hearts, prices, diet labels and inline portion/raita customization. Desktop pairs the two-column menu with a sticky bag; mobile uses horizontal dish cards and a dedicated bag view. At 760px and below, the opening is denser: a 110px hero with a 20px heading, no welcome subtitle, no hero body or CTA, and no redundant menu-heading block in the Menu view. Saved retains its heading. The preparation qualifier stays visible at 9px.

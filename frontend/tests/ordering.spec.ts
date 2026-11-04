@@ -75,6 +75,32 @@ test('menu search, vegetarian filter, categories, customization and mobile bag',
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
 });
 
+test('clickable cards and bag customizations persist with updated totals', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const card = page.locator('.dish').filter({ has: page.getByRole('heading', { name: 'Dum chicken biryani', exact: true }) });
+  await card.locator('.dish-photo img').click();
+  await expect(card.getByLabel('Portion for Dum chicken biryani')).toBeFocused();
+  await card.getByLabel('Portion for Dum chicken biryani').selectOption('large');
+  await card.getByLabel('Extra raita +₹30').check();
+  await card.getByRole('button', { name: 'Add Dum chicken biryani', exact: true }).click();
+  await page.getByRole('button', { name: 'Your bag · 1' }).click();
+  const line = page.locator('.cart-line').first();
+  await line.locator('summary').click();
+  await line.getByLabel('Bag portion for Dum chicken biryani').selectOption('regular');
+  await line.getByLabel('Extra raita for Dum chicken biryani').uncheck();
+  await line.getByLabel('Quantity Dum chicken biryani').fill('2');
+  await expect(page.locator('.total')).toContainText('₹598');
+  await page.screenshot({ path: 'test-results/edit-bag-mobile.png', fullPage: true });
+  await page.reload();
+  await page.getByRole('button', { name: 'Your bag · 2' }).click();
+  await expect(page.locator('.total')).toContainText('₹598');
+  await page.getByRole('button', { name: 'Back to menu' }).click();
+  await card.getByRole('button', { name: 'Customize Dum chicken biryani' }).focus();
+  await page.keyboard.press('Enter');
+  await expect(card.getByLabel('Portion for Dum chicken biryani')).toBeFocused();
+});
+
 test('saved dishes persist and mobile account navigation works', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

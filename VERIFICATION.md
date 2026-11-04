@@ -1,5 +1,11 @@
 # Verification — 5 November 2026
 
+## Clickable cards and editable bag
+
+Card image/body clicks and keyboard activation of the dish title open and focus inline customization. Bag items expose portion and extra-raita edits alongside quantity; prices update immediately, matching customizations merge without exceeding 20, and edits persist for the cart lifetime. No backend changes.
+
+Production build/TypeScript and all five browser tests passed (22.7 seconds). The new mobile test verifies photo click, keyboard activation, portion/add-on edits, quantity, recalculated total and persistence after reload. Existing payment and kitchen-stage checks still pass. Changed UI targets had no detector findings.
+
 Executed on the user's local Linux workspace, using Node 22.22.0, Python 3.13.13, Next.js 16.4.5 and a PostgreSQL 17 Podman container.
 
 | Check | Result |
