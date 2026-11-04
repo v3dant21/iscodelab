@@ -1,0 +1,34 @@
+services:
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: dumhouse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-demo-only}
+      POSTGRES_DB: dumhouse
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U dumhouse"]
+      interval: 3s
+      retries: 20
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://dumhouse:${POSTGRES_PASSWORD:-local-demo-only}@database:5432/dumhouse
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-DemoPass123!}
+      ALLOW_MOCK_PAYMENTS: ${ALLOW_MOCK_PAYMENTS:-true}
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      SECURE_COOKIES: ${SECURE_COOKIES:-false}
+    ports:
+      - 127.0.0.1:8000:8000
+    depends_on:
+      database:
+        condition: service_healthy
+  frontend:
+    build: ./frontend
+    ports:
+      - 127.0.0.1:3000:3000
+    depends_on:
+      - backend
+volumes:
+  postgres:

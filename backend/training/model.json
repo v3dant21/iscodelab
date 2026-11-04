@@ -1,0 +1,15 @@
+{
+  "intercept": 3.206807068150404,
+  "coefficients": [
+    0.8068752210822837,
+    1.1881848570389844,
+    0.07531288887085756,
+    1.8068500946630854,
+    3.957158894877197,
+    0.7983897978546326
+  ],
+  "synthetic_mae_minutes": 2.344943715531339,
+  "seed": 42,
+  "samples": 2400,
+  "notice": "Synthetic data only. Not validated in a real kitchen."
+}
