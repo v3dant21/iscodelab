@@ -23,3 +23,9 @@ The trained Ridge artifact reports a held-out synthetic MAE of approximately 2.3
 Warnings: Starlette reports that its httpx-based test client is deprecated; tests still pass. Next.js reports a parent-directory package lock outside this independent repository; the local production build succeeds. These do not constitute a production security or performance assessment.
 
 Not verified: complete Compose image build, public deployment, real payment processing, rider tracking, peak-load targets, accessibility audit, or real-world prediction accuracy. The original source archive was not retrievable; this code is a reconstruction of the locally recovered specification.
+
+## Premium-menu redesign
+
+The user selected a quiet, premium restaurant menu. The rebuilt interface uses local Cormorant Garamond and Manrope fonts, a labeled generated food image, a compact delivery/outlet bar, combined search/category/vegetarian filtering, inline customization, and a mobile bag shortcut. The existing payment and kitchen APIs were unchanged.
+
+Production build and strict TypeScript pass. All three browser tests pass. The original browser order/payment/kitchen tracking workflow passes after changing the customization selector to open its disclosure. Search, vegetarian/category combinations, empty-result recovery and mobile bag focus are covered by a new browser test. Layout/image-load checks now cover 390, 942 and 1440 pixels. An independent Impeccable review requested larger dish metadata/descriptions and restoration of geolocation access at tablet widths; both were implemented, and the reviewer scored both resolved with a ship verdict scoped to those fixes. Final captures are stored in `.impeccable/review/`.

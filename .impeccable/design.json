@@ -1,10 +1,307 @@
 {
-  "name": "DumHouse paper menu",
-  "tokens": {
-    "color": { "paper": "#f8f4eb", "ink": "#29251f", "muted": "#696052", "brand": "#762e22", "line": "#d9cfbd", "white": "#fffdf8", "green": "#355b36" },
-    "font": { "display": "Georgia", "body": "Arial" },
-    "radius": { "card": "12px", "button": "7px" },
-    "controlMinHeight": "44px"
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T19:36:18.128Z",
+  "title": "Design System: DumHouse",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Bone paper",
+        "tonalRamp": [
+          "oklch(15% 0.015 95)",
+          "oklch(26% 0.015 95)",
+          "oklch(38% 0.015 95)",
+          "oklch(49% 0.015 95)",
+          "oklch(61% 0.015 95)",
+          "oklch(72% 0.015 95)",
+          "oklch(84% 0.015 95)",
+          "oklch(95% 0.015 95)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Warm white",
+        "tonalRamp": [
+          "oklch(15% 0.01 95)",
+          "oklch(26% 0.01 95)",
+          "oklch(38% 0.01 95)",
+          "oklch(49% 0.01 95)",
+          "oklch(61% 0.01 95)",
+          "oklch(72% 0.01 95)",
+          "oklch(84% 0.01 95)",
+          "oklch(95% 0.01 95)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Forest ink",
+        "tonalRamp": [
+          "oklch(15% 0.025 150)",
+          "oklch(26% 0.025 150)",
+          "oklch(38% 0.025 150)",
+          "oklch(49% 0.025 150)",
+          "oklch(61% 0.025 150)",
+          "oklch(72% 0.025 150)",
+          "oklch(84% 0.025 150)",
+          "oklch(95% 0.025 150)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted sage",
+        "tonalRamp": [
+          "oklch(15% 0.02 120)",
+          "oklch(26% 0.02 120)",
+          "oklch(38% 0.02 120)",
+          "oklch(49% 0.02 120)",
+          "oklch(61% 0.02 120)",
+          "oklch(72% 0.02 120)",
+          "oklch(84% 0.02 120)",
+          "oklch(95% 0.02 120)"
+        ]
+      },
+      "brand": {
+        "role": "primary",
+        "displayName": "Forest action",
+        "tonalRamp": [
+          "oklch(15% 0.045 150)",
+          "oklch(26% 0.045 150)",
+          "oklch(38% 0.045 150)",
+          "oklch(49% 0.045 150)",
+          "oklch(61% 0.045 150)",
+          "oklch(72% 0.045 150)",
+          "oklch(84% 0.045 150)",
+          "oklch(95% 0.045 150)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Fine divider",
+        "tonalRamp": [
+          "oklch(15% 0.015 110)",
+          "oklch(26% 0.015 110)",
+          "oklch(38% 0.015 110)",
+          "oklch(49% 0.015 110)",
+          "oklch(61% 0.015 110)",
+          "oklch(72% 0.015 110)",
+          "oklch(84% 0.015 110)",
+          "oklch(95% 0.015 110)"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft sage",
+        "tonalRamp": [
+          "oklch(15% 0.015 110)",
+          "oklch(26% 0.015 110)",
+          "oklch(38% 0.015 110)",
+          "oklch(49% 0.015 110)",
+          "oklch(61% 0.015 110)",
+          "oklch(72% 0.015 110)",
+          "oklch(84% 0.015 110)",
+          "oklch(95% 0.015 110)"
+        ]
+      },
+      "green": {
+        "role": "secondary",
+        "displayName": "Leaf green",
+        "tonalRamp": [
+          "oklch(15% 0.045 140)",
+          "oklch(26% 0.045 140)",
+          "oklch(38% 0.045 140)",
+          "oklch(49% 0.045 140)",
+          "oklch(61% 0.045 140)",
+          "oklch(72% 0.045 140)",
+          "oklch(84% 0.045 140)",
+          "oklch(95% 0.045 140)"
+        ]
+      },
+      "brand-hover": {
+        "role": "primary",
+        "displayName": "Deep forest hover",
+        "tonalRamp": [
+          "oklch(15% 0.045 150)",
+          "oklch(26% 0.045 150)",
+          "oklch(38% 0.045 150)",
+          "oklch(49% 0.045 150)",
+          "oklch(61% 0.045 150)",
+          "oklch(72% 0.045 150)",
+          "oklch(84% 0.045 150)",
+          "oklch(95% 0.045 150)"
+        ]
+      },
+      "focus": {
+        "role": "secondary",
+        "displayName": "Olive focus",
+        "tonalRamp": [
+          "oklch(15% 0.06 120)",
+          "oklch(26% 0.06 120)",
+          "oklch(38% 0.06 120)",
+          "oklch(49% 0.06 120)",
+          "oklch(61% 0.06 120)",
+          "oklch(72% 0.06 120)",
+          "oklch(84% 0.06 120)",
+          "oklch(95% 0.06 120)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero title."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "General section headings; responsive menu overrides are in DESIGN.md."
+      },
+      "title": {
+        "displayName": "Dish title",
+        "purpose": "Menu dish names."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading and ordering content."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Compact field labels."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Action labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "mobile-bag",
+        "value": "0 8px 24px rgb(25 46 30 / 20%)",
+        "purpose": "Structural shadow beneath the floating mobile bag."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "background .2s ease, color .2s ease, border-color .2s ease",
+        "purpose": "Button state changes; disabled by prefers-reduced-motion."
+      },
+      {
+        "name": "added-feedback",
+        "value": "1600ms",
+        "purpose": "Duration of the Added label and live status."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop-max",
+        "value": "1100px"
+      },
+      {
+        "name": "mobile-max",
+        "value": "760px"
+      }
+    ]
   },
-  "source": "frontend/app/style.css"
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Implemented action variant; native button semantics.",
+      "html": "<button class=\"ds-control\">Continue to payment</button>",
+      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:var(--brand,#304c3a);color:var(--white,#fffefa);}.ds-control:hover{background:#203c2a;}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Implemented action variant; native button semantics.",
+      "html": "<button class=\"ds-control\">Show full menu</button>",
+      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--brand,#304c3a);border-color:#bcc4b6;}.ds-control:hover{background:var(--soft,#eceee5);}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Quiet button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Implemented action variant; native button semantics.",
+      "html": "<button class=\"ds-control\">Sign in</button>",
+      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--ink,#28372e);}.ds-control:hover{background:var(--soft,#eceee5);}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Add button",
+      "kind": "button",
+      "refersTo": "button-add",
+      "description": "Implemented action variant; native button semantics.",
+      "html": "<button class=\"ds-control\">Add +</button>",
+      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--brand,#304c3a);border-color:#9dac93;padding:8px 13px;min-width:90px;}.ds-control:hover{background:var(--brand,#304c3a);color:var(--white,#fffefa);border-color:var(--brand,#304c3a);}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Standard labeled form field.",
+      "html": "<label class=\"ds-label\">Email<input class=\"ds-control\" type=\"email\" autocomplete=\"email\"></label>",
+      "css": ".ds-label{font:650 11px var(--body,\"Manrope\",sans-serif);color:var(--ink,#28372e)}.ds-control{display:block;width:100%;min-height:44px;margin:7px 0 14px;padding:11px 12px;background:var(--white,#fffefa);color:var(--ink,#28372e);border:1px solid #b9c0af;border-radius:5px;font:14px/1.65 var(--body,\"Manrope\",sans-serif);caret-color:var(--brand,#304c3a)}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Menu navigation",
+      "kind": "nav",
+      "description": "Underline identifies the selected view.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><button class=\"ds-control ds-selected\">Menu</button><button class=\"ds-control\">Sign in</button></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:12px}.ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;padding:9px 14px;background:transparent;color:var(--ink,#28372e)}.ds-control:hover{background:var(--soft,#eceee5)}.ds-control.ds-selected{border-radius:0;border-bottom-color:var(--brand,#304c3a);background:transparent}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Vegetarian filter",
+      "kind": "chip",
+      "refersTo": "vegetarian-filter",
+      "description": "Pressed state uses a pale green fill.",
+      "html": "<button class=\"ds-control\" aria-pressed=\"true\">Vegetarian</button>",
+      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;background:transparent;color:var(--green,#476146);border:1px solid #bcc6b3;border-radius:24px;min-height:38px;padding:8px 14px;font-size:10px}.ds-control:hover,.ds-control[aria-pressed=true]{background:#e3eadc;color:#284231;border-color:#809575}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Bag card",
+      "kind": "card",
+      "refersTo": "bag-card",
+      "description": "Flat bordered order summary; preview omits page-level sticky positioning.",
+      "html": "<aside class=\"ds-bag\"><h2>Your bag</h2><p>Add something you love.</p></aside>",
+      "css": ".ds-bag{background:var(--white,#fffefa);color:var(--ink,#28372e);border:1px solid var(--line,#dcded3);border-radius:12px;padding:24px}.ds-bag h2{font:500 30px/1.05 var(--display,\"Cormorant\",Georgia,serif);letter-spacing:-.025em;margin:0}.ds-bag p{font:11px/1.8 var(--body,\"Manrope\",sans-serif);color:var(--muted,#656b60)}"
+    },
+    {
+      "name": "Inline customization",
+      "kind": "custom",
+      "description": "Native disclosure retains options beneath the dish.",
+      "html": "<details class=\"ds-customize\"><summary class=\"ds-control\">Make it yours</summary><label class=\"ds-label\">Portion<select class=\"ds-select\"><option>Regular</option><option>Large</option></select></label></details>",
+      "css": ".ds-customize{font:12px/1.65 var(--body,\"Manrope\",sans-serif);color:var(--ink,#28372e)}.ds-control{width:fit-content;cursor:pointer;min-height:44px;padding:10px 0;font-weight:600;color:#5e694f}.ds-label{display:block;font-size:11px;font-weight:650}.ds-select{font:12px var(--body,\"Manrope\",sans-serif);min-height:44px;padding:11px 12px;border:1px solid #b9c0af;border-radius:5px;background:var(--white,#fffefa);color:var(--ink,#28372e)}.ds-select:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    },
+    {
+      "name": "Mobile bag dock",
+      "kind": "custom",
+      "refersTo": "mobile-bag",
+      "description": "Preview uses normal flow; live dock is fixed on mobile when the customer menu bag is nonempty.",
+      "html": "<button class=\"ds-control\"><span>1 item · ₹300</span><span>View bag</span></button>",
+      "css": ".ds-control{font-family:var(--body, 'Manrope', sans-serif);font-size:12px;font-weight:650;min-height:44px;padding:11px 18px;border:1px solid transparent;border-radius:5px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease;display:flex;justify-content:space-between;gap:30px;width:100%;padding:15px;border-radius:8px;background:var(--brand,#304c3a);color:var(--white,#fffefa);box-shadow:0 8px 24px rgb(25 46 30 / 20%);font-size:11px}.ds-control:hover{background:#203c2a}.ds-control:focus-visible{outline:2px solid #778556;outline-offset:4px}.ds-control:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-control{transition:none!important}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Quiet, premium restaurant menu",
+    "overview": "Quiet, premium restaurant menu is the user-selected visual direction. Bone paper, forest ink and softened olive details create a restrained restaurant identity. Cormorant display type supplies warmth; Manrope keeps ordering controls precise and compact.\n\nFine rules and open dish rows carry the menu. A single atmospheric biryani image provides the expressive moment and is explicitly illustrative. Tonal surfaces separate the order summary without making every dish a raised card.",
+    "keyCharacteristics": [
+      "Bone paper and forest actions with softened olive accents.",
+      "Expressive serif headings paired with compact sans-serif controls.",
+      "Fine dividers, open dish rows and inline customization.",
+      "One illustrative food asset and a persistent route to the bag."
+    ],
+    "rules": [],
+    "dos": [
+      "Do use forest actions, bone surfaces and the Cormorant/Manrope pairing.",
+      "Do keep dish customization inline and preserve visible price and diet information.",
+      "Do label the food asset as illustrative and keep demo/payment disclosures visible.",
+      "Do preserve keyboard focus, loading and empty states, and reduced-motion behavior."
+    ],
+    "donts": [
+      "Don't restore the superseded burgundy/Arial visual system.",
+      "Don't turn each menu row into a raised card or introduce decorative shadows throughout.",
+      "Don't present the illustrative image as an actual outlet's food or invent ratings and awards.",
+      "Don't describe preparation estimates as delivery or automatic staff progress."
+    ]
+  }
 }

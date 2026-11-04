@@ -10,6 +10,7 @@ async function login(page: Page, email: string) {
 test('persisted cart, test payment, kitchen stages and customer tracking', async ({ page, browser }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Dum chicken biryani', exact: true })).toBeVisible();
+  await page.locator('.dish').filter({ has: page.getByRole('heading', { name: 'Dum chicken biryani', exact: true }) }).locator('summary').click();
   await page.getByLabel('Portion for Dum chicken biryani').selectOption('large');
   await page.getByRole('button', { name: 'Add Dum chicken biryani', exact: true }).click();
   await page.reload();
@@ -41,11 +42,34 @@ test('persisted cart, test payment, kitchen stages and customer tracking', async
 });
 
 test('menu works without horizontal overflow on mobile and desktop', async ({ page }) => {
-  for (const width of [390, 1440]) {
+  for (const width of [390, 942, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     await expect(page.getByRole('heading', { name: 'Dum chicken biryani', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Use my location' })).toBeVisible();
+    await page.evaluate(() => document.fonts.ready);
+    await expect(page.locator('.hero-image img')).toHaveJSProperty('complete', true);
+    expect(await page.locator('.hero-image img').evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
     await page.screenshot({ path: `test-results/menu-${width}.png`, fullPage: true });
   }
+});
+
+test('menu search, vegetarian filter, categories, customization and mobile bag', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await expect(page.locator('.dish')).toHaveCount(6);
+  await page.getByRole('button', { name: 'Vegetarian', exact: true }).click();
+  await expect(page.locator('.dish')).toHaveCount(3);
+  await page.locator('.filters').getByRole('button', { name: /^Biryani/ }).click();
+  await expect(page.locator('.dish')).toHaveCount(1);
+  await page.getByRole('searchbox', { name: 'Search the menu' }).fill('nothing-like-this');
+  await expect(page.getByRole('heading', { name: 'Nothing on this page, yet.' })).toBeVisible();
+  await page.getByRole('button', { name: 'Show full menu' }).click();
+  await expect(page.locator('.dish')).toHaveCount(6);
+  await page.getByRole('button', { name: 'Add Dum chicken biryani', exact: true }).click();
+  await page.getByRole('button', { name: /1 item.*View bag/ }).click();
+  await expect(page.locator('#cart')).toBeFocused();
+  await expect(page.getByLabel('Delivery address')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
 });

@@ -57,6 +57,8 @@ New accounts are customers and prepaid-only. Kitchen/admin roles cannot be selec
 
 The demo COD rule accepts trusted-account orders up to ₹1,500; larger orders require a 20% simulated deposit. The remaining balance is displayed, but no cash collection is implemented.
 
+The premium menu redesign adds combined text/category/vegetarian filtering, inline “Make it yours” customization, a compact delivery/kitchen selector, and a fixed mobile bag shortcut. Cormorant Garamond and Manrope fonts are self-hosted with their open-font licenses. The generated food image is explicitly labeled illustrative; its prompt is recorded under `frontend/public/images/README.md`.
+
 ## Architecture and invariants
 
 - `frontend/app`: Next.js App Router, React, strict TypeScript. The same-origin `/api` rewrite connects to FastAPI. Responsive customer, kitchen and admin views share a small typed request helper.
@@ -90,7 +92,7 @@ Browser tests require both local servers already running and the initial demo ac
 
 ## Scope and remaining limitations
 
-Three synthetic outlets and six dishes demonstrate the single-chain model; the original 17-outlet production inventory was not available. No real payment gateway, rider GPS, address geocoding, delivery confirmation, refunds, real FSSAI/license data, notifications or public deployment is claimed. The model is trained on synthetic examples, not restaurant history. The interface deliberately uses a text menu without external food photographs.
+Three synthetic outlets and six dishes demonstrate the single-chain model; the original 17-outlet production inventory was not available. No real payment gateway, rider GPS, address geocoding, delivery confirmation, refunds, real FSSAI/license data, notifications or public deployment is claimed. The model is trained on synthetic examples, not restaurant history. The menu uses text for live dish data and a locally stored, generated illustrative food photograph.
 
 This is a local demo, not a production launch: public hosting still needs HTTPS, non-demo accounts, login throttling, identity/contact verification, real payment verification, operational monitoring, backups, and load/security review. Current cookies expire in one day; expired session cleanup is not scheduled. Polling is near-live, not push delivery. Seed startup assumes one initial writer. The API currently uses synchronous database access and a compact monolithic module appropriate to this scope.
 
