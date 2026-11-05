@@ -21,7 +21,7 @@ bash scripts/run-local.sh
 
 If the database container already exists, run `podman start dumhouse-postgres` instead of creating it. `scripts/run-local.sh` applies migrations, idempotently seeds synthetic data, and starts both servers. Ctrl+C stops the app servers; the database container remains running. Stop it with `podman stop dumhouse-postgres`. Container data persists across stops; removing the container/volume can delete data.
 
-Open http://localhost:3000. API reference: http://localhost:8000/docs. Use the localhost hostname consistently for cookies. Demo mode does not charge money or send messages. Do not enter real payment credentials.
+Open . API reference: http://localhost:8000/docs. Use the localhost hostname consistently for cookies. Demo mode does not charge money or send messages. Do not enter real payment credentials.
 
 Alternatively, with Docker Compose installed:
 
@@ -90,7 +90,7 @@ Browser tests require both local servers already running and the initial demo ac
 
 ## Configuration
 
-`DATABASE_URL` defaults to the dedicated local demo database on port 55432. `ALLOW_MOCK_PAYMENTS` defaults to false in the API and is explicitly enabled by the local launcher/Compose. `APP_ORIGIN` defaults to http://localhost:3000. `SECURE_COOKIES=true` requires HTTPS. `API_INTERNAL_URL` sets the Next.js rewrite destination at build time. `.env` is only loaded automatically by Compose; export variables for native commands.
+`DATABASE_URL` defaults to the dedicated local demo database on port 55432. `ALLOW_MOCK_PAYMENTS` defaults to false in the API and is explicitly enabled by the local launcher/Compose. `APP_ORIGIN` defaults to . `SECURE_COOKIES=true` requires HTTPS. `API_INTERNAL_URL` sets the Next.js rewrite destination at build time. `.env` is only loaded automatically by Compose; export variables for native commands.
 
 ## Scope and remaining limitations
 
