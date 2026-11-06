@@ -21,7 +21,7 @@ bash scripts/run-local.sh
 
 If the database container already exists, run `podman start dumhouse-postgres` instead of creating it. `scripts/run-local.sh` applies migrations, idempotently seeds synthetic data, and starts both servers. Ctrl+C stops the app servers; the database container remains running. Stop it with `podman stop dumhouse-postgres`. Container data persists across stops; removing the container/volume can delete data.
 
-Open . API reference: ./docs. Use the localhost hostname consistently for cookies. Demo mode does not charge money or send messages. Do not enter real payment credentials.
+Open http://localhost:3000. API reference: http://localhost:8000/docs. Use the localhost hostname consistently for cookies. Demo mode does not charge money or send messages. Do not enter real payment credentials.
 
 Alternatively, with Docker Compose installed:
 
@@ -149,3 +149,7 @@ The 70 published dishes now use 70 distinct real photographs with source/author/
 ### Food information and privacy launch requirements
 Prices are displayed as including 5% GST per the operator requirement. Dietary markers use a green circle or brown triangle with text. Allergens appear on cards and details; missing declarations explicitly say unverified, not allergen-free. Each outlet has an optional 14-digit FSSAI field managed by the administrator after checking the actual licence. No invented licence numbers are seeded.
 Marketing consent defaults to false and has a separate account control with a versioned timestamped audit trail. Order SMS/WhatsApp consent does not imply marketing consent. No marketing sender is connected. `/privacy.html` describes actual data uses and the unfinished operator/contact, retention, rights-request and processor requirements; it is not a DPDP compliance certification. Official references: https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa and https://www.fssai.gov.in/upload/uploadfiles/files/FAQ-%20Display%20of%20Information.pdf . Confirm applicability and phased commencement with qualified review before launch.
+
+## Vercel deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for website, API, database and worker setup.
