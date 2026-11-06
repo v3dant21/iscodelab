@@ -18,13 +18,27 @@ services:
       DEMO_PASSWORD: ${DEMO_PASSWORD:-DemoPass123!}
       ALLOW_MOCK_PAYMENTS: ${ALLOW_MOCK_PAYMENTS:-true}
       APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       SECURE_COOKIES: ${SECURE_COOKIES:-false}
     ports:
       - 127.0.0.1:8000:8000
     depends_on:
       database:
         condition: service_healthy
+  notifications:
+    build: ./backend
+    command: ["python", "notification_worker.py"]
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://dumhouse:${POSTGRES_PASSWORD:-local-demo-only}@database:5432/dumhouse
+      NOTIFICATION_WEBHOOK_URL: ${NOTIFICATION_WEBHOOK_URL:-}
+      NOTIFICATION_WEBHOOK_SECRET: ${NOTIFICATION_WEBHOOK_SECRET:-}
+    depends_on:
+      - backend
   frontend:
+    environment:
+      SITE_URL: ${SITE_URL:-http://localhost:3000}
+      API_INTERNAL_URL: http://backend:8000
     build: ./frontend
     ports:
       - 127.0.0.1:3000:3000

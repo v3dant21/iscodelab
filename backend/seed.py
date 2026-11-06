@@ -30,6 +30,8 @@ def seed():
             database.add(User(email=email, password=hashed, role=role, outlet_id=outlet, cod=cod))
         database.flush()
         sync_sequences(database)
+        from reference_menu import extend_menu
+        extend_menu(database)
 
 
 def sync_sequences(database):

@@ -8,3 +8,9 @@ node_modules/
 test-results/
 playwright-report/
 *.db
+
+# Local deployment credentials and environment overrides
+.vercel/
+.env.*
+!.env.example
+!*.env.example

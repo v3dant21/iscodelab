@@ -21,4 +21,4 @@ def predict(lines, queue, minimum, peak):
     except (OSError, ValueError, KeyError, TypeError):
         estimate = minimum + portions * 2 + queue * 3
         source = 'queue fallback'
-    return max(minimum, min(120, math.ceil(estimate))), source
+    return max(minimum, math.ceil(estimate)), source

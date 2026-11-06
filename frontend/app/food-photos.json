@@ -1,0 +1,702 @@
+{
+  "dum chicken biryani": {
+    "src": "/images/dishes/dum-chicken-biryani.webp",
+    "title": "Chicken Dum Biryani 03.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_Dum_Biryani_03.jpg",
+    "author": "Vis M",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Chicken Dum Biryani from WikiConference India 2023 at Hyatt Hyatt Hyderabad Gachibowli",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "paneer dum biryani": {
+    "src": "/images/dishes/paneer-dum-biryani.webp",
+    "title": "Paneer Biriyani 02.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Paneer_Biriyani_02.jpg",
+    "author": "Vis M",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Paneer Biriyani from Alappuzha, Kerala",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken 65": {
+    "src": "/images/dishes/chicken-65.webp",
+    "title": "Chicken 65 (Dish).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_65_(Dish).jpg",
+    "author": "Amiyashrivastava",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Chicken 65 (Garnished)",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mirchi ka salan": {
+    "src": "/images/dishes/mirchi-ka-salan.webp",
+    "title": "Hyderabadi Hari Mirchi Ka Salan.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyderabadi_Hari_Mirchi_Ka_Salan.JPG",
+    "author": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Hyderabadi Hari Mirchon  Ka Salan, حیدرآبادی ھری مرچوں کا سالن",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "double ka meetha": {
+    "src": "/images/dishes/double-ka-meetha.webp",
+    "title": "Double Ka Meetha.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Double_Ka_Meetha.JPG",
+    "author": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "ڈبل کا میٹھا",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "veg biryani": {
+    "src": "/images/dishes/veg-biryani.webp",
+    "title": "Vegetable Biryani IMG 001.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Vegetable_Biryani_IMG_001.jpg",
+    "author": "Phadke09",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Veg Biryani",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mushroom biryani": {
+    "src": "/images/dishes/mushroom-biryani.webp",
+    "title": "Mushroom Biryani.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Mushroom_Biryani.JPG",
+    "author": "Mohsinkt",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Delicious and Nutritious Mushroom Biryani.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "kaju biryani": {
+    "src": "/images/dishes/kaju-biryani.webp",
+    "title": "Veg Kaju Biryani.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Veg_Kaju_Biryani.jpg",
+    "author": "Karan Aggarwal",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Biryani is a rice dish, mainly made up by rice, meat, vegetables and spices. But this is a vegetarian version of biryani, I made it at home in pressure cooker to give \"Dum\"(a technique of cooking food by steam in sealed vessel, it is a slow cooking process) to biryani. As the name says the main ingredient is \"Kaju\"(Cashew Nuts) of this biryani.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "egg biryani": {
+    "src": "/images/dishes/egg-biryani.webp",
+    "title": "Hyderabadi egg biryani.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Hyderabadi_egg_biryani.jpg",
+    "author": "Ravi Dwivedi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Hyderabadi egg biryani served with mirchi ka salan, raita and salad. This biryani is from the famous Paradise Biryani restaurant of Hyderabad.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "nizam chicken biryani": {
+    "src": "/images/dishes/nizam-chicken-biryani.webp",
+    "title": "Chicken Hyderabadi Biryani.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_Hyderabadi_Biryani.JPG",
+    "author": "Dheerajk88",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "{Wiki Loves Food 2015",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "pot biryani": {
+    "src": "/images/dishes/pot-biryani.webp",
+    "title": "Dum Biryani Plate.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Dum_Biryani_Plate.jpg",
+    "author": "Umesh Tongbra",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "description": "Kachhi Murgh Dum Biryani (plated)",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "fry piece chicken biryani": {
+    "src": "/images/dishes/fry-piece-chicken-biryani.webp",
+    "title": "Chicken biryani 02-06-2015 (India).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_biryani_02-06-2015_(India).jpg",
+    "author": "Shivani shipra",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "INDIAN chicken biryani :can make anyone hungry",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken handi biryani": {
+    "src": "/images/dishes/chicken-handi-biryani.webp",
+    "title": "Chicken Biryani 4.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_Biryani_4.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Chicken Biryani.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mutton handi biryani": {
+    "src": "/images/dishes/mutton-handi-biryani.webp",
+    "title": "Mutton biryani.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Mutton_biryani.JPG",
+    "author": "Bhaskaranaidu",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Hyderabad mutton biryani.  hyderabad",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "veg biryani family pack": {
+    "src": "/images/dishes/veg-biryani-family-pack.webp",
+    "title": "Vegetable Biryani 001.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Vegetable_Biryani_001.JPG",
+    "author": "Thesmellofearthafterrain",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Vegetable Biryani !!!",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "paneer biryani family pack": {
+    "src": "/images/dishes/paneer-biryani-family-pack.webp",
+    "title": "Panner Vegetable Hyderabad Biryani.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Panner_Vegetable_Hyderabad_Biryani.jpg",
+    "author": "Kasyap",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Panner Vegetable Hyderabad Biryani",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken biryani family pack": {
+    "src": "/images/dishes/chicken-biryani-family-pack.webp",
+    "title": "Chicken biriyani- My cafe restaurant - Meghalaya DSC 009.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_biriyani-_My_cafe_restaurant_-_Meghalaya_DSC_009.jpg",
+    "author": "Gitika Gayan",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Restaurant style chicken biriyani with raita",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mutton biryani family pack": {
+    "src": "/images/dishes/mutton-biryani-family-pack.webp",
+    "title": "Mutton Biryani..JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Mutton_Biryani..JPG",
+    "author": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "مٹن بریانی، بکرے کے گوشت کی بریانی",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "prawns biryani family pack": {
+    "src": "/images/dishes/prawns-biryani-family-pack.webp",
+    "title": "Prawn Biryani, Hyderabad.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Prawn_Biryani,_Hyderabad.jpg",
+    "author": "Abhinaba Basu",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Prawn Biryani, Hyderabad, India",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "lassi": {
+    "src": "/images/dishes/lassi.webp",
+    "title": "Lassi 1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Lassi_1.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A glass of lassi.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "buttermilk": {
+    "src": "/images/dishes/buttermilk.webp",
+    "title": "Chaach.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Chaach.JPG",
+    "author": "Rayraider",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A soothing cool milk based Indian drink made by churning milk in an earthern pot.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "gulab jamun": {
+    "src": "/images/dishes/gulab-jamun.webp",
+    "title": "Two Gulab Jamun in a plate 01.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Two_Gulab_Jamun_in_a_plate_01.jpg",
+    "author": "Suyash.dwivedi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Two gulab jamun in a plate",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken tandoori half": {
+    "src": "/images/dishes/chicken-tandoori-half.webp",
+    "title": "Tandoori chicken Indian.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Tandoori_chicken_Indian.jpg",
+    "author": "pelican",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "Tandoori Chicken Indian cuisine",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken tandoori full": {
+    "src": "/images/dishes/chicken-tandoori-full.webp",
+    "title": "Tandoori Chicken 1.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Tandoori_Chicken_1.JPG",
+    "author": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Tandoori Chicken 1",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "tangdi kebab half": {
+    "src": "/images/dishes/tangdi-kebab-half.webp",
+    "title": "Chicken Tangdi Kebab.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_Tangdi_Kebab.jpg",
+    "author": "Rahul Dhakate",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A non vegetarian Indian starter prepared either roasted or fried. These are served hot with onion salad , chutneys and sauce",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken reshmi kebab": {
+    "src": "/images/dishes/chicken-reshmi-kebab.webp",
+    "title": "Chicken reshmi kebabs.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_reshmi_kebabs.jpg",
+    "author": "Prianxi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Chicken reshmi kebabs",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken garlic tikka": {
+    "src": "/images/dishes/chicken-garlic-tikka.webp",
+    "title": "Chicken tikka in Araku Valley, Andhra Pradesh 01.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_tikka_in_Araku_Valley,_Andhra_Pradesh_01.jpg",
+    "author": "Satdeep Gill",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Chicken tikka in Araku Valley, Andhra Pradesh",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "achari chicken tikka": {
+    "src": "/images/dishes/achari-chicken-tikka.webp",
+    "title": "Chicken-Tikka.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken-Tikka.jpg",
+    "author": "Minaxibose1992",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Chicken Tikka one of the main snack of Pakistan, can be easily found and great in taste.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mutton chop tikka kebab": {
+    "src": "/images/dishes/mutton-chop-tikka-kebab.webp",
+    "title": "Mughlai Mutton Chop Kababs.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Mughlai_Mutton_Chop_Kababs.jpg",
+    "author": "Fatimahope",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Mughlai Mutton Chop Kababs",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mutton seekh kebab": {
+    "src": "/images/dishes/mutton-seekh-kebab.webp",
+    "title": "Seekh Kebab.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Seekh_Kebab.JPG",
+    "author": "raasiel",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Seekh kebab, ready to eat.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "fish tikka": {
+    "src": "/images/dishes/fish-tikka.webp",
+    "title": "Tandoori Fish tikka.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Tandoori_Fish_tikka.jpg",
+    "author": "Fatimahope",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Tandoori Fish tikka",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chapati": {
+    "src": "/images/dishes/chapati.webp",
+    "title": "Chapati 1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chapati_1.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Chapati.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "tandoori roti": {
+    "src": "/images/dishes/tandoori-roti.webp",
+    "title": "Tandoori-rotis.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Tandoori-rotis.jpg",
+    "author": "Ravi Dwivedi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Tandoori roti is cooked by sticking the flattened dough to the inside wall of a tandoor oven, where it bakes quickly at a high temperature and is a popular flatbread in India. This photo was taken in Meerut, Uttar Pardesh, India.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "plain naan": {
+    "src": "/images/dishes/plain-naan.webp",
+    "title": "Naan 2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Naan_2.jpg",
+    "author": "Shisma",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "description": "naan",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "butter naan": {
+    "src": "/images/dishes/butter-naan.webp",
+    "title": "Butter Naan 2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Butter_Naan_2.jpg",
+    "author": "Ganesh Mohan T",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Butter Naan from Himachal",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "garlic naan": {
+    "src": "/images/dishes/garlic-naan.webp",
+    "title": "Garlic naan 1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Garlic_naan_1.jpg",
+    "author": "Joy",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "the-cooking-of-joy.blogspot.com/2015/06/garlic-naan.html",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "lachha paratha": {
+    "src": "/images/dishes/lachha-paratha.webp",
+    "title": "Lachha-paratha.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Lachha-paratha.jpg",
+    "author": "Sonia Goyal",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "Lachha Paratha is an Indian multi-layered flatbread of Punjabi cuisine. It is made of whole wheat flour.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "paneer kulcha": {
+    "src": "/images/dishes/paneer-kulcha.webp",
+    "title": "Butter kulcha - paneer chana.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Butter_kulcha_-_paneer_chana.jpg",
+    "author": "Kulkarni, Vibhas",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "This is classic vegetarian Butter kulcha - paneer chana combo.. The dish is famous in North India. Kulcha is a type of a tortilla made from wheat flour and Paneer chana, means Horsegram Cheese, is spicy thick gravy consumed along with Kulcha and other types of Rotis ie: Breads/tortillas... Salad can be used to enhance the veggie taste.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "tomato soup": {
+    "src": "/images/dishes/tomato-soup.webp",
+    "title": "Tomato soup.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Tomato_soup.jpg",
+    "author": "",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "lemon coriander soup": {
+    "src": "/images/dishes/lemon-coriander-soup.webp",
+    "title": "Lemon Chilli Coriander Soup - The Asian Curry House, Bangalore - Karnataka - PXL2005.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Lemon_Chilli_Coriander_Soup_-_The_Asian_Curry_House,_Bangalore_-_Karnataka_-_PXL2005.jpg",
+    "author": "Harikrishnan N",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Lemon Chilli Coriander Soup - Tangy lemony spicy flavourful soup.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "gobi 65": {
+    "src": "/images/dishes/gobi-65.webp",
+    "title": "Gobi 65 (cauliflower fry).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Gobi_65_(cauliflower_fry).jpg",
+    "author": "Alvinjesusyouth",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Cauliflower fry with tomato sause",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "veg manchurian": {
+    "src": "/images/dishes/veg-manchurian.webp",
+    "title": "Vegetable manchurian.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Vegetable_manchurian.jpg",
+    "author": "Msec109",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Vegetable manchurian, an Indian-Chinese dish made up of flour and vegetable.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "paneer 65": {
+    "src": "/images/dishes/paneer-65.webp",
+    "title": "Paneer 65 plate.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Paneer_65_plate.jpg",
+    "author": "Phil Denton",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "Paneer 65",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chilli paneer": {
+    "src": "/images/dishes/chilli-paneer.webp",
+    "title": "Chilly Paneer 01.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chilly_Paneer_01.jpg",
+    "author": "Marajozkee",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A spicy main course dish derived from Chinese dish, very popular in West Bengal and other cities of India, it is made up of fresh Indian cottage cheese, chilly, onion, tomatoes and other ingredients.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "babycorn chilli": {
+    "src": "/images/dishes/babycorn-chilli.webp",
+    "title": "Crispy chilli baby corn.....jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Crispy_chilli_baby_corn.....jpg",
+    "author": "Dikshita Bairagi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "spicy tasty vegetarian snack",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "apollo fish": {
+    "src": "/images/dishes/apollo-fish.webp",
+    "title": "APOLLO FISH.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:APOLLO_FISH.jpg",
+    "author": "NEHAL NAZIM",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "apollo fish fry recipe is a closest match to the one that is served in most andhra restaurants I have visited. Similiar to the fish manchurian recipe, but we do not need any sauces, artificial colors or ajinomotto, you can still prepare this apollo fish, just like the restaurant style one.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "prawns 65": {
+    "src": "/images/dishes/prawns-65.webp",
+    "title": "Kolambi fry (prawn).JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Kolambi_fry_(prawn).JPG",
+    "author": "Sbchavan",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "prawn fry with red chili, garlic, ginger",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "veg malai kofta": {
+    "src": "/images/dishes/veg-malai-kofta.webp",
+    "title": "Malai Kofta Curry.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Malai_Kofta_Curry.jpg",
+    "author": "Mrudit161187",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Malai Kofta Curry made of patato and dryfruits eat for Fasting",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "paneer butter masala": {
+    "src": "/images/dishes/paneer-butter-masala.webp",
+    "title": "Paneer butter masala 2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Paneer_butter_masala_2.jpg",
+    "author": "Gannu03",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Paneer butter masala from Himachal Pradesh, India.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "palak paneer": {
+    "src": "/images/dishes/palak-paneer.webp",
+    "title": "Palak Paneer (Cottage cheese in spinach gravy).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Palak_Paneer_(Cottage_cheese_in_spinach_gravy).jpg",
+    "author": "DreamyFlutura11",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A North Indian dish consisting of paneer (cottage cheese) in a thick spinach gravy, usually served with naan or roti (Indian bread).",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mushroom curry": {
+    "src": "/images/dishes/mushroom-curry.webp",
+    "title": "Mushroom-Tonaak.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Mushroom-Tonaak.jpg",
+    "author": "Siddhesh Salelkar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Mushroom curry prepared in a Konkani Hindu household, with a base of ground paste prepared from roasted coconut and spices",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "dal fry": {
+    "src": "/images/dishes/dal-fry.webp",
+    "title": "Dal Fry with Garlic Tadka.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Dal_Fry_with_Garlic_Tadka.jpg",
+    "author": "Fatimahope",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Dal Fry with Garlic Tadka",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "kadai paneer": {
+    "src": "/images/dishes/kadai-paneer.webp",
+    "title": "Kadai Paneer Recipe.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Kadai_Paneer_Recipe.JPG",
+    "author": "Saishalini7",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "This image shows three colors of veg (GREEN,RED,WHITE) Capsicum,Tomato,Paneer.Kadai paneer is awesome gravy ever.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "andhra chicken curry (bone-in)": {
+    "src": "/images/dishes/andhra-chicken-curry-bone-in.webp",
+    "title": "Andhra Chicken Curry - WCI-Day0-Dinner.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Andhra_Chicken_Curry_-_WCI-Day0-Dinner.jpg",
+    "author": "Sumitsurai",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Andhra Chicken Curry at the dinner buffet during Day 0 of WikiConference India 2023 in Hyderabad.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "andhra chicken curry (boneless)": {
+    "src": "/images/dishes/andhra-chicken-curry-boneless.webp",
+    "title": "Andhra kodi kura (chicken gravy).JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Andhra_kodi_kura_(chicken_gravy).JPG",
+    "author": "Karteeki4u",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "This chicken gravy is a delicious home made food.\nVery tasty & savory",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "butter chicken": {
+    "src": "/images/dishes/butter-chicken.webp",
+    "title": "Chicken makhani.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_makhani.jpg",
+    "author": "stu_spivack",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "Chicken Makhani, murgh makhani, or \"Butter Chicken\"chicken makhani",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "mutton pulusu": {
+    "src": "/images/dishes/mutton-pulusu.webp",
+    "title": "Mutton Curry 1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Mutton_Curry_1.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Mutton Curry, mutton dish in Dashain festival.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "gongura mutton": {
+    "src": "/images/dishes/gongura-mutton.webp",
+    "title": "Mutton Curry 2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Mutton_Curry_2.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Mutton Curry.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "jeera rice": {
+    "src": "/images/dishes/jeera-rice.webp",
+    "title": "Jeera-rice.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Jeera-rice.JPG",
+    "author": "Sonia Goyal",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "Jeera rice is an Indian recipe in which rice is cooked with cumin seeds (Jeera). The wonderful aroma of cumin seeds make this rice recipe very aromatic and mouth watering.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "veg fried rice": {
+    "src": "/images/dishes/veg-fried-rice.webp",
+    "title": "Vegetable Fried Rice.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Vegetable_Fried_Rice.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Veg Fried Rice.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "curd rice": {
+    "src": "/images/dishes/curd-rice.webp",
+    "title": "Curd Rice.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Curd_Rice.jpg",
+    "author": "Sudharshan Shanmugasundaram",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Curd rice with puppads and cashews",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "egg fried rice": {
+    "src": "/images/dishes/egg-fried-rice.webp",
+    "title": "Egg Fried Rice.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Egg_Fried_Rice.jpg",
+    "author": "Gaurav Dhwaj Khadka",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Egg Fried Rice",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "chicken fried rice": {
+    "src": "/images/dishes/chicken-fried-rice.webp",
+    "title": "Chicken Fried rice.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicken_Fried_rice.jpg",
+    "author": "Deepak Official Id",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Spicy Chicken Fried rice",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "egg curry": {
+    "src": "/images/dishes/egg-curry.webp",
+    "title": "Spicy Anda Curry.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Spicy_Anda_Curry.jpg",
+    "author": "https://onlybestrecipes.com/egg-curry-recipeegg-curry-recipe/",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Anda Curry or Egg Curry is generally a spicy dish, it can be made in different styles with different masala (spices) and boiled eggs, it can be served with rotis, parathas or rice",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "egg omelette": {
+    "src": "/images/dishes/egg-omelette.webp",
+    "title": "Masala Omelette.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Masala_Omelette.jpg",
+    "author": "Shubham2007chaudhary",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "This is the Indian version of the classic omelette. Apart from the regular recipe various spices and herbs are added to it. Spices include red chili, cardamom, coriander powder, etc. The recipe is modified according to taste. The omelette is often served with white bread.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "hyderabadi mutton biryani": {
+    "src": "/images/dishes/hyderabadi-mutton-biryani.webp",
+    "title": "Muglai Mutton biryani with whole spiced potato.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Muglai_Mutton_biryani_with_whole_spiced_potato.JPG",
+    "author": "Gupchup",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Made with spiced rice , mutton and potato",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "apricot delight": {
+    "src": "/images/dishes/apricot-delight.webp",
+    "title": "Khobai Ka Meetha with Custard.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Khobai_Ka_Meetha_with_Custard.JPG",
+    "author": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Apricot Dessert of Hyderabad Deccan",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "lemon fish tikka": {
+    "src": "/images/dishes/lemon-fish-tikka.webp",
+    "title": "Fish Tikka.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Fish_Tikka.JPG",
+    "author": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Fish Tikka",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "kadai chicken": {
+    "src": "/images/dishes/kadai-chicken.webp",
+    "title": "Kadai chicken by usamah.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Kadai_chicken_by_usamah.jpg",
+    "author": "Shiek md usamah",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "kadai chicken with coke",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  },
+  "gongura chicken": {
+    "src": "/images/dishes/gongura-chicken.webp",
+    "title": "BrownRice ChickenMeal-Home-AndhraPradesh-002.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:BrownRice_ChickenMeal-Home-AndhraPradesh-002.jpg",
+    "author": "M N Swarna",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "A complete meal for chicken lovers with healthy brown rice, spicy chettinad chicken and sorrel chicken.Chettinad chicken is very famous dish in South Indian region.Sorrel(Gongura) chicken fry is very tasty and it is due to the flavour of leaves which makes the dish very tasty making you crave for the next time.",
+    "changes": "Resized, converted to WebP; cropped to fit in the menu."
+  }
+}

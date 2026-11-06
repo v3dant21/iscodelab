@@ -15,6 +15,8 @@ class User(Base):
     role = Column(String, nullable=False, default='customer')
     outlet_id = Column(Integer, ForeignKey('outlets.id'))
     cod = Column(Boolean, nullable=False, default=False)
+    marketing_opt_in = Column(Boolean, nullable=False, default=False)
+    marketing_updated = Column(Float)
 
 
 class Session(Base):
@@ -34,6 +36,7 @@ class Outlet(Base):
     radius = Column(Float, nullable=False, default=8)
     opened = Column(Boolean, nullable=False, default=True)
     minimum = Column(Integer, nullable=False, default=20)
+    fssai = Column(String(14))
 
 
 class Dish(Base):
@@ -77,6 +80,10 @@ class Order(Base):
     accepted = Column(Float)
     minutes = Column(Integer)
     prediction = Column(String)
+    ai_minutes = Column(Integer)
+    original_promise = Column(Float)
+    late_alerted = Column(Float)
+    estimate_reason = Column(String)
 
 
 class Payment(Base):
@@ -85,3 +92,53 @@ class Payment(Base):
     order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)
     success = Column(Boolean, nullable=False)
     amount = Column(Integer, nullable=False)
+
+
+class GoogleIdentity(Base):
+    __tablename__ = 'google_identities'
+    subject = Column(String(255), primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), unique=True, nullable=False)
+
+
+class Invoice(Base):
+    __tablename__ = 'invoices'
+    order_id = Column(Integer, ForeignKey('orders.id'), primary_key=True)
+    document = Column(JSON, nullable=False)
+
+
+class Notification(Base):
+    __tablename__ = 'notifications'
+    id = Column(Integer, primary_key=True)
+    event_key = Column(String, unique=True, nullable=False)
+    order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    outlet_id = Column(Integer, ForeignKey('outlets.id'), nullable=False)
+    audience = Column(String, nullable=False)
+    message = Column(String, nullable=False)
+    channel = Column(String, nullable=False, default='in_app')
+    recipient = Column(String)
+    state = Column(String, nullable=False, default='pending')
+    attempts = Column(Integer, nullable=False, default=0)
+    next_attempt = Column(Float, nullable=False, default=0)
+    created = Column(Float, nullable=False)
+
+
+class EstimateChange(Base):
+    __tablename__ = 'estimate_changes'
+    id = Column(Integer, primary_key=True)
+    order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)
+    actor_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    before = Column(Integer, nullable=False)
+    after = Column(Integer, nullable=False)
+    reason = Column(String, nullable=False)
+    created = Column(Float, nullable=False)
+
+
+class ConsentRecord(Base):
+    __tablename__ = 'consent_records'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    purpose = Column(String, nullable=False)
+    granted = Column(Boolean, nullable=False)
+    notice_version = Column(String, nullable=False)
+    created = Column(Float, nullable=False)

@@ -1,0 +1,258 @@
+{
+  "veg biryani": {
+    "src": "/images/paneer-biryani.png",
+    "category": "Biryani"
+  },
+  "mushroom biryani": {
+    "src": "/images/paneer-biryani.png",
+    "category": "Biryani"
+  },
+  "kaju biryani": {
+    "src": "/images/paneer-biryani.png",
+    "category": "Biryani"
+  },
+  "egg biryani": {
+    "src": "/images/dumhouse-biryani.png",
+    "category": "Biryani"
+  },
+  "nizam chicken biryani": {
+    "src": "/images/dumhouse-biryani.png",
+    "category": "Biryani"
+  },
+  "pot biryani": {
+    "src": "/images/dumhouse-biryani.png",
+    "category": "Biryani"
+  },
+  "fry piece chicken biryani": {
+    "src": "/images/dumhouse-biryani.png",
+    "category": "Biryani"
+  },
+  "chicken handi biryani": {
+    "src": "/images/dumhouse-biryani.png",
+    "category": "Handi Biryani"
+  },
+  "mutton handi biryani": {
+    "src": "/images/mutton-biryani.png",
+    "category": "Handi Biryani"
+  },
+  "veg biryani family pack": {
+    "src": "/images/paneer-biryani.png",
+    "category": "Family Packs"
+  },
+  "paneer biryani family pack": {
+    "src": "/images/paneer-biryani.png",
+    "category": "Family Packs"
+  },
+  "chicken biryani family pack": {
+    "src": "/images/dumhouse-biryani.png",
+    "category": "Family Packs"
+  },
+  "mutton biryani family pack": {
+    "src": "/images/mutton-biryani.png",
+    "category": "Family Packs"
+  },
+  "prawns biryani family pack": {
+    "src": "/images/category-seafood.png",
+    "category": "Family Packs"
+  },
+  "lassi": {
+    "src": "/images/category-drinks.png",
+    "category": "Drinks"
+  },
+  "buttermilk": {
+    "src": "/images/category-drinks.png",
+    "category": "Drinks"
+  },
+  "gulab jamun": {
+    "src": "/images/category-sweets.png",
+    "category": "Sweets"
+  },
+  "apricot delight": {
+    "src": "/images/category-sweets.png",
+    "category": "Sweets"
+  },
+  "chicken tandoori half": {
+    "src": "/images/category-kebabs.png",
+    "category": "Chicken Kebabs"
+  },
+  "chicken tandoori full": {
+    "src": "/images/category-kebabs.png",
+    "category": "Chicken Kebabs"
+  },
+  "tangdi kebab half": {
+    "src": "/images/category-kebabs.png",
+    "category": "Chicken Kebabs"
+  },
+  "chicken reshmi kebab": {
+    "src": "/images/category-kebabs.png",
+    "category": "Chicken Kebabs"
+  },
+  "chicken garlic tikka": {
+    "src": "/images/category-kebabs.png",
+    "category": "Chicken Kebabs"
+  },
+  "achari chicken tikka": {
+    "src": "/images/category-kebabs.png",
+    "category": "Chicken Kebabs"
+  },
+  "mutton chop tikka kebab": {
+    "src": "/images/category-kebabs.png",
+    "category": "Mutton Kebabs"
+  },
+  "mutton seekh kebab": {
+    "src": "/images/category-kebabs.png",
+    "category": "Mutton Kebabs"
+  },
+  "fish tikka": {
+    "src": "/images/category-seafood.png",
+    "category": "Fish Kebabs"
+  },
+  "lemon fish tikka": {
+    "src": "/images/category-seafood.png",
+    "category": "Fish Kebabs"
+  },
+  "chapati": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "tandoori roti": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "plain naan": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "butter naan": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "garlic naan": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "lachha paratha": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "paneer kulcha": {
+    "src": "/images/category-breads.png",
+    "category": "Breads"
+  },
+  "tomato soup": {
+    "src": "/images/category-drinks.png",
+    "category": "Veg Soups"
+  },
+  "lemon coriander soup": {
+    "src": "/images/category-drinks.png",
+    "category": "Veg Soups"
+  },
+  "gobi 65": {
+    "src": "/images/category-veg.png",
+    "category": "Veg Starters"
+  },
+  "veg manchurian": {
+    "src": "/images/category-veg.png",
+    "category": "Veg Starters"
+  },
+  "paneer 65": {
+    "src": "/images/category-veg.png",
+    "category": "Veg Starters"
+  },
+  "chilli paneer": {
+    "src": "/images/category-veg.png",
+    "category": "Veg Starters"
+  },
+  "babycorn chilli": {
+    "src": "/images/category-veg.png",
+    "category": "Veg Starters"
+  },
+  "apollo fish": {
+    "src": "/images/category-seafood.png",
+    "category": "Fish Starters"
+  },
+  "prawns 65": {
+    "src": "/images/category-seafood.png",
+    "category": "Fish Starters"
+  },
+  "veg malai kofta": {
+    "src": "/images/category-veg-curries.png",
+    "category": "Veg Curries"
+  },
+  "paneer butter masala": {
+    "src": "/images/category-veg-curries.png",
+    "category": "Veg Curries"
+  },
+  "palak paneer": {
+    "src": "/images/category-veg-curries.png",
+    "category": "Veg Curries"
+  },
+  "kadai paneer": {
+    "src": "/images/category-veg-curries.png",
+    "category": "Veg Curries"
+  },
+  "mushroom curry": {
+    "src": "/images/category-veg-curries.png",
+    "category": "Veg Curries"
+  },
+  "dal fry": {
+    "src": "/images/category-veg-curries.png",
+    "category": "Veg Curries"
+  },
+  "andhra chicken curry (bone-in)": {
+    "src": "/images/category-curries.png",
+    "category": "Chicken Curries"
+  },
+  "andhra chicken curry (boneless)": {
+    "src": "/images/category-curries.png",
+    "category": "Chicken Curries"
+  },
+  "kadai chicken": {
+    "src": "/images/category-curries.png",
+    "category": "Chicken Curries"
+  },
+  "butter chicken": {
+    "src": "/images/category-curries.png",
+    "category": "Chicken Curries"
+  },
+  "gongura chicken": {
+    "src": "/images/category-curries.png",
+    "category": "Chicken Curries"
+  },
+  "mutton pulusu": {
+    "src": "/images/category-curries.png",
+    "category": "Mutton Curries"
+  },
+  "gongura mutton": {
+    "src": "/images/category-curries.png",
+    "category": "Mutton Curries"
+  },
+  "jeera rice": {
+    "src": "/images/category-rice.png",
+    "category": "Rice"
+  },
+  "veg fried rice": {
+    "src": "/images/category-rice.png",
+    "category": "Rice"
+  },
+  "curd rice": {
+    "src": "/images/category-rice.png",
+    "category": "Rice"
+  },
+  "egg fried rice": {
+    "src": "/images/category-rice.png",
+    "category": "Rice"
+  },
+  "chicken fried rice": {
+    "src": "/images/category-rice.png",
+    "category": "Rice"
+  },
+  "egg curry": {
+    "src": "/images/category-eggs.png",
+    "category": "Egg Dishes"
+  },
+  "egg omelette": {
+    "src": "/images/category-eggs.png",
+    "category": "Egg Dishes"
+  }
+}

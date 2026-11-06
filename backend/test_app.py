@@ -207,3 +207,119 @@ def test_concurrent_checkout_and_payment(clients):
         responses = list(executor.map(lambda _: pay(clients, order, event=event), range(2)))
     assert all(response.status_code == 200 for response in responses)
     assert responses[0].json()['version'] == responses[1].json()['version'] == 1
+
+
+def test_meal_specific_addons(clients):
+    for dish_id in (4, 5, 6):
+        response = clients['customer'].post('/checkout/quote', json=payload(lines=[{'dish_id': dish_id, 'quantity': 1, 'portion': 'regular', 'addon': True}]))
+        assert response.status_code == 400
+
+
+def test_google_setup_and_identity(clients, monkeypatch):
+    guest = clients['guest']
+    monkeypatch.delenv('GOOGLE_CLIENT_ID', raising=False)
+    assert guest.get('/auth/google/config').json()['client_id'] == ''
+    monkeypatch.setenv('GOOGLE_CLIENT_ID', 'test-client')
+    config = guest.get('/auth/google/config').json()
+    body = {'credential': 'signed-token', 'nonce': config['nonce']}
+    claims = {'sub': 'google-123', 'email': 'new@gmail.com', 'email_verified': True, 'nonce': config['nonce']}
+    monkeypatch.setattr(main, 'verify_google_token', lambda token, audience: claims)
+    assert guest.post('/auth/google', json=body).status_code == 403
+    headers = {'origin': main.origin}
+    wrong = body | {'nonce': 'wrong-nonce-long-enough'}
+    assert guest.post('/auth/google', json=wrong, headers=headers).status_code == 403
+    response = guest.post('/auth/google', json=body, headers=headers)
+    assert response.status_code == 200
+    user_id = response.json()['id']
+    assert response.json()['role'] == 'customer'
+    assert response.json()['cod'] is False
+    assert guest.get('/auth/me').json()['id'] == user_id
+    assert guest.post('/auth/google', json=body, headers=headers).status_code == 403
+    config = guest.get('/auth/google/config').json()
+    claims['nonce'] = config['nonce']
+    body['nonce'] = config['nonce']
+    assert guest.post('/auth/google', json=body, headers=headers).json()['id'] == user_id
+
+
+def test_google_rejects_unverified_and_existing_accounts(clients, monkeypatch):
+    monkeypatch.setenv('GOOGLE_CLIENT_ID', 'test-client')
+    guest = clients['guest']
+    nonce = guest.get('/auth/google/config').json()['nonce']
+    body = {'credential': 'signed-token', 'nonce': nonce}
+    claims = {'sub': 'another-sub', 'email': 'admin@demo.test', 'email_verified': True, 'nonce': nonce}
+    monkeypatch.setattr(main, 'verify_google_token', lambda token, audience: claims)
+    headers = {'origin': main.origin}
+    assert guest.post('/auth/google', json=body, headers=headers).status_code == 409
+    claims['email_verified'] = False
+    assert guest.post('/auth/google', json=body, headers=headers).status_code == 401
+    claims['nonce'] = 'incorrect'
+    assert guest.post('/auth/google', json=body, headers=headers).status_code == 401
+
+
+def test_reference_catalog_import_is_idempotent_and_preserves_stock(clients):
+    from reference_menu import extend_menu
+    from models import Assignment, Dish
+    guest = clients['guest']
+    catalog = guest.get('/catalog').json()
+    assert len(catalog) == 70
+    assert sum(dish['veg'] for dish in catalog) == 35
+    assert len({dish['name'] for dish in catalog}) == 70
+    naan = next(dish for dish in catalog if dish['name'] == 'Garlic Naan')
+    assert naan['price'] == 7900 and naan['veg']
+    handi = next(dish for dish in catalog if dish['name'] == 'Chicken Handi Biryani')
+    assert handi['options'] == {'handi (2 people)': 0}
+    with clients['database'].begin() as database:
+        assignment = database.get(Assignment, (1, naan['id']))
+        assignment.available = False
+        assignment.price = 8500
+    with clients['database'].begin() as database:
+        assert extend_menu(database) == 0
+        assignment = database.get(Assignment, (1, naan['id']))
+        assert assignment.available is False and assignment.price == 8500
+    assert any(item['id'] == naan['id'] for item in guest.get('/catalog').json())
+    assert not any(item['id'] == naan['id'] for item in guest.get('/outlets/1/menu').json())
+
+
+def test_demo_invoice_access_snapshot_and_totals(clients):
+    from models import Invoice
+    order = create(clients, address='<script>alert(1)</script> flat')
+    path = f"/orders/{order['id']}/invoice"
+    assert clients['customer'].post(path).status_code == 409
+    assert pay(clients, order).status_code == 200
+    response = clients['customer'].get(path)
+    assert response.status_code == 200
+    assert 'NOT VALID FOR TAX PURPOSES' in response.text
+    assert '<script>alert(1)</script>' not in response.text
+    assert '&lt;script&gt;' in response.text
+    assert response.headers['cache-control'] == 'private, no-store'
+    assert clients['guest'].get(path).status_code == 401
+    assert clients['kondapur'].get(path).status_code == 404
+    assert clients['kondapur'].post(path).status_code == 404
+    assert clients['customer'].post(path).status_code == 200
+    assert clients['customer'].get(path).text == response.text
+    assert 'attachment' in clients['customer'].get(path+'?download=true').headers['content-disposition']
+    with clients['database']() as session:
+        doc = session.get(Invoice, order['id']).document
+        assert doc['total'] == doc['taxable'] + doc['cgst'] + doc['sgst'] + doc['rounding']
+        assert doc['total'] == sum(x['gross'] for x in doc['lines'])
+        assert doc['paid'] == doc['total']
+        saved = session.get(Order, order['id'])
+        saved.lines = []
+        session.commit()
+    assert clients['customer'].get(path).text == response.text
+
+
+def test_demo_invoice_cod_deposit_and_rounding(clients):
+    from models import Invoice
+    from billing import snapshot
+    from types import SimpleNamespace
+    order = create(clients, method='cod', lines=[{'dish_id': 1, 'quantity': 6, 'portion': 'regular', 'addon': False}])
+    assert pay(clients, order).status_code == 200
+    with clients['database']() as session:
+        doc = session.get(Invoice, order['id']).document
+        assert doc['paid'] == order['due']
+        assert doc['total'] - doc['paid'] > 0
+    dummy = SimpleNamespace(id=1, accepted=1, request={'address':'Example'}, lines=[{'name':'Example', 'price':100, 'quantity':1, 'portion':'regular','addon':False}], total=100, payment='COD_DUE', due=100)
+    doc = snapshot(dummy, SimpleNamespace(email='test@example.test'), SimpleNamespace(name='Test'))
+    assert doc['taxable'] + doc['cgst'] + doc['sgst'] + doc['rounding'] == 100
+    assert doc['paid'] == 0
