@@ -36,3 +36,15 @@ A fresh database requires deliberate outlet, menu and staff provisioning before 
 Use a separate staging database for preview deployments. Verify sign-in, category and dish pages, stock changes, quote/checkout, order tracking, saved invoices, manager overrides, and delayed-order notifications over HTTPS. Verify the final APP_ORIGIN to prevent “Origin not allowed”. Keep preview and production secrets separate.
 
 Current release blockers for accepting real orders: merchant/payment integration, verified seller/GST and outlet licence details, approved allergen data, production staff setup and privacy/operator contact details. A hosted development preview can be shared while these are completed, but it must retain its test-payment and sample-invoice disclosures.
+
+## Configured Vercel projects
+
+- Website: `iscodelab`, root `frontend`, Node.js 22, https://iscodelab.vercel.app.
+- API: `iscodelab-api`, root `backend`, Python 3.13, https://iscodelab-api.vercel.app.
+- Database: Neon `iscodelab-db`, free plan, Singapore; credentials remain in Vercel environment settings.
+- Worker: `backend/vercel.json` declares one Singapore notification daemon using `Dockerfile.worker`. This bypasses the local Dockerfile's automatic seed command.
+- Both projects connect to the repository's main branch for automatic deployments.
+
+This is a hosted development deployment with mock payments enabled, not approval to accept real payments. The sample menu is loaded; known demo account passwords are disabled. New customer accounts can use email registration. Google login still needs GOOGLE_CLIENT_ID and the exact website origin authorized in Google Cloud. Phone OTP is not enabled.
+
+After changing database schema, apply migrations before promoting new code. The initial hosted schema was migrated explicitly; builds do not mutate the database automatically. Preview environments must receive their own database and exact allowed origin before they can be tested.
