@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "fastapi",
+  "regions": ["sin1"],
+  "daemons": {
+    "notifications": {
+      "root": ".",
+      "entrypoint": "Dockerfile.worker",
+      "instances": {"sin1": 1}
+    }
+  }
+}

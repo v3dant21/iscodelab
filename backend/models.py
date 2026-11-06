@@ -2,7 +2,11 @@ import os
 from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, JSON, String, UniqueConstraint, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-engine = create_engine(os.environ.get('DATABASE_URL', 'postgresql+psycopg://dumhouse:local-demo-only@localhost:55432/dumhouse'), pool_pre_ping=True)
+database_url = os.environ.get('DATABASE_URL', 'postgresql+psycopg://dumhouse:local-demo-only@localhost:55432/dumhouse')
+# Hosted providers return standard PostgreSQL URLs; this app uses psycopg 3.
+if database_url.startswith(('postgres://', 'postgresql://')):
+    database_url = 'postgresql+psycopg://' + database_url.split('://', 1)[1]
+engine = create_engine(database_url, pool_pre_ping=True)
 SessionLocal = sessionmaker(engine)
 Base = declarative_base()
 
