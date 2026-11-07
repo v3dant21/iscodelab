@@ -100,8 +100,8 @@ test('clickable cards and bag customizations persist with updated totals', async
   const card = page.locator('.dish').filter({ has: page.getByRole('heading', { name: 'Dum chicken biryani', exact: true }) });
   await card.locator('.dish-photo img').click();
   await expect(page).toHaveURL(/\/menu\/dum-chicken-biryani$/);
-  await page.getByLabel('Portion for Dum chicken biryani').selectOption('large');
-  await page.getByRole('checkbox', { name: /Extra raita/ }).check();
+  await page.locator('.dish-detail').getByLabel('Portion for Dum chicken biryani').selectOption('large');
+  await page.locator('.dish-detail').getByRole('checkbox', { name: /Extra raita/ }).check();
   await page.getByRole('button', { name: 'Add to bag · ₹449' }).click();
   await page.getByRole('button', { name: 'Your bag · 1' }).click();
   const line = page.locator('.cart-line').first();
