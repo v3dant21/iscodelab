@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
+if [ ! -f "$project_root/.env.personal" ]; then
+  "$project_root/.venv/bin/python" "$project_root/scripts/create-personal-data-keys.py" "$project_root/.env.personal"
+fi
+set -a
+source "$project_root/.env.personal"
+set +a
 cd "$project_root/backend"
 ../.venv/bin/python -m alembic upgrade head
 ../.venv/bin/python seed.py

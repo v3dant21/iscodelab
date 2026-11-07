@@ -14,6 +14,9 @@ from models import Base, Order, Outlet
 
 @pytest.fixture()
 def clients(tmp_path, monkeypatch):
+    from cryptography.fernet import Fernet
+    monkeypatch.setenv('PII_ENCRYPTION_KEYS',Fernet.generate_key().decode())
+    monkeypatch.setenv('PII_LOOKUP_KEY','test-only-separate-lookup-key-123456789')
     url = os.environ.get('TEST_DATABASE_URL', f'sqlite:///{tmp_path}/test.db')
     if not url.startswith('sqlite:') and not (make_url(url).database or '').endswith('_test'):
         raise ValueError('Integration tests require a database name ending in _test.')
@@ -130,8 +133,8 @@ def test_roles_csrf_and_registration(clients):
     client.headers.pop('x-csrf-token')
     assert client.post('/orders', json=payload()).status_code == 403
     guest = clients['guest']
-    assert guest.post('/auth/register', json={'email': 'new@example.test', 'password': 'DemoPass123!', 'role': 'admin'}).status_code == 422
-    response = guest.post('/auth/register', json={'email': 'new@example.test', 'password': 'DemoPass123!'})
+    assert guest.post('/auth/register', json={'email': 'new@example.test', 'password': 'DemoPass123!', 'name':'New Customer', 'phone':'+919876543210', 'role': 'admin'}).status_code == 422
+    response = guest.post('/auth/register', json={'email': 'new@example.test', 'password': 'DemoPass123!', 'name':'New Customer', 'phone':'+919876543210'})
     assert response.json()['role'] == 'customer'
     guest.headers['x-csrf-token'] = guest.cookies['csrf']
     assert guest.post('/orders', json=payload(method='cod')).status_code == 403
@@ -142,7 +145,7 @@ def test_roles_csrf_and_registration(clients):
 def test_order_owner_and_kitchen_isolation(clients):
     order = pay(clients, create(clients)).json()
     guest = clients['guest']
-    guest.post('/auth/register', json={'email': 'other@example.test', 'password': 'DemoPass123!'})
+    guest.post('/auth/register', json={'email': 'other@example.test', 'password': 'DemoPass123!', 'name':'Other Customer', 'phone':'+919876543211'})
     guest.headers['x-csrf-token'] = guest.cookies['csrf']
     assert guest.get(f"/orders/{order['id']}").status_code == 404
     assert guest.post(f"/payments/mock/{order['id']}/complete", json={'event': str(uuid.uuid4()), 'success': True}).status_code == 404

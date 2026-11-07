@@ -28,7 +28,7 @@ def seed():
         if os.environ.get('SEED_DEMO_USERS', 'true') == 'true':
             hashed = PasswordHasher().hash(os.environ.get('DEMO_PASSWORD', 'DemoPass123!'))
             for email, role, outlet, cod in [('customer@demo.test', 'customer', None, True), ('kondapur@demo.test', 'kitchen', 1, False), ('gachibowli@demo.test', 'kitchen', 2, False), ('admin@demo.test', 'admin', None, False)]:
-                database.add(User(email=email, password=hashed, role=role, outlet_id=outlet, cod=cod))
+                database.add(User(email=email, password=hashed, role=role, outlet_id=outlet, cod=cod, name='Demo Customer' if role=='customer' else None, phone='+919000000000' if role=='customer' else None))
         database.flush()
         sync_sequences(database)
         from reference_menu import extend_menu

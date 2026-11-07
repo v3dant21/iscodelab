@@ -8,11 +8,13 @@ import { Icon } from './ui-icon';
 export function OrderHistory({ orders, busy, pay, focusedId, confirmed = false }: { focusedId?:number; confirmed?:boolean; orders: Order[]; busy: boolean; pay: (order: Order, success: boolean) => void }) {
   const [notices,setNotices]=useState<{id:number;order_id:number;message:string;channel:string;state:string}[]>([]);
   useEffect(()=>{let active=true;const load=()=>api<typeof notices>('/notifications').then(items=>active && setNotices(items)).catch(()=>{});load();const timer=setInterval(load,15000);return()=>{active=false;clearInterval(timer);};},[]);
+  const [emailState,setEmailState]=useState<{configured:boolean;verified:boolean;items:{order_id:number;state:string}[]} | null>(null);
+  useEffect(()=>{let active=true;const load=()=>api<NonNullable<typeof emailState>>('/account/email-status').then(result=>active && setEmailState(result)).catch(()=>{});load();const timer=setInterval(load,15000);return()=>{active=false;clearInterval(timer);};},[]);
   const [billBusy, setBillBusy] = useState<number | null>(null);
   const [billError, setBillError] = useState('');
   async function openBill(order: Order, download = false) {
     setBillBusy(order.id); setBillError('');
-    try { const result = await api<{url:string}>(`/orders/${order.id}/invoice`, 'POST'); window.location.assign(result.url + (download ? '?download=true' : '')); }
+    try { const result = await api<{url:string}>(`/orders/${order.id}/invoice`, 'POST'); window.location.assign(result.url + (download ? '?format=pdf' : '')); }
     catch (error) { setBillError(error instanceof Error ? error.message : 'Could not open bill.'); }
     finally { setBillBusy(null); }
   }
@@ -36,7 +38,7 @@ export function OrderHistory({ orders, busy, pay, focusedId, confirmed = false }
       {order.status !== 'PENDING_PAYMENT' && <ol className="timeline">{stages.map((stage,index) => <li className={index <= stages.indexOf(order.status) ? 'done' : ''} key={stage}><span className="stage-dot">{index <= stages.indexOf(order.status) && <Icon name="check" size={12} />}</span><span>{stage === 'NEW' ? 'Order confirmed' : stage === 'PREPARING' ? 'Preparing your food' : stage === 'READY' ? 'Ready for pickup' : 'Handed to delivery partner'}{stage === order.status && <small>Latest kitchen update</small>}</span></li>)}</ol>}
       {order.estimate_reason && <p className="warning">Updated by the manager: {order.estimate_reason}</p>}
       {notices.filter(n=>n.order_id===order.id).slice(0,5).map(n=><p key={n.id} className="order-notice">{n.message}{n.channel !== 'in_app' && <small>{n.channel.toUpperCase()}: {n.state === 'submitted' ? 'Submitted to messaging service' : n.state === 'failed' ? 'Could not send — update shown here' : 'Waiting for messaging service'}</small>}</p>)}
-      <p>Payment: {order.payment.replaceAll('_', ' ')}</p>{order.payment === 'DEPOSIT_PAID' && <small>{money(order.total - order.due)} due on handoff</small>}
+      <p>Payment: {order.payment.replaceAll('_', ' ')}</p>{order.status !== 'PENDING_PAYMENT' && emailState && <p className="email-status">{!emailState.configured ? 'Email delivery is not connected yet. Track your order and download its PDF here.' : !emailState.verified ? 'Verify your email from your account to receive the tracking link and invoice PDF.' : emailState.items.find(item=>item.order_id===order.id)?.state === 'submitted' ? 'Tracking link and invoice PDF submitted to the email service. Check your inbox or spam folder.' : emailState.items.find(item=>item.order_id===order.id)?.state === 'failed' ? 'Email could not be sent. Your tracking and invoice remain available here.' : 'Tracking link and invoice PDF queued for email.'}</p>}{order.payment === 'DEPOSIT_PAID' && <small>{money(order.total - order.due)} due on handoff</small>}
       {order.status === 'PENDING_PAYMENT' && <div className="payment"><p>Test payment · {money(order.due)}<small>No actual money will be charged.</small></p><button disabled={busy} onClick={() => pay(order,true)}>Simulate successful payment <Icon name="arrow" size={18} /></button><button className="quiet" disabled={busy} onClick={() => pay(order,false)}>Simulate failure</button></div>}
       {order.status !== 'PENDING_PAYMENT' && <div className="bill-actions"><button className="secondary" disabled={billBusy !== null} onClick={() => openBill(order)}>{billBusy === order.id ? 'Preparing bill…' : 'View / print demo bill'}</button><button className="quiet" disabled={billBusy !== null} onClick={() => openBill(order, true)}>Download bill</button><small>Sample tax invoice · not valid for tax purposes</small></div>}
       {order.status === 'HANDED_OFF' && <small>Kitchen handoff recorded. Delivery completion is not tracked in this demo.</small>}

@@ -24,7 +24,7 @@ def snapshot(order, customer, outlet):
     lines = tax_breakdown(order.lines)['lines']
     return {'number': f'DEMO-{order.id:010d}', 'issued': order.accepted,
             'seller': 'DumHouse Sample Restaurant (fictional)', 'seller_address': 'Sample billing address, Hyderabad, Telangana (fictional)',
-            'gstin': 'NOT REGISTERED — SAMPLE ONLY', 'customer': customer.email, 'address': order.request['address'],
+            'gstin': 'NOT REGISTERED — SAMPLE ONLY', 'customer': (getattr(order,'contact',None) or {}).get('email',customer.email), 'customer_name': (getattr(order,'contact',None) or {}).get('name',getattr(customer,'name','') or ''), 'address': order.request['address'],
             'outlet': outlet.name, 'lines': lines, 'total': order.total,
             'taxable': sum(x['taxable'] for x in lines), 'cgst': sum(x['cgst'] for x in lines),
             'sgst': sum(x['sgst'] for x in lines), 'rounding': sum(x['rounding'] for x in lines),
@@ -47,3 +47,46 @@ def render_bill(bill):
 <div class="scroll"><table><thead><tr><th>Item / customisation</th><th>Qty</th><th>Unit price</th><th>Taxable</th><th>CGST 2.5%</th><th>SGST 2.5%</th><th>Total</th></tr></thead><tbody>{rows}</tbody></table></div>
 <div class="totals"><p><span>Taxable amount</span><strong>{money(bill['taxable'])}</strong></p><p><span>CGST · 2.5%</span><span>{money(bill['cgst'])}</span></p><p><span>SGST · 2.5%</span><span>{money(bill['sgst'])}</span></p><p><span>Rounding adjustment</span><span>{money(bill['rounding'])}</span></p><p><strong>Grand total</strong><strong>{money(bill['total'])}</strong></p><p><span>Simulated amount paid</span><span>{money(bill['paid'])}</span></p><p><span>Demo balance due</span><strong>{money(bill['total']-bill['paid'])}</strong></p></div>
 <p>Payment state at issue: {e(bill['payment'].replace('_',' '))}. This is a saved billing snapshot.</p><hr><small>Digitally generated sample only. Not digitally signed, not a GST portal e-invoice, and not eligible for input tax credit. A genuine invoice requires verified supplier and tax details and the applicable production billing workflow.</small></main></body></html>'''
+
+
+def render_pdf(bill):
+    """Generate a real PDF attachment from the immutable encrypted invoice snapshot."""
+    from io import BytesIO
+    from pathlib import Path
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+    if 'DumHouse' not in pdfmetrics.getRegisteredFontNames():
+        pdfmetrics.registerFont(TTFont('DumHouse', str(Path(__file__).parent / 'fonts' / 'DejaVuSans.ttf')))
+    styles = getSampleStyleSheet()
+    normal = ParagraphStyle('Invoice', parent=styles['Normal'], fontName='DumHouse', fontSize=9, leading=14, spaceAfter=6)
+    title = ParagraphStyle('InvoiceTitle', parent=normal, fontSize=19, leading=25, spaceAfter=12)
+    p = lambda value: Paragraph(escape(str(value)), normal)
+    money = lambda value: f'₹{value/100:,.2f}'
+    out = BytesIO()
+    doc = SimpleDocTemplate(out, pagesize=A4, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=42, title=bill['number'], invariant=1)
+    items = [Paragraph('DumHouse · Sample tax invoice', title),
+             p('DEMO — NOT VALID FOR TAX PURPOSES. Fictional supplier details; test payments only.'),
+             p(f"{bill['number']} · Order #{bill['order_id']}"),
+             p(datetime.fromtimestamp(bill['issued'], ZoneInfo('Asia/Kolkata')).strftime('%d %b %Y, %I:%M %p IST')),
+             p(bill['seller']), p(bill['seller_address']), p('GSTIN: '+bill['gstin']),
+             p('Kitchen: '+bill['outlet']), Spacer(1,10),
+             p('Bill to: '+bill.get('customer_name', '')+' · '+bill['customer']), p(bill['address']), Spacer(1,12)]
+    rows = [[p(x) for x in ['Item / portion', 'Qty', 'Unit price', 'Total (INR)']]]
+    for line in bill['lines']:
+        rows.append([p(line['name']+' · '+line['portion']+(' · Extra raita' if line['addon'] else '')),p(line['quantity']),p(money(line['price'])),p(money(line['gross']))])
+    table = Table(rows, colWidths=[280,40,90,113], repeatRows=1, hAlign='LEFT')
+    table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#f6eee5')),('VALIGN',(0,0),(-1,-1),'TOP'),('LINEBELOW',(0,0),(-1,-1),0.4,colors.HexColor('#e8dacf')),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),7)]))
+    items += [table, Spacer(1,14)]
+    for label, value in [('Taxable amount',bill['taxable']),('CGST 2.5%',bill['cgst']),('SGST 2.5%',bill['sgst']),('Rounding',bill['rounding']),('Grand total',bill['total']),('Simulated amount paid',bill['paid']),('Balance due',bill['total']-bill['paid'])]:
+        items.append(p(f'{label}: {money(value)}'))
+    items += [p('Prices include illustrative 5% GST. Payment state at issue: '+bill['payment']),p('Digitally generated sample, not digitally signed or a GST portal e-invoice. Not eligible for input tax credit.')]
+    def footer(canvas, document):
+        canvas.setFont('DumHouse',8); canvas.drawString(36,22,f"{bill['number']} · Page {document.page}")
+    from functools import partial
+    from reportlab.pdfgen.canvas import Canvas
+    doc.build(items,onFirstPage=footer,onLaterPages=footer,canvasmaker=partial(Canvas,invariant=1))
+    return out.getvalue()

@@ -4,6 +4,7 @@ import math
 import os
 import secrets
 import time
+from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Literal
 from zoneinfo import ZoneInfo
@@ -11,18 +12,34 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerificationError
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
-from billing import snapshot, render_bill, tax_breakdown
+from billing import snapshot, render_bill, render_pdf, tax_breakdown
+from personal_data import lookup, cipher
+from email_delivery import verification, order_email, configured as email_configured
 from notifications import enqueue
-from models import Notification, EstimateChange, ConsentRecord, Invoice, GoogleIdentity, Assignment, Dish, Order, Outlet, Payment, Session, SessionLocal, User
+from models import EmailDelivery, EmailVerification, Notification, EstimateChange, ConsentRecord, Invoice, GoogleIdentity, Assignment, Dish, Order, Outlet, Payment, Session, SessionLocal, User
 from prediction import predict
 
-app = FastAPI(title='DumHouse API')
+@asynccontextmanager
+async def lifespan(app):
+    cipher()
+    lookup('configuration-check')
+    yield
+
+app = FastAPI(title='DumHouse API', lifespan=lifespan)
 origin = os.environ.get('APP_ORIGIN', 'http://localhost:3000')
 app.add_middleware(CORSMiddleware, allow_origins=[origin], allow_credentials=True, allow_methods=['GET', 'POST', 'PATCH'], allow_headers=['Content-Type', 'X-CSRF-Token'])
 hasher = PasswordHasher()
+
+@app.middleware('http')
+async def private_responses(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith(('/auth/', '/account/', '/orders', '/kitchen/', '/manager/')):
+        response.headers['Cache-Control'] = 'private, no-store'
+    return response
+
 
 
 def fail(detail, code=400):
@@ -58,13 +75,29 @@ def role(user, expected):
 
 
 def profile(user):
-    return {'id': user.id, 'email': user.email, 'role': user.role, 'outlet_id': user.outlet_id, 'cod': user.cod, 'marketing_opt_in': user.marketing_opt_in}
+    return {'id': user.id, 'email': user.email, 'role': user.role, 'outlet_id': user.outlet_id, 'cod': user.cod, 'marketing_opt_in': user.marketing_opt_in, 'name': user.name or '', 'phone': user.phone or '', 'profile_complete': bool(user.name and user.phone), 'email_verified': user.email_verified, 'email_delivery_configured': email_configured()}
 
 
 class Credentials(BaseModel):
     model_config = ConfigDict(extra='forbid')
     email: str = Field(min_length=5, max_length=254, pattern=r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
     password: str = Field(min_length=10, max_length=128)
+
+
+class ContactDetails(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    name: str = Field(min_length=2, max_length=100)
+    phone: str = Field(pattern=r'^\+[1-9][0-9]{7,14}$', max_length=16)
+
+    @field_validator('name')
+    @classmethod
+    def clean_name(cls, value):
+        value = value.strip()
+        if len(value) < 2 or any(ord(c)<32 for c in value): raise ValueError('Enter your name')
+        return value
+
+class Registration(Credentials, ContactDetails):
+    pass
 
 
 def login_session(user, response, connection):
@@ -78,16 +111,17 @@ def login_session(user, response, connection):
 
 
 @app.post('/auth/register')
-def register(body: Credentials, request: Request, response: Response, connection=Depends(database)):
+def register(body: Registration, request: Request, response: Response, connection=Depends(database)):
     if request.headers.get('origin') not in (None, origin):
         fail('Origin not allowed.', 403)
-    user = User(email=body.email.lower(), password=hasher.hash(body.password), role='customer')
+    user = User(email=body.email.lower(), password=hasher.hash(body.password), role='customer', name=body.name, phone=body.phone)
     connection.add(user)
     try:
         connection.flush()
     except IntegrityError:
         connection.rollback()
         fail('This email is already registered.', 409)
+    verification(connection, user)
     return login_session(user, response, connection)
 
 
@@ -95,7 +129,7 @@ def register(body: Credentials, request: Request, response: Response, connection
 def login(body: Credentials, request: Request, response: Response, connection=Depends(database)):
     if request.headers.get('origin') not in (None, origin):
         fail('Origin not allowed.', 403)
-    user = connection.scalar(select(User).where(User.email == body.email.lower()))
+    user = connection.scalar(select(User).where(User.email_hash == lookup(body.email)))
     try:
         if not user or not hasher.verify(user.password, body.password):
             fail('Email or password is incorrect.', 401)
@@ -152,9 +186,9 @@ def google_login(body: GoogleCredentials, request: Request, response: Response, 
     user = connection.get(User, identity.user_id) if identity else None
     if not user:
         email = claims['email'].lower()
-        if connection.scalar(select(User).where(User.email == email)):
+        if connection.scalar(select(User).where(User.email_hash == lookup(email))):
             fail('This email already has an account. Sign in with your existing password.', 409)
-        user = User(email=email, password=hasher.hash(secrets.token_urlsafe(48)), role='customer', cod=False)
+        user = User(email=email, password=hasher.hash(secrets.token_urlsafe(48)), role='customer', cod=False, email_verified=True, name=str(claims.get('name',''))[:100])
         connection.add(user)
         try:
             connection.flush()
@@ -171,6 +205,44 @@ def google_login(body: GoogleCredentials, request: Request, response: Response, 
 @app.get('/auth/me')
 def me(user=Depends(current_user)):
     return profile(user)
+
+
+@app.patch('/account/profile')
+def update_profile(body: ContactDetails, user=Depends(current_user), connection=Depends(database)):
+    role(user, 'customer')
+    user.name, user.phone = body.name, body.phone
+    connection.commit()
+    return profile(user)
+
+@app.post('/auth/email/request-verification')
+def request_verification(user=Depends(current_user), connection=Depends(database)):
+    role(user, 'customer')
+    connection.execute(select(User.id).where(User.id==user.id).with_for_update())
+    if not user.email_verified: verification(connection,user)
+    connection.commit()
+    return {'configured':email_configured(), 'verified':user.email_verified}
+
+class VerifyEmail(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    token: str = Field(min_length=32, max_length=100)
+
+@app.post('/auth/email/verify')
+def verify_email(body: VerifyEmail, request: Request, connection=Depends(database)):
+    if request.headers.get('origin') != origin: fail('Origin not allowed.',403)
+    record=connection.get(EmailVerification,digest(body.token),with_for_update=True)
+    if not record or record.used or record.expires < time.time(): fail('This verification link expired or was already used. Request another from your account.',400)
+    user=connection.get(User,record.user_id)
+    user.email_verified=True
+    record.used=True
+    connection.execute(update(EmailDelivery).where(EmailDelivery.user_id==user.id,EmailDelivery.state=='awaiting_verification').values(state='pending'))
+    connection.commit()
+    return {'verified':True}
+
+@app.get('/account/email-status')
+def email_status(user=Depends(current_user), connection=Depends(database)):
+    role(user,'customer')
+    rows=connection.scalars(select(EmailDelivery).where(EmailDelivery.user_id==user.id,EmailDelivery.kind=='order').order_by(EmailDelivery.id.desc()).limit(100))
+    return {'configured':email_configured(),'verified':user.email_verified,'items':[{'order_id':r.order_id,'state':r.state} for r in rows]}
 
 
 @app.post('/auth/logout')
@@ -313,18 +385,20 @@ def accept(order, connection):
     enqueue(connection, order, 'confirmed', f'Order #{order.id} is confirmed. Preparation promise: {order.minutes} minutes from confirmation.')
     customer = connection.get(User, order.user_id)
     connection.add(Invoice(order_id=order.id, document=snapshot(order, customer, outlet)))
+    order_email(connection, order, customer)
 
 
 def order_data(order):
-    return {field: getattr(order, field) for field in ('id', 'outlet_id', 'lines', 'total', 'due', 'payment', 'status', 'version', 'created', 'accepted', 'minutes', 'prediction', 'ai_minutes', 'original_promise', 'estimate_reason')} | {'address': order.request['address'], 'late': bool(order.late_alerted or (order.original_promise and order.status in ('NEW','PREPARING') and time.time() >= order.original_promise + 600))}
+    return {field: getattr(order, field) for field in ('id', 'outlet_id', 'lines', 'total', 'due', 'payment', 'status', 'version', 'created', 'accepted', 'minutes', 'prediction', 'ai_minutes', 'original_promise', 'estimate_reason')} | {'address': order.request['address'], 'contact': order.contact or {}, 'late': bool(order.late_alerted or (order.original_promise and order.status in ('NEW','PREPARING') and time.time() >= order.original_promise + 600))}
 
 
 @app.post('/orders')
 def create_order(body: Checkout, user=Depends(current_user), connection=Depends(database)):
     role(user, 'customer')
     connection.execute(select(User.id).where(User.id == user.id).with_for_update())
+    if not user.name or not user.phone: fail('Complete your name and contact phone number before ordering.',409)
     payload = body.model_dump()
-    fingerprint = digest(json.dumps(payload, sort_keys=True))
+    fingerprint = lookup(json.dumps(payload, sort_keys=True), 'checkout')
     existing = connection.scalar(select(Order).where(Order.user_id == user.id, Order.key == body.key))
     if existing:
         if existing.digest != fingerprint:
@@ -335,7 +409,7 @@ def create_order(body: Checkout, user=Depends(current_user), connection=Depends(
     quoted = quote(body, connection)
     if (body.expected_total is not None and body.expected_total != quoted['total']) or (body.expected_outlet is not None and body.expected_outlet != quoted['outlet_id']):
         fail('Price or kitchen changed. Review your order again before confirming.',409)
-    order = Order(user_id=user.id, outlet_id=quoted['outlet_id'], key=body.key, digest=fingerprint, request={**payload, 'outlet_id': quoted['outlet_id'], 'routing':'selected'}, lines=quoted['lines'], total=quoted['total'], due=quoted['total'], created=time.time())
+    order = Order(user_id=user.id, outlet_id=quoted['outlet_id'], key=body.key, digest=fingerprint, request={**payload, 'outlet_id': quoted['outlet_id'], 'routing':'selected'}, contact={'name':user.name,'phone':user.phone,'email':user.email}, lines=quoted['lines'], total=quoted['total'], due=quoted['total'], created=time.time())
     connection.add(order)
     if body.method == 'cod':
         if order.total <= 150000:
@@ -535,7 +609,7 @@ def prepare_invoice(order_id: int, user=Depends(current_user), connection=Depend
 
 
 @app.get('/orders/{order_id}/invoice')
-def view_invoice(order_id: int, download: bool = False, user=Depends(current_user), connection=Depends(database)):
+def view_invoice(order_id: int, download: bool = False, format: Literal['html','pdf'] = 'html', user=Depends(current_user), connection=Depends(database)):
     order = connection.scalar(select(Order).where(Order.id == order_id, Order.user_id == user.id))
     if not order:
         fail('Order not found.', 404)
@@ -543,6 +617,9 @@ def view_invoice(order_id: int, download: bool = False, user=Depends(current_use
     if not invoice:
         fail('Bill is not available yet.', 404)
     headers = {'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff'}
+    if format == 'pdf':
+        headers['Content-Disposition'] = f'attachment; filename="{invoice.document["number"]}.pdf"'
+        return Response(render_pdf(invoice.document), media_type='application/pdf', headers=headers)
     if download:
         headers['Content-Disposition'] = f'attachment; filename="{invoice.document["number"]}.html"'
     return Response(render_bill(invoice.document), media_type='text/html', headers=headers)

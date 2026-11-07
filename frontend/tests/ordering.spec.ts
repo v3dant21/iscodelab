@@ -6,6 +6,12 @@ async function login(page: Page, email: string) {
   await page.getByLabel('Password', { exact: true }).fill('DemoPass123!');
   await page.getByRole('button', { name: 'Sign in', exact: true }).last().click();
   await expect(page.getByRole('button', { name: 'Sign out', exact: true }).first()).toBeVisible();
+  if (await page.getByRole('heading', {name:'A few details before you order'}).isVisible()) {
+    await page.getByLabel('Your name').fill('Test Customer');
+    await page.getByLabel('Contact phone').fill('+919000000000');
+    await page.getByRole('button', {name:'Save and continue'}).click();
+    await expect(page.getByRole('heading', {name:'A few details before you order'})).toHaveCount(0);
+  }
 }
 
 test('persisted cart, test payment, kitchen stages and customer tracking', async ({ page, browser }) => {
@@ -232,7 +238,7 @@ test('customer can view, download and print a saved demo bill', async ({ page })
   const downloadEvent = page.waitForEvent('download');
   await card.getByRole('button', { name: 'Download bill', exact: true }).click();
   const download = await downloadEvent;
-  expect(download.suggestedFilename()).toMatch(/^DEMO-\d+\.html$/);
+  expect(download.suggestedFilename()).toMatch(/^DEMO-\d+\.pdf$/);
   await card.getByRole('button', { name: 'View / print demo bill', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Demo tax invoice', exact: true })).toBeVisible();
   await expect(page.getByText('DEMO TAX INVOICE — NOT VALID FOR TAX PURPOSES', { exact: true })).toBeVisible();
@@ -287,4 +293,30 @@ test('food disclosures, separate marketing consent and tablet kitchen controls',
   const height=await page.locator('.staff-workspace button').first().evaluate(el=>el.getBoundingClientRect().height);
   expect(height).toBeGreaterThanOrEqual(56);
   await page.screenshot({path:'../.impeccable/review/kitchen-tablet.png',fullPage:true});
+});
+
+
+test('signup collects contact details and shows truthful email status', async ({page}) => {
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/signin');
+  await page.getByRole('button',{name:'New here? Create an account'}).click();
+  await page.getByLabel('Your name').fill('Browser Customer');
+  await page.getByLabel('Contact phone').fill('+919876543210');
+  await page.getByLabel('Email',{exact:true}).fill(`browser-${Date.now()}@example.test`);
+  await page.getByLabel('Password',{exact:true}).fill('BrowserPassword123!');
+  await page.screenshot({path:'../.impeccable/review/signup-contact-mobile.png',fullPage:true});
+  await page.getByRole('button',{name:'Create account',exact:true}).click();
+  await page.waitForURL('**/menu');
+  await page.goto('/account');
+  await expect(page.getByLabel('Your name')).toHaveValue('Browser Customer');
+  await expect(page.getByText('Email delivery setup is pending.',{exact:false})).toBeVisible();
+  await page.getByLabel('Your name').fill('Updated Customer');
+  await page.getByRole('button',{name:'Save contact details'}).click();
+  await expect(page.getByRole('status')).toContainText('Contact details saved.');
+  await page.reload();
+  await expect(page.getByLabel('Your name')).toHaveValue('Updated Customer');
+  await page.getByRole('button',{name:'Request verification email'}).click();
+  await expect(page.getByRole('status')).toContainText('not connected');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
+  await page.screenshot({path:'../.impeccable/review/profile-contact-mobile.png',fullPage:true});
 });

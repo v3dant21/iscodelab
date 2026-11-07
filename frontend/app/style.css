@@ -526,3 +526,10 @@ footer nav { font-size: 12px; justify-content: flex-end; margin-bottom: 12px; }
   .dish .customize summary { min-height:44px; font-size:12px; }
   .staff-workspace .board .order { padding:20px; }
 }
+
+.customer-profile { margin:28px 0; text-align:left; }
+.customer-profile form { display:grid; gap:16px; max-width:440px; }
+.customer-profile h2 { font-size:22px; }
+.customer-profile small,.email-status { font-size:13px; line-height:1.6; color:var(--muted); }
+.customer-profile button { min-height:44px; }
+.staff-workspace .order .kitchen-contact { font-size:18px; }

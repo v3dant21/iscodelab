@@ -4,4 +4,5 @@ COPY requirements.lock .
 RUN pip install --no-cache-dir -r requirements.lock
 COPY *.py ./
 COPY training ./training
+COPY fonts ./fonts
 CMD ["python", "notification_worker.py"]

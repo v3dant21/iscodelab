@@ -1,6 +1,7 @@
 import os
 from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, JSON, String, UniqueConstraint, create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, validates
+from personal_data import PrivateText, PrivateJSON, lookup
 
 database_url = os.environ.get('DATABASE_URL', 'postgresql+psycopg://dumhouse:local-demo-only@localhost:55432/dumhouse')
 # Hosted providers return standard PostgreSQL URLs; this app uses psycopg 3.
@@ -14,7 +15,23 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    email = Column(String(254), unique=True, nullable=False)
+    email = Column(PrivateText, nullable=False)
+    email_hash = Column(String(64), unique=True, nullable=True)
+    name = Column(PrivateText)
+    phone = Column(PrivateText)
+    phone_hash = Column(String(64), index=True)
+    email_verified = Column(Boolean, nullable=False, default=False)
+
+    @validates('email')
+    def protect_email(self, key, value):
+        value = value.strip().lower()
+        self.email_hash = lookup(value)
+        return value
+
+    @validates('phone')
+    def protect_phone(self, key, value):
+        self.phone_hash = lookup(value, 'phone') if value else None
+        return value
     password = Column(String, nullable=False)
     role = Column(String, nullable=False, default='customer')
     outlet_id = Column(Integer, ForeignKey('outlets.id'))
@@ -73,7 +90,8 @@ class Order(Base):
     outlet_id = Column(Integer, ForeignKey('outlets.id'), nullable=False, index=True)
     key = Column(String, nullable=False)
     digest = Column(String, nullable=False)
-    request = Column(JSON, nullable=False)
+    request = Column(PrivateJSON, nullable=False)
+    contact = Column(PrivateJSON)
     lines = Column(JSON, nullable=False)
     total = Column(Integer, nullable=False)
     due = Column(Integer, nullable=False)
@@ -107,7 +125,7 @@ class GoogleIdentity(Base):
 class Invoice(Base):
     __tablename__ = 'invoices'
     order_id = Column(Integer, ForeignKey('orders.id'), primary_key=True)
-    document = Column(JSON, nullable=False)
+    document = Column(PrivateJSON, nullable=False)
 
 
 class Notification(Base):
@@ -120,7 +138,7 @@ class Notification(Base):
     audience = Column(String, nullable=False)
     message = Column(String, nullable=False)
     channel = Column(String, nullable=False, default='in_app')
-    recipient = Column(String)
+    recipient = Column(PrivateText)
     state = Column(String, nullable=False, default='pending')
     attempts = Column(Integer, nullable=False, default=0)
     next_attempt = Column(Float, nullable=False, default=0)
@@ -146,3 +164,27 @@ class ConsentRecord(Base):
     granted = Column(Boolean, nullable=False)
     notice_version = Column(String, nullable=False)
     created = Column(Float, nullable=False)
+
+
+class EmailVerification(Base):
+    __tablename__ = 'email_verifications'
+    token_hash = Column(String(64), primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    expires = Column(Float, nullable=False)
+    used = Column(Boolean, nullable=False, default=False)
+
+
+class EmailDelivery(Base):
+    __tablename__ = 'email_deliveries'
+    id = Column(Integer, primary_key=True)
+    event_key = Column(String, unique=True, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    order_id = Column(Integer, ForeignKey('orders.id'))
+    kind = Column(String, nullable=False)
+    recipient = Column(PrivateText, nullable=False)
+    payload = Column(PrivateJSON, nullable=False)
+    state = Column(String, nullable=False, default='pending', index=True)
+    attempts = Column(Integer, nullable=False, default=0)
+    next_attempt = Column(Float, nullable=False, default=0)
+    created = Column(Float, nullable=False)
+    provider_id = Column(String)
