@@ -1,0 +1,9 @@
+'use client';
+import { useEffect, useState } from 'react';
+import { api, money } from './api';
+type Report={days:number;definitions:string;outlets:{outlet_id:number;outlet:string;city:string;orders:number;accepted:number;cancellations:number;handoffs:number;gross_sales:number;average_prep_minutes:number|null;prep_samples:number;repeat_customers:number;customers:number}[]};
+export function OutletDashboard(){
+ const [days,setDays]=useState(30);const [report,setReport]=useState<Report|null>(null);const [error,setError]=useState('');
+ useEffect(()=>{let active=true;setReport(null);setError('');const load=()=>api<Report>(`/manager/dashboard?days=${days}`).then(r=>active&&setReport(r)).catch(e=>active&&setError(e.message));load();const t=setInterval(load,30000);return()=>{active=false;clearInterval(t);};},[days]);
+ return <section className="outlet-report"><h2>Outlet performance</h2><label>Reporting period<select value={days} onChange={e=>setDays(Number(e.target.value))}>{[7,30,90].map(n=><option key={n} value={n}>Last {n} days</option>)}</select></label>{error&&<p className="error" role="alert">{error}</p>}{!report&&!error&&<p role="status">Loading report…</p>}{report&&<><div className="report-scroll" tabIndex={0} role="region" aria-label="Outlet report table"><table><thead><tr>{['Outlet','Orders placed','Accepted','Handoffs','Cancelled','Gross sales','Average prep','Repeat customers'].map(h=><th key={h} scope="col">{h}</th>)}</tr></thead><tbody>{report.outlets.map(o=><tr key={o.outlet_id}><th scope="row">{o.outlet}<small>{o.city}</small></th><td>{o.orders}</td><td>{o.accepted}</td><td>{o.handoffs}</td><td>{o.cancellations}</td><td>{money(o.gross_sales)}</td><td>{o.average_prep_minutes===null?'No measured orders':`${o.average_prep_minutes} min`}<small>{o.prep_samples} measured</small></td><td>{o.repeat_customers} of {o.customers}</td></tr>)}</tbody></table></div><p className="muted">{report.definitions}</p></>}</section>;
+}

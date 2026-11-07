@@ -552,3 +552,38 @@ footer nav { font-size: 12px; justify-content: flex-end; margin-bottom: 12px; }
 .cart-line>small, .kitchen-dish small, .order-line small, .review-line small { overflow-wrap: anywhere; }
 
 .dish-options input[type="checkbox"] { width: 17px; min-height: 17px; margin: 0; padding: 0; }
+
+/* Operational forms use the same light palette and spacious, labelled controls. */
+.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; align-items: start; }
+.menu-editor { max-width: 850px; }
+.menu-editor fieldset { margin: 26px 0; padding: 20px 0; border: 0; border-top: 1px solid var(--line); }
+.menu-editor legend { font-size: 18px; font-weight: 750; padding-right: 12px; }
+.weekday-options { display: flex; flex-wrap: wrap; gap: 12px; }
+.weekday-options .check { min-height: 44px; }
+.schedule-window { margin-bottom: 20px; }
+.party-page { max-width: 760px; margin: 16px auto 40px; }
+.party-page>p { max-width: 65ch; }
+.party-page form { margin: 28px 0; }
+.party-history, .loyalty-panel { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 24px; }
+.party-history article, .catering-desk article { padding: 24px 0; border-bottom: 1px solid var(--line); }
+.catering-desk { max-width: 900px; }
+.checkout-rewards { margin: 24px 0; padding: 18px; border: 1px solid var(--line); border-radius: 8px; }
+.checkout-rewards legend { font-weight: 750; padding: 0 6px; }
+.checkout-rewards input { max-width: 140px; }
+.report-scroll { overflow-x: auto; margin: 24px 0; border: 1px solid var(--line); }
+.outlet-report table { border-collapse: collapse; width: 100%; text-align: left; font-variant-numeric: tabular-nums; }
+.outlet-report th,.outlet-report td { padding: 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.outlet-report thead { background: var(--soft); }
+.outlet-report small { display:block; white-space:nowrap; }
+.outlet-report>label { max-width: 260px; }
+.staff-workspace .order .kitchen-timer { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.kitchen-actions>button { width: 100%; min-height: 56px; font-size: 18px; }
+.kitchen-actions input { min-height: 48px; }
+.kitchen-actions .check input { min-height: 20px; }
+.cancel-order { margin-top: 20px; }
+.cancel-order summary { min-height: 44px; padding: 10px 0; cursor: pointer; }
+.cancel-order form { margin-top: 14px; }
+@media(max-width:760px) { .form-grid { grid-template-columns:1fr; }.party-page { padding:0 4px; }.staff-workspace .filters { flex-wrap:wrap; }.catering-desk .row { flex-wrap:wrap; } }
+
+.staff-workspace .board>section>.empty { padding: 8px 0; margin: 0; text-align: left; }
+.menu-editor { scroll-margin-top: 110px; }

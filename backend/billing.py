@@ -28,7 +28,8 @@ def snapshot(order, customer, outlet):
             'outlet': outlet.name, 'lines': lines, 'total': order.total,
             'taxable': sum(x['taxable'] for x in lines), 'cgst': sum(x['cgst'] for x in lines),
             'sgst': sum(x['sgst'] for x in lines), 'rounding': sum(x['rounding'] for x in lines),
-            'payment': order.payment, 'paid': order.total if order.payment == 'PAID' else order.due if order.payment == 'DEPOSIT_PAID' else 0,
+            'loyalty_credit': (getattr(order,'redeemed_points',0) or 0)*100,
+            'payment': order.payment, 'paid': order.total-(getattr(order,'redeemed_points',0) or 0)*100 if order.payment == 'PAID' else order.due if order.payment == 'DEPOSIT_PAID' else 0,
             'order_id': order.id}
 
 
@@ -49,7 +50,7 @@ def render_bill(bill):
 <div class="parties"><div><h2>From</h2><strong>{e(bill['seller'])}</strong><p>{e(bill['seller_address'])}<br>GSTIN: {e(bill['gstin'])}<br>Kitchen: {e(bill['outlet'])}</p></div><div><h2>Bill to / Delivery address</h2><strong>{e(bill['customer'])}</strong><p>{e(bill['address'])}</p></div></div>
 <p>Amounts in INR. Unit prices include the illustrative tax. Sample CGST 2.5% + SGST 2.5%; this rate is not a determination of your restaurant’s tax liability.</p>
 <div class="scroll"><table><thead><tr><th>Item / customisation</th><th>Qty</th><th>Unit price</th><th>Taxable</th><th>CGST 2.5%</th><th>SGST 2.5%</th><th>Total</th></tr></thead><tbody>{rows}</tbody></table></div>
-<div class="totals"><p><span>Taxable amount</span><strong>{money(bill['taxable'])}</strong></p><p><span>CGST · 2.5%</span><span>{money(bill['cgst'])}</span></p><p><span>SGST · 2.5%</span><span>{money(bill['sgst'])}</span></p><p><span>Rounding adjustment</span><span>{money(bill['rounding'])}</span></p><p><strong>Grand total</strong><strong>{money(bill['total'])}</strong></p><p><span>Simulated amount paid</span><span>{money(bill['paid'])}</span></p><p><span>Demo balance due</span><strong>{money(bill['total']-bill['paid'])}</strong></p></div>
+<div class="totals"><p><span>Taxable amount</span><strong>{money(bill['taxable'])}</strong></p><p><span>CGST · 2.5%</span><span>{money(bill['cgst'])}</span></p><p><span>SGST · 2.5%</span><span>{money(bill['sgst'])}</span></p><p><span>Rounding adjustment</span><span>{money(bill['rounding'])}</span></p><p><strong>Grand total</strong><strong>{money(bill['total'])}</strong></p><p><span>Loyalty payment credit</span><span>{money(bill.get('loyalty_credit',0))}</span></p><p><span>Simulated amount paid</span><span>{money(bill['paid'])}</span></p><p><span>Demo balance due</span><strong>{money(bill['total']-bill['paid']-bill.get('loyalty_credit',0))}</strong></p></div>
 <p>Payment state at issue: {e(bill['payment'].replace('_',' '))}. This is a saved billing snapshot.</p><hr><small>Digitally generated sample only. Not digitally signed, not a GST portal e-invoice, and not eligible for input tax credit. A genuine invoice requires verified supplier and tax details and the applicable production billing workflow.</small></main></body></html>'''
 
 
@@ -85,7 +86,7 @@ def render_pdf(bill):
     table = Table(rows, colWidths=[280,40,90,113], repeatRows=1, hAlign='LEFT')
     table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#f6eee5')),('VALIGN',(0,0),(-1,-1),'TOP'),('LINEBELOW',(0,0),(-1,-1),0.4,colors.HexColor('#e8dacf')),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),7)]))
     items += [table, Spacer(1,14)]
-    for label, value in [('Taxable amount',bill['taxable']),('CGST 2.5%',bill['cgst']),('SGST 2.5%',bill['sgst']),('Rounding',bill['rounding']),('Grand total',bill['total']),('Simulated amount paid',bill['paid']),('Balance due',bill['total']-bill['paid'])]:
+    for label, value in [('Taxable amount',bill['taxable']),('CGST 2.5%',bill['cgst']),('SGST 2.5%',bill['sgst']),('Rounding',bill['rounding']),('Grand total',bill['total']),('Loyalty payment credit',bill.get('loyalty_credit',0)),('Simulated amount paid',bill['paid']),('Balance due',bill['total']-bill['paid']-bill.get('loyalty_credit',0))]:
         items.append(p(f'{label}: {money(value)}'))
     items += [p('Prices include illustrative 5% GST. Payment state at issue: '+bill['payment']),p('Digitally generated sample, not digitally signed or a GST portal e-invoice. Not eligible for input tax credit.')]
     def footer(canvas, document):

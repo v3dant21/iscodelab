@@ -52,9 +52,9 @@ test('persisted cart, test payment, kitchen stages and customer tracking', async
   await expect(kitchenCard).toBeVisible();
   await kitchenCard.getByRole('button', { name: 'Start preparing' }).click();
   await expect(orderCard.locator('strong').filter({ hasText: /^PREPARING$/ })).toBeVisible({ timeout: 10000 });
-  await kitchenCard.getByRole('button', { name: 'Mark ready' }).click();
+  await kitchenCard.getByRole('button', { name: 'Ready for pickup' }).click();
   await expect(orderCard.locator('strong').filter({ hasText: /^READY$/ })).toBeVisible({ timeout: 10000 });
-  await kitchenCard.getByRole('button', { name: 'Mark handed off' }).click();
+  await kitchenCard.getByRole('button', { name: 'Confirm rider handoff' }).click();
   await expect(orderCard.locator('strong').filter({ hasText: /^HANDED OFF$/ })).toBeVisible({ timeout: 10000 });
   await kitchenContext.close();
 });

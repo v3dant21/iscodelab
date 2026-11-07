@@ -58,6 +58,7 @@ class Outlet(Base):
     opened = Column(Boolean, nullable=False, default=True)
     minimum = Column(Integer, nullable=False, default=20)
     fssai = Column(String(14))
+    city = Column(String(80), nullable=False, default='Hyderabad')
 
 
 class Dish(Base):
@@ -71,6 +72,11 @@ class Dish(Base):
     allergens = Column(String, nullable=False, default='')
     weight = Column(Integer, nullable=False, default=10)
     options = Column(JSON, nullable=False, default=dict)
+    city_prices = Column(JSON, nullable=False, default=dict)
+    schedule = Column(JSON, nullable=False, default=list)
+    photo_url = Column(String(1000), nullable=False, default='')
+    photo_credit = Column(String(200), nullable=False, default='')
+    spice_level = Column(String(20), nullable=False, default='not_set')
 
 
 class Assignment(Base):
@@ -106,6 +112,14 @@ class Order(Base):
     original_promise = Column(Float)
     late_alerted = Column(Float)
     estimate_reason = Column(String)
+    preparing_at = Column(Float)
+    ready_at = Column(Float)
+    handed_off_at = Column(Float)
+    cancelled_at = Column(Float)
+    cancellation_reason = Column(PrivateText)
+    handoff = Column(PrivateJSON)
+    redeemed_points = Column(Integer, nullable=False, default=0)
+    earned_points = Column(Integer, nullable=False, default=0)
 
 
 class Payment(Base):
@@ -188,3 +202,33 @@ class EmailDelivery(Base):
     next_attempt = Column(Float, nullable=False, default=0)
     created = Column(Float, nullable=False)
     provider_id = Column(String)
+
+
+class LoyaltyEntry(Base):
+    __tablename__ = 'loyalty_entries'
+    __table_args__ = (UniqueConstraint('order_id', 'kind'),)
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)
+    kind = Column(String(20), nullable=False)
+    points = Column(Integer, nullable=False)
+    created = Column(Float, nullable=False)
+
+
+class PartyRequest(Base):
+    __tablename__ = 'party_requests'
+    __table_args__ = (UniqueConstraint('user_id', 'key'),)
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    outlet_id = Column(Integer, ForeignKey('outlets.id'), nullable=False, index=True)
+    key = Column(String(100), nullable=False)
+    digest = Column(String(64), nullable=False)
+    event_at = Column(Float, nullable=False, index=True)
+    guests = Column(Integer, nullable=False)
+    details = Column(PrivateJSON, nullable=False)
+    status = Column(String(20), nullable=False, default='REQUESTED')
+    manager_note = Column(PrivateText)
+    decided_by = Column(Integer, ForeignKey('users.id'))
+    decided_at = Column(Float)
+    version = Column(Integer, nullable=False, default=0)
+    created = Column(Float, nullable=False)

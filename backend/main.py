@@ -1,3 +1,5 @@
+from menu_rules import scheduled_now, dish_price
+from loyalty import lock_customer, reward_quote, add_entry, award
 from customizations import customization_groups, supports_raita, resolve_choices
 import hashlib
 import json
@@ -37,7 +39,7 @@ hasher = PasswordHasher()
 @app.middleware('http')
 async def private_responses(request, call_next):
     response = await call_next(request)
-    if request.url.path.startswith(('/auth/', '/account/', '/orders', '/kitchen/', '/manager/')):
+    if request.url.path.startswith(('/auth/', '/account/', '/orders', '/kitchen/', '/manager/', '/admin/', '/party', '/catering/')):
         response.headers['Cache-Control'] = 'private, no-store'
     return response
 
@@ -283,15 +285,16 @@ def outlets(location: Location = Depends(), connection=Depends(database)):
     return sorted(result, key=lambda outlet: outlet['distance'])
 
 
-def menu_data(dish, assignment=None):
-    return {'id': dish.id, 'name': dish.name, 'description': dish.description, 'category': dish.category, 'price': assignment.price if assignment and assignment.price is not None else dish.price, 'veg': dish.veg, 'allergens': dish.allergens, 'options': dish.options, 'customizations': customization_groups(dish), 'raita_available': supports_raita(dish), 'weight': dish.weight, 'enabled': assignment.enabled if assignment else True, 'available': assignment.available if assignment else True, 'override': assignment.price if assignment else None}
+def menu_data(dish, assignment=None, city=None):
+    return {'id': dish.id, 'name': dish.name, 'description': dish.description, 'category': dish.category, 'price': dish_price(dish, assignment, city), 'veg': dish.veg, 'allergens': dish.allergens, 'options': dish.options, 'customizations': customization_groups(dish), 'raita_available': supports_raita(dish), 'weight': dish.weight, 'city_prices': dish.city_prices, 'schedule': dish.schedule, 'photo_url': dish.photo_url, 'photo_credit': dish.photo_credit, 'spice_level': dish.spice_level, 'scheduled_now': scheduled_now(dish), 'enabled': assignment.enabled if assignment else True, 'available': assignment.available if assignment else True, 'override': assignment.price if assignment else None}
 
 
 def menu(connection, outlet_id, public=True):
     query = select(Dish, Assignment).join(Assignment, Assignment.dish_id == Dish.id).where(Assignment.outlet_id == outlet_id)
     if public:
         query = query.where(Assignment.enabled.is_(True), Assignment.available.is_(True))
-    return [menu_data(dish, assignment) for dish, assignment in connection.execute(query.order_by(Dish.id))]
+    outlet = connection.get(Outlet, outlet_id)
+    return [menu_data(dish, assignment, outlet.city if outlet else None) for dish, assignment in connection.execute(query.order_by(Dish.id)) if not public or scheduled_now(dish)]
 
 
 @app.get('/catalog')
@@ -328,6 +331,7 @@ class Checkout(Location):
     model_config = ConfigDict(extra='forbid')
     outlet_id: int
     routing: Literal['auto', 'selected'] = 'selected'
+    redeem_points: int = Field(default=0, ge=0, le=1000000)
     expected_total: int | None = Field(default=None, ge=0)
     expected_outlet: int | None = None
     updates: UpdatePreference = Field(default_factory=UpdatePreference)
@@ -346,7 +350,7 @@ def quote(body, connection):
         outlet_id = 0
         for candidate in candidates:
             assigned = {a.dish_id:a for a in connection.scalars(select(Assignment).where(Assignment.outlet_id==candidate.id, Assignment.enabled.is_(True), Assignment.available.is_(True)))}
-            if all(line.dish_id in assigned for line in body.lines):
+            if all(line.dish_id in assigned and scheduled_now(connection.get(Dish,line.dish_id)) for line in body.lines):
                 outlet_id=candidate.id; break
         if not outlet_id: fail('No nearby open kitchen can fulfil every item. Please edit your bag.',409)
     outlet = connection.get(Outlet, outlet_id, with_for_update=True)
@@ -356,7 +360,7 @@ def quote(body, connection):
     for line in sorted(body.lines, key=lambda item: item.dish_id):
         dish = connection.get(Dish, line.dish_id, with_for_update=True)
         assignment = connection.get(Assignment, (outlet_id, line.dish_id), with_for_update=True)
-        if not dish or not assignment or not assignment.enabled or not assignment.available:
+        if not dish or not assignment or not assignment.enabled or not assignment.available or not scheduled_now(dish):
             fail('An item is sold out or no longer assigned. Refresh your menu and cart.', 409)
         if line.portion not in dish.options:
             fail('Invalid portion.')
@@ -366,7 +370,7 @@ def quote(body, connection):
             selections, customization_labels = resolve_choices(dish, line.selections)
         except ValueError as error:
             fail(str(error))
-        price = (assignment.price if assignment.price is not None else dish.price) + dish.options[line.portion] + (3000 if line.addon else 0)
+        price = dish_price(dish, assignment, outlet.city) + dish.options[line.portion] + (3000 if line.addon else 0)
         lines.append({'dish_id': dish.id, 'name': dish.name, 'portion': line.portion, 'addon': line.addon, 'selections': selections, 'customization_labels': customization_labels, 'quantity': line.quantity, 'price': price, 'weight': dish.weight})
     return {'lines': lines, 'total': sum(line['price'] * line['quantity'] for line in lines), 'outlet_id': outlet.id, 'outlet_name': outlet.name}
 
@@ -375,7 +379,7 @@ def quote(body, connection):
 def checkout_quote(body: Checkout, user=Depends(current_user), connection=Depends(database)):
     role(user, 'customer')
     result = quote(body, connection)
-    return {**result, 'billing': tax_breakdown(result['lines'])}
+    return {**result, **reward_quote(connection,user.id,result['total'],body.redeem_points,fail), 'billing': tax_breakdown(result['lines'])}
 
 
 def accept(order, connection):
@@ -395,7 +399,7 @@ def accept(order, connection):
 
 
 def order_data(order):
-    return {field: getattr(order, field) for field in ('id', 'outlet_id', 'lines', 'total', 'due', 'payment', 'status', 'version', 'created', 'accepted', 'minutes', 'prediction', 'ai_minutes', 'original_promise', 'estimate_reason')} | {'address': order.request['address'], 'contact': order.contact or {}, 'late': bool(order.late_alerted or (order.original_promise and order.status in ('NEW','PREPARING') and time.time() >= order.original_promise + 600))}
+    return {field: getattr(order, field) for field in ('id', 'outlet_id', 'lines', 'total', 'due', 'payment', 'status', 'version', 'created', 'accepted', 'minutes', 'prediction', 'ai_minutes', 'original_promise', 'estimate_reason', 'preparing_at', 'ready_at', 'handed_off_at', 'cancelled_at', 'cancellation_reason', 'redeemed_points', 'earned_points')} | {'payable_total': order.total-(order.redeemed_points or 0)*100, 'address': order.request['address'], 'contact': order.contact or {}, 'late': bool(order.late_alerted or (order.original_promise and order.status in ('NEW','PREPARING') and time.time() >= order.original_promise + 600))}
 
 
 @app.post('/orders')
@@ -413,16 +417,22 @@ def create_order(body: Checkout, user=Depends(current_user), connection=Depends(
     if body.method == 'cod' and not user.cod:
         fail('This account is prepaid-only.', 403)
     quoted = quote(body, connection)
+    rewards = reward_quote(connection,user.id,quoted['total'],body.redeem_points,fail)
     if (body.expected_total is not None and body.expected_total != quoted['total']) or (body.expected_outlet is not None and body.expected_outlet != quoted['outlet_id']):
         fail('Price or kitchen changed. Review your order again before confirming.',409)
-    order = Order(user_id=user.id, outlet_id=quoted['outlet_id'], key=body.key, digest=fingerprint, request={**payload, 'outlet_id': quoted['outlet_id'], 'routing':'selected'}, contact={'name':user.name,'phone':user.phone,'email':user.email}, lines=quoted['lines'], total=quoted['total'], due=quoted['total'], created=time.time())
+    order = Order(user_id=user.id, outlet_id=quoted['outlet_id'], key=body.key, digest=fingerprint, request={**payload, 'outlet_id': quoted['outlet_id'], 'routing':'selected'}, contact={'name':user.name,'phone':user.phone,'email':user.email}, lines=quoted['lines'], total=quoted['total'], due=rewards['payable_total'], redeemed_points=body.redeem_points, created=time.time())
     connection.add(order)
-    if body.method == 'cod':
-        if order.total <= 150000:
+    connection.flush()
+    add_entry(connection,order,'redeem',-body.redeem_points)
+    if order.due == 0:
+        order.payment = 'PAID'
+        accept(order, connection)
+    elif body.method == 'cod':
+        if rewards['payable_total'] <= 150000:
             order.payment = 'COD_DUE'
             accept(order, connection)
         else:
-            order.due = math.ceil(order.total * 0.2)
+            order.due = math.ceil(rewards['payable_total'] * 0.2)
     try:
         connection.commit()
     except IntegrityError:
@@ -444,6 +454,7 @@ def pay(order_id: int, body: MockPayment, user=Depends(current_user), connection
     role(user, 'customer')
     if os.environ.get('ALLOW_MOCK_PAYMENTS', 'false') != 'true':
         fail('Test payments are disabled.', 403)
+    lock_customer(connection,user.id)
     order = connection.scalar(select(Order).where(Order.id == order_id, Order.user_id == user.id).with_for_update())
     if not order:
         fail('Order not found.', 404)
@@ -493,17 +504,32 @@ def kitchen_orders(user=Depends(current_user), connection=Depends(database)):
 class Transition(BaseModel):
     status: Literal['PREPARING', 'READY', 'HANDED_OFF']
     version: int
+    rider_reference: str = Field(default='', max_length=80)
+    cash_collected: bool = False
 
 
 @app.patch('/kitchen/orders/{order_id}/status')
 def transition(order_id: int, body: Transition, user=Depends(current_user), connection=Depends(database)):
     if user.role not in ('kitchen','manager'): fail('Outlet staff access required.',403)
-    previous = {'PREPARING': 'NEW', 'READY': 'PREPARING', 'HANDED_OFF': 'READY'}[body.status]
-    result = connection.execute(update(Order).where(Order.id == order_id, Order.outlet_id == user.outlet_id, Order.status == previous, Order.version == body.version).values(status=body.status, version=body.version + 1))
-    if result.rowcount != 1:
-        fail('Order changed or is unavailable. Refresh the board.', 409)
-    order = connection.get(Order, order_id)
-    enqueue(connection,order, f'status-{body.status}', f'Order #{order.id}: {body.status.replace("_"," ").lower()}.')
+    target = connection.scalar(select(Order).where(Order.id==order_id,Order.outlet_id==user.outlet_id))
+    if not target: fail('Order changed or is unavailable. Refresh the board.',409)
+    lock_customer(connection,target.user_id)
+    order = connection.scalar(select(Order).where(Order.id==order_id).with_for_update().execution_options(populate_existing=True))
+    previous = {'PREPARING':'NEW','READY':'PREPARING','HANDED_OFF':'READY'}[body.status]
+    if order.status != previous or order.version != body.version:
+        fail('Order changed or is unavailable. Refresh the board.',409)
+    now=time.time()
+    if body.status == 'HANDED_OFF':
+        if order.payment in ('COD_DUE','DEPOSIT_PAID') and not body.cash_collected:
+            fail('Confirm the outstanding cash was collected before handoff.')
+        order.payment='PAID'
+        order.handed_off_at=now
+        order.handoff={'actor_id':user.id,'rider_reference':body.rider_reference.strip(),'cash_collected':body.cash_collected,'at':now}
+    elif body.status == 'READY': order.ready_at=now
+    else: order.preparing_at=now
+    order.status=body.status; order.version+=1
+    award(connection,order)
+    enqueue(connection,order,f'status-{body.status}',f'Order #{order.id}: {body.status.replace("_"," ").lower()}.')
     connection.commit()
     return order_data(order)
 
@@ -529,7 +555,9 @@ def availability(dish_id: int, body: Availability, user=Depends(current_user), c
     return {'ok': True}
 
 
-class DishInput(BaseModel):
+from operations_api import MenuFields
+
+class DishInput(MenuFields):
     model_config = ConfigDict(extra='forbid')
     name: str = Field(min_length=2, max_length=100)
     description: str = Field(min_length=5, max_length=500)
@@ -575,7 +603,7 @@ def edit_dish(dish_id: int, body: DishInput, user=Depends(current_user), connect
 @app.get('/admin/outlets')
 def admin_outlets(user=Depends(current_user), connection=Depends(database)):
     role(user, 'admin')
-    return [{'id': outlet.id, 'name': outlet.name, 'fssai':outlet.fssai} for outlet in connection.scalars(select(Outlet))]
+    return [{'id': outlet.id, 'name': outlet.name, 'fssai':outlet.fssai, 'city':outlet.city} for outlet in connection.scalars(select(Outlet))]
 
 
 @app.get('/admin/outlets/{outlet_id}/menu')
@@ -603,6 +631,7 @@ def assign(outlet_id: int, dish_id: int, body: Override, user=Depends(current_us
 
 @app.post('/orders/{order_id}/invoice')
 def prepare_invoice(order_id: int, user=Depends(current_user), connection=Depends(database)):
+    lock_customer(connection,user.id)
     order = connection.scalar(select(Order).where(Order.id == order_id, Order.user_id == user.id).with_for_update())
     if not order:
         fail('Order not found.', 404)
@@ -706,3 +735,7 @@ def marketing_consent(body:MarketingConsent,user=Depends(current_user),connectio
     connection.add(ConsentRecord(user_id=user.id,purpose='marketing',granted=body.granted,notice_version='2026-11-06',created=user.marketing_updated))
     connection.commit()
     return profile(user)
+
+
+from operations_api import register_operations
+register_operations(app, current_user, database, fail, order_data)
