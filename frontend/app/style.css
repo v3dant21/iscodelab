@@ -533,3 +533,22 @@ footer nav { font-size: 12px; justify-content: flex-end; margin-bottom: 12px; }
 .customer-profile small,.email-status { font-size:13px; line-height:1.6; color:var(--muted); }
 .customer-profile button { min-height:44px; }
 .staff-workspace .order .kitchen-contact { font-size:18px; }
+
+/* Dish-specific preferences, shared by detail pages and bag editing. */
+.dish-options { display: grid; gap: 20px; margin: 16px 0; min-width: 0; }
+.dish-options .serving-note { margin: 0; color: var(--muted); font-size: 13px; }
+.dish-options .preparation-group { min-width: 0; margin: 0; padding: 0; border: 0; }
+.preparation-group legend { padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 750; }
+.preparation-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.preparation-choices label { display: flex; flex-direction: row; align-items: center; gap: 8px; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); cursor: pointer; margin: 0; }
+.preparation-choices label.chosen { border-color: var(--brand); background: var(--selected-surface, #fff0df); }
+.preparation-choices input { width: 16px; min-height: 16px; margin: 0; accent-color: var(--brand); }
+.preparation-group>small, .preference-note { display: block; margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.dish-options .raita-option { display: flex; align-items: center; gap: 12px; margin: 0; }
+.raita-option strong { margin-left: auto; white-space: nowrap; }
+.raita-option small { display: block; }
+.dish-options.compact { gap: 16px; }
+.customize summary span { white-space: normal; }
+.cart-line>small, .kitchen-dish small, .order-line small, .review-line small { overflow-wrap: anywhere; }
+
+.dish-options input[type="checkbox"] { width: 17px; min-height: 17px; margin: 0; padding: 0; }

@@ -1,0 +1,31 @@
+import { test, expect } from '@playwright/test';
+
+test('dish preferences stay distinct, persist and can be edited before checkout', async ({ page }) => {
+  await page.goto('/menu/lassi');
+  await page.getByRole('radio', { name: 'Salted', exact: true }).check();
+  await page.getByRole('button', { name: /Add to bag/ }).click();
+  await page.getByRole('radio', { name: 'Sweet', exact: true }).check();
+  await page.getByRole('button', { name: /Add to bag/ }).click();
+  await page.getByRole('button', { name: 'View your bag', exact: true }).click();
+  await expect(page).toHaveURL(/\/bag$/);
+  await expect(page.locator('.cart-line')).toHaveCount(2);
+  await page.reload();
+  await expect(page.locator('.cart-line')).toHaveCount(2);
+  const first = page.locator('.cart-line').first();
+  await first.getByText('Edit item', { exact: true }).click();
+  await first.getByRole('combobox', { name: 'Lassi style for Lassi' }).selectOption('unsweetened');
+  await expect(first).toContainText('No added sugar');
+  await page.goto('/menu/dum-chicken-biryani');
+  await page.getByRole('radio', { name: 'Less masala', exact: true }).check();
+  await page.getByRole('radio', { name: 'No added fried onion', exact: true }).check();
+  await page.getByRole('button', { name: /Add to bag/ }).click();
+  await page.getByRole('button', { name: 'View your bag', exact: true }).click();
+  await expect(page).toHaveURL(/\/bag$/);
+  await expect(page.locator('.cart-line')).toHaveCount(3);
+  await expect(page.locator('.cart-line').last()).toContainText('Less masala');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/menu/butter-chicken');
+  await page.getByRole('radio', { name: 'Milder', exact: true }).check();
+  await page.getByRole('radio', { name: 'No added cream', exact: true }).check();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+});

@@ -1,3 +1,4 @@
+from customizations import customization_groups, supports_raita, resolve_choices
 import hashlib
 import json
 import math
@@ -283,7 +284,7 @@ def outlets(location: Location = Depends(), connection=Depends(database)):
 
 
 def menu_data(dish, assignment=None):
-    return {'id': dish.id, 'name': dish.name, 'description': dish.description, 'category': dish.category, 'price': assignment.price if assignment and assignment.price is not None else dish.price, 'veg': dish.veg, 'allergens': dish.allergens, 'options': dish.options, 'weight': dish.weight, 'enabled': assignment.enabled if assignment else True, 'available': assignment.available if assignment else True, 'override': assignment.price if assignment else None}
+    return {'id': dish.id, 'name': dish.name, 'description': dish.description, 'category': dish.category, 'price': assignment.price if assignment and assignment.price is not None else dish.price, 'veg': dish.veg, 'allergens': dish.allergens, 'options': dish.options, 'customizations': customization_groups(dish), 'raita_available': supports_raita(dish), 'weight': dish.weight, 'enabled': assignment.enabled if assignment else True, 'available': assignment.available if assignment else True, 'override': assignment.price if assignment else None}
 
 
 def menu(connection, outlet_id, public=True):
@@ -314,6 +315,7 @@ class Line(BaseModel):
     quantity: int = Field(ge=1, le=20)
     portion: str = 'regular'
     addon: bool = False
+    selections: dict[str, str] = Field(default_factory=dict, max_length=12)
 
 
 class UpdatePreference(BaseModel):
@@ -358,10 +360,14 @@ def quote(body, connection):
             fail('An item is sold out or no longer assigned. Refresh your menu and cart.', 409)
         if line.portion not in dish.options:
             fail('Invalid portion.')
-        if line.addon and dish.category != 'Biryani':
+        if line.addon and not supports_raita(dish):
             fail('Extra raita is only available with biryani.')
+        try:
+            selections, customization_labels = resolve_choices(dish, line.selections)
+        except ValueError as error:
+            fail(str(error))
         price = (assignment.price if assignment.price is not None else dish.price) + dish.options[line.portion] + (3000 if line.addon else 0)
-        lines.append({'dish_id': dish.id, 'name': dish.name, 'portion': line.portion, 'addon': line.addon, 'quantity': line.quantity, 'price': price, 'weight': dish.weight})
+        lines.append({'dish_id': dish.id, 'name': dish.name, 'portion': line.portion, 'addon': line.addon, 'selections': selections, 'customization_labels': customization_labels, 'quantity': line.quantity, 'price': price, 'weight': dish.weight})
     return {'lines': lines, 'total': sum(line['price'] * line['quantity'] for line in lines), 'outlet_id': outlet.id, 'outlet_name': outlet.name}
 
 

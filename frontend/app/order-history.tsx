@@ -1,4 +1,5 @@
 'use client';
+import { lineDescription } from './dish-options';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { api, money, Order } from './api';
@@ -30,7 +31,7 @@ export function OrderHistory({ orders, busy, pay, focusedId, confirmed = false }
     <div className="orders">{visible.map(order => <article className="order" key={order.id}>
       <div className="row"><h2><Link href={`/orders/${order.id}`}>Order #{order.id}</Link></h2><strong>{money(order.total)}</strong></div>
       <div className="order-outlet"><Icon name="pin" size={14} />{({1:'Kondapur',2:'Gachibowli',3:'Madhapur'} as Record<number,string>)[order.outlet_id] || 'Your selected'} kitchen</div>
-      <div className="order-lines">{order.lines.map((line, index) => <div className="order-line" key={index}><FoodImage name={line.name} /><div><strong>{line.name}</strong><small>{line.quantity} × {line.portion}{line.addon ? ' · extra raita' : ''}</small></div><span>{money(line.price * line.quantity)}</span></div>)}</div>
+      <div className="order-lines">{order.lines.map((line, index) => <div className="order-line" key={index}><FoodImage name={line.name} /><div><strong>{line.name}</strong><small>{line.quantity} × {lineDescription(line)}</small></div><span>{money(line.price * line.quantity)}</span></div>)}</div>
       <p className="delivery-address"><Icon name="pin" size={16} /><span>Delivering to<small>{order.address}</small></span></p>
       <div id={focusedId ? "order-tracking" : undefined} className="order-state"><strong>{order.status.replaceAll('_', ' ')}</strong>{order.minutes && <span><Icon name="clock" size={15} />{order.minutes} min prep estimate</span>}</div>
       {order.minutes && <p className="muted">Estimated ready {order.accepted && new Date((order.accepted + order.minutes * 60) * 1000).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' })}. Preparation only, not a delivery promise.</p>}
