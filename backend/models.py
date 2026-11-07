@@ -232,3 +232,12 @@ class PartyRequest(Base):
     decided_at = Column(Float)
     version = Column(Integer, nullable=False, default=0)
     created = Column(Float, nullable=False)
+
+
+class PasswordReset(Base):
+    __tablename__ = 'password_resets'
+    token_hash = Column(String(64), primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    created = Column(Float, nullable=False)
+    expires = Column(Float, nullable=False)
+    used = Column(Boolean, nullable=False, default=False)

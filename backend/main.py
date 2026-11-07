@@ -795,3 +795,6 @@ def marketing_consent(body:MarketingConsent,user=Depends(current_user),connectio
 
 from operations_api import register_operations
 register_operations(app, current_user, database, fail, order_data)
+
+from password_recovery import register as register_password_recovery
+register_password_recovery(app,database,fail,origin,hasher)
