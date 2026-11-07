@@ -67,12 +67,12 @@ def dispatch_email(connection, now=None):
         item.state='expired'; return True
     payload={'from':os.environ['EMAIL_FROM'],'to':[item.recipient]}
     if item.kind=='verify':
-        payload.update(subject='Verify your DumHouse email',text='Confirm your email to receive order updates and invoices. This link expires in 24 hours.\n\n'+item.payload['link']+'\n\nIf you did not create this account, ignore this email.')
+        payload.update(subject='Verify your Dum & Dastaan email',text='Confirm your email to receive order updates and invoices. This link expires in 24 hours.\n\n'+item.payload['link']+'\n\nIf you did not create this account, ignore this email.')
     else:
         invoice=connection.get(Invoice,item.order_id)
         if not invoice:
             item.state='failed'; return True
-        payload.update(subject=f'DumHouse order #{item.order_id} confirmed',text='Your order is confirmed. Sign in to your account to track preparation:\n'+item.payload['link']+'\n\nYour sample invoice PDF is attached. This order uses test payments; this is not a valid tax invoice.',attachments=[{'filename':invoice.document['number']+'.pdf','content':base64.b64encode(render_pdf(invoice.document)).decode()}])
+        payload.update(subject=f'Dum & Dastaan order #{item.order_id} confirmed',text='Your order is confirmed. Sign in to your account to track preparation:\n'+item.payload['link']+'\n\nYour sample invoice PDF is attached. This order uses test payments; this is not a valid tax invoice.',attachments=[{'filename':invoice.document['number']+'.pdf','content':base64.b64encode(render_pdf(invoice.document)).decode()}])
     item.attempts+=1
     try:
         item.provider_id=send(payload,item.event_key)

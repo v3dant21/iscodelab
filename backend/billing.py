@@ -23,7 +23,7 @@ def tax_breakdown(order_lines):
 def snapshot(order, customer, outlet):
     lines = tax_breakdown(order.lines)['lines']
     return {'number': f'DEMO-{order.id:010d}', 'issued': order.accepted,
-            'seller': 'DumHouse Sample Restaurant (fictional)', 'seller_address': 'Sample billing address, Hyderabad, Telangana (fictional)',
+            'seller': 'Dum & Dastaan Sample Restaurant (fictional)', 'seller_address': 'Sample billing address, Hyderabad, Telangana (fictional)',
             'gstin': 'NOT REGISTERED — SAMPLE ONLY', 'customer': (getattr(order,'contact',None) or {}).get('email',customer.email), 'customer_name': (getattr(order,'contact',None) or {}).get('name',getattr(customer,'name','') or ''), 'address': order.request['address'],
             'outlet': outlet.name, 'lines': lines, 'total': order.total,
             'taxable': sum(x['taxable'] for x in lines), 'cgst': sum(x['cgst'] for x in lines),
@@ -68,7 +68,7 @@ def render_pdf(bill):
     money = lambda value: f'₹{value/100:,.2f}'
     out = BytesIO()
     doc = SimpleDocTemplate(out, pagesize=A4, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=42, title=bill['number'], invariant=1)
-    items = [Paragraph('DumHouse · Sample tax invoice', title),
+    items = [Paragraph('Dum &amp; Dastaan · Sample tax invoice', title),
              p('DEMO — NOT VALID FOR TAX PURPOSES. Fictional supplier details; test payments only.'),
              p(f"{bill['number']} · Order #{bill['order_id']}"),
              p(datetime.fromtimestamp(bill['issued'], ZoneInfo('Asia/Kolkata')).strftime('%d %b %Y, %I:%M %p IST')),

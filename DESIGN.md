@@ -1,5 +1,5 @@
 ---
-name: DumHouse
+name: Dum & Dastaan
 description: Light, food-first ordering for one Hyderabad restaurant chain.
 colors:
   paper: "#fffaf3"
@@ -93,13 +93,13 @@ components:
     padding: "22px"
 ---
 
-# Design System: DumHouse
+# Design System: Dum & Dastaan
 
 ## Overview
 
 **Creative North Star: "Light, food-first Hyderabad ordering"**
 
-The user-approved light direction uses warm cream canvas, white cards, brown text, burnt-orange calls to action and bold Manrope. DumHouse remains a fictional single restaurant chain in Hyderabad, with a curated 70-dish menu and illustrative food imagery. The interface keeps its established ordering layout and real URL navigation.
+The user-approved light direction uses warm cream canvas, white cards, brown text, burnt-orange calls to action and bold Manrope. Dum & Dastaan remains a fictional single restaurant chain in Hyderabad, with a curated 70-dish menu and illustrative food imagery. The interface keeps its established ordering layout and real URL navigation.
 
 **Key Characteristics:**
 - Warm cream layers, brown text, burnt-orange actions and rounded food cards.
@@ -144,7 +144,7 @@ Rounded rectangles define the system: 8px fields, 9px buttons, 9px category link
 - **Bag/account:** thumbnails, quantity/remove controls, estimated total, address and test payment method. Header and mobile shortcuts open the dedicated bag. The account view links to orders, saved dishes and bag. Sign-in is required for checkout.
 - **Food imagery:** all 70 curated dishes have illustrations. Six original dish-specific images combine with ten generated category illustrations mapped by `food-illustrations.json`; related dishes share a category image. Next Image provides responsive image delivery and lazy loading. Category-image alt text identifies the category, dish and “presentation may vary”; detail captions disclose illustrative imagery and variation. Images recur in cards, detail, bag and orders; the hero uses the original chicken biryani image. These are illustrations, not evidence of actual outlet food. Unmapped future names retain a labeled food-icon fallback with `#fff0df` fill, `#87613c` text, 12px gap and 20px padding (10px in mobile cards). Its detail aspect ratios match photos; compact bag/order fallbacks hide visible names while retaining accessible labels.
 - **Orders:** All orders and Past (HANDED_OFF only), dish thumbnails, outlet, address, payment state, preparation estimate, late notice and staff-stage timeline. Orders poll every four seconds while the customer Orders view is active. NEW → PREPARING → READY → HANDED_OFF ends at kitchen handoff; no rider GPS or delivery completion is tracked. Pending payments expose simulated success/failure actions.
-- **Footer:** warm `#f7ede2` surface with Menu, Orders and Account links and “© 2026 DumHouse. All rights reserved.” Desktop content is split across the row; mobile stacks it and left-aligns links.
+- **Footer:** warm `#f7ede2` surface with Menu, Orders and Account links and “© 2026 Dum & Dastaan. All rights reserved.” Desktop content is split across the row; mobile stacks it and left-aligns links.
 - **Supporting states:** explicit loading, empty menu/saved/bag/order states, dismissible errors, demo notices and shared light styling across authentication, kitchen queues and admin editors.
 
 ## Do's and Don'ts

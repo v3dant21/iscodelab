@@ -1,4 +1,4 @@
-# Isocode DumHouse
+# Isocode Dum & Dastaan
 
 Local reconstruction of the restaurant ordering project from the recovered design and deployment documents. The original conversation exposed no retrievable source attachment; the downloaded `isocode_submission_docs.zip` contained only documentation. This repository is newly implemented source, not a recovered original ZIP.
 
@@ -108,7 +108,7 @@ The official Google button appears on sign-in when configured. Tokens are verifi
 
 Menu, dish, saved, bag, orders, account and sign-in now have direct URLs. `/menu/<dish-id>` includes kitchen-supported portions, quantity and biryani-only extra raita; the server rejects raita on sides or desserts. Personal pages are marked `noindex`. Public pages have titles, descriptions and canonical URLs, with `/sitemap.xml` and `/robots.txt`. Set `SITE_URL` on the frontend to your public HTTPS origin before deployment. Search engines cannot index localhost; these changes prepare indexing, they do not publish or submit the site. The sitemap currently lists the Kondapur menu.
 
-The interface uses warm charcoal, saffron orange and cream; vegetarian badges remain green. The footer reads “© 2026 DumHouse. All rights reserved.” Test-payment labels remain beside payment flows.
+The interface uses warm charcoal, saffron orange and cream; vegetarian badges remain green. The footer reads “© 2026 Dum & Dastaan. All rights reserved.” Test-payment labels remain beside payment flows.
 
 ## Reference-menu expansion and readable URLs
 

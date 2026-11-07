@@ -139,7 +139,7 @@ test('dish deep links, history, meal options and metadata', async ({ page, reque
   await page.goto('/menu/6');
   await expect(page.getByRole('heading', { name: 'Double ka meetha', exact: true })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: /Extra raita/ })).toHaveCount(0);
-  await expect(page).toHaveTitle('Double ka meetha · DumHouse');
+  await expect(page).toHaveTitle('Double ka meetha · Dum & Dastaan');
   await page.getByRole('button', { name: 'Add to bag · ₹129' }).click();
   await page.getByRole('button', { name: 'View your bag', exact: true }).click();
   await expect(page).toHaveURL(/\/bag$/);

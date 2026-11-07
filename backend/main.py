@@ -28,7 +28,7 @@ async def lifespan(app):
     lookup('configuration-check')
     yield
 
-app = FastAPI(title='DumHouse API', lifespan=lifespan)
+app = FastAPI(title='Dum & Dastaan API', lifespan=lifespan)
 origin = os.environ.get('APP_ORIGIN', 'http://localhost:3000')
 app.add_middleware(CORSMiddleware, allow_origins=[origin], allow_credentials=True, allow_methods=['GET', 'POST', 'PATCH'], allow_headers=['Content-Type', 'X-CSRF-Token'])
 hasher = PasswordHasher()

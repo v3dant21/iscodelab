@@ -1,4 +1,4 @@
-# DumHouse
+# Dum & Dastaan
 
 A fictional Hyderabad single-chain restaurant ordering demo reconstructed from the user's local engineering documents. Customers choose an eligible outlet, customize a dish, pay in simulation, and follow staff-reported progress. Outlet kitchen staff manage their queue and stockouts. Central admins own dishes and outlet assignments.
 

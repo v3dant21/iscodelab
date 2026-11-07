@@ -6,8 +6,8 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const dish = (await publicMenu()).find(item => slugify(item.name) === slug || String(item.id) === slug);
-  if (!dish) return { title: 'Dish unavailable · DumHouse', robots: { index: false } };
-  return { title: `${dish.name} · DumHouse`, description: dish.description, alternates: { canonical: dishPath(dish) } };
+  if (!dish) return { title: 'Dish unavailable · Dum & Dastaan', robots: { index: false } };
+  return { title: `${dish.name} · Dum & Dastaan`, description: dish.description, alternates: { canonical: dishPath(dish) } };
 }
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
