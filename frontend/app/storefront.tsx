@@ -4,6 +4,7 @@ import { dishPath, slugify, categoryPath } from './menu-links';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { CustomerProfile, ContactFields } from './customer-profile';
 import { EmailVerification } from './email-verification';
+import { StaffPortal } from './staff-portal';
 import { GoogleSignIn } from './google-signin';
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { api, CartLine, Dish, money, Order, Outlet, User } from './api';
@@ -21,6 +22,7 @@ const areas = [{ name: 'Kondapur', lat: 17.462, lng: 78.357 }, { name: 'Gachibow
 const storageKey = 'dumhouse-cart-v1';
 export default function Storefront({ initialDishes }: { initialDishes: Dish[] }) {
   const [user, setUser] = useState<User | null>(null);
+  const [authReady,setAuthReady]=useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const view = pathname.startsWith('/orders/') ? 'orders' : pathname.startsWith('/menu/') ? 'dish' : pathname === '/' || pathname === '/menu' ? 'menu' : pathname.slice(1);
@@ -72,7 +74,7 @@ export default function Storefront({ initialDishes }: { initialDishes: Dish[] })
   const restoredOutlet = useRef(0);
 
   useEffect(() => {
-    api<User>('/auth/me').then(setUser).catch(() => {});
+    api<User>('/auth/me').then(setUser).catch(() => {}).finally(()=>setAuthReady(true));
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
       if (saved && saved.expires > Date.now() && Array.isArray(saved.lines) && saved.location && typeof saved.outlet === 'number') {
@@ -216,7 +218,7 @@ export default function Storefront({ initialDishes }: { initialDishes: Dish[] })
     const form = new FormData(event.currentTarget);
     await action(async () => {
       const account = await api<User>(register ? '/auth/register' : '/auth/login', 'POST', { email: form.get('email'), password: form.get('password'), ...(register ? {name:form.get('name'),phone:form.get('phone')} : {}) });
-      setUser(account); if (view !== 'orders' || account.role !== 'customer') setView(checkoutAfterLogin.current && account.role === 'customer' ? 'bag' : 'menu');
+      setUser(account); if (view !== 'orders' || account.role !== 'customer') setView(account.role!=='customer'?'staff':checkoutAfterLogin.current?'bag':'menu');
       checkoutAfterLogin.current = false;
     });
   }
@@ -226,6 +228,7 @@ export default function Storefront({ initialDishes }: { initialDishes: Dish[] })
   const visibleDishes = dishes.filter(dish => (view !== 'saved' || saved.includes(dish.id)) && (category === 'All' || dish.category === category) && (!vegetarian || dish.veg) && `${dish.name} ${dish.description}`.toLowerCase().includes(search.toLowerCase()));
   const selectedDish = dishes.find(dish => slugify(dish.name) === dishSlug);
   useEffect(() => { setPageSize(12); }, [categorySlug, search, vegetarian, view, outlet]);
+  if(pathname==='/staff'||pathname.startsWith('/staff/')||(user&&user.role!=='customer')) return <StaffPortal user={user} ready={authReady} onUser={setUser}/>;
   const categories = ['All', ...Array.from(new Set(dishes.map(dish => dish.category)))];
   return <>
     <a className="skip-link" href="#main">Skip to content</a><header><a className="brand" href="/" aria-label="Dum & Dastaan home"><span className="brand-symbol"><Icon name="food" size={22} /></span><span className="brand-text">Dum & Dastaan<small>HYDERABAD KITCHENS</small></span></a><nav aria-label="Main navigation">

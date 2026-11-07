@@ -139,3 +139,59 @@ def test_failed_bridge_retains_notice_and_backoff(clients,monkeypatch):
         n=db.scalar(select(Notification));assert n.state=='pending' and n.attempts==1 and n.next_attempt>1000
     with clients['database'].begin() as db: dispatch(db,now=1001)
     with clients['database']() as db: assert db.scalar(select(Notification)).attempts==1
+
+
+@pytest.mark.parametrize('artifact', [None, [], {'intercept': 1, 'coefficients': None},
+    {'intercept': 'bad', 'coefficients': [1]*6}, {'intercept': 1, 'coefficients': [-1]*6},
+    {'intercept': float('nan'), 'coefficients': [1]*6}, {'intercept': -100, 'coefficients': [0]*6}])
+def test_invalid_models_use_queue_fallback(tmp_path, monkeypatch, artifact):
+    path=tmp_path/'bad.json';path.write_text(json.dumps(artifact))
+    monkeypatch.setattr(prediction,'MODEL_PATH',path)
+    assert prediction.predict([{'quantity':2,'weight':10}],3,20,False)==(33,'queue fallback')
+
+
+def test_unfamiliar_load_uses_conservative_safeguard(tmp_path,monkeypatch):
+    path=tmp_path/'model.json';path.write_text(json.dumps({'intercept':21,'coefficients':[0]*6}))
+    monkeypatch.setattr(prediction,'MODEL_PATH',path)
+    minutes,source=prediction.predict([{'quantity':20,'weight':15}],40,20,True)
+    assert minutes==180 and 'outside training range' in source
+    assert prediction.observed_floor([30]*19) is None
+    assert prediction.observed_floor([30]*18+[60,90])==30
+    assert prediction.observed_floor([60]*20+[float('nan'),-5])==60
+
+
+def test_recent_outlet_measurements_raise_promise(clients):
+    base=create(clients,method='cod');now=time.time()
+    with clients['database'].begin() as db:
+        original=db.get(Order,base['id'])
+        for index in range(20):
+            db.add(Order(user_id=original.user_id,outlet_id=1,key=str(uuid.uuid4()),digest='sample',
+                request=original.request,lines=original.lines,total=29900,due=0,payment='PAID',
+                status='HANDED_OFF',created=now-7200,accepted=now-7200,ready_at=now-3600))
+    result=create(clients,method='cod')
+    assert result['minutes']>=60 and 'recent outlet prep safeguard' in result['prediction']
+    assert result['original_promise']==result['accepted']+result['minutes']*60
+    other=create(clients,method='cod',outlet_id=2)
+    assert 'recent outlet prep safeguard' not in other['prediction']
+    with clients['database'].begin() as db:
+        for order in db.scalars(select(Order).where(Order.status=='HANDED_OFF')):
+            order.accepted=now-30*86400;order.ready_at=order.accepted+3600
+    assert 'recent outlet prep safeguard' not in create(clients,method='cod')['prediction']
+
+
+def test_reorders_ignore_cancelled_orders_and_closed_outlet(clients):
+    order=create(clients,method='cod');c=clients['customer']
+    assert c.get('/recommendations?outlet_id=1').json()
+    with clients['database'].begin() as db: db.get(Order,order['id']).status='CANCELLED'
+    assert c.get('/recommendations?outlet_id=1').json()==[]
+    create(clients,method='cod')
+    with clients['database'].begin() as db: db.get(Outlet,1).opened=False
+    assert c.get('/recommendations?outlet_id=1').json()==[]
+    assert len(c.get('/orders').json())==2
+
+
+def test_override_needs_meaningful_reason(clients):
+    order=create(clients,method='cod')
+    response=clients['admin'].patch(f"/manager/orders/{order['id']}/estimate",json={
+        'minutes':60,'reason':'     ','version':order['version']})
+    assert response.status_code==422

@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 async function signIn(page:Page,email:string){
- await page.goto('/signin');await page.getByLabel('Email',{exact:true}).fill(email);await page.getByLabel('Password',{exact:true}).fill('DemoPass123!');await page.getByRole('button',{name:'Sign in',exact:true}).click();await page.waitForURL('**/menu');
+ await page.goto('/signin');await page.getByLabel('Email',{exact:true}).fill(email);await page.getByLabel('Password',{exact:true}).fill('DemoPass123!');await page.getByRole('button',{name:'Sign in',exact:true}).click();await page.waitForURL(email==='customer@demo.test'?'**/menu':'**/staff');
 }
 
 test('party request stays pending until the catering desk confirms it',async({page,browser,baseURL})=>{
@@ -23,7 +23,7 @@ test('party request stays pending until the catering desk confirms it',async({pa
 });
 
 test('central menu editor exposes city pricing, serving windows, dietary marks and photos',async({page})=>{
- await signIn(page,'admin@demo.test');await page.getByRole('button',{name:'Edit Tomato Soup',exact:true}).click();
+ await signIn(page,'admin@demo.test');await page.getByRole('button',{name:'catalog',exact:true}).click();await page.getByRole('button',{name:'Edit Tomato Soup',exact:true}).click();
  const form=page.locator('.menu-editor');await expect(form.getByLabel('Photo URL',{exact:true})).toBeVisible();
  await form.getByLabel('Spice level').selectOption('mild');
  await form.getByRole('button',{name:'Add city price',exact:true}).click();

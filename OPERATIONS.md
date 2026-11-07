@@ -48,3 +48,37 @@ Admins see every outlet; outlet managers see their own. Choose the last 7, 30 or
 Migration 006 adds columns/tables without rewriting historical orders or granting historical points. Migration 005 now tolerates a fresh database already created by the initial metadata migration. Migration 006 works for both an existing v005 database and a fresh setup. No existing production role is changed.
 
 Validation includes PostgreSQL row-lock concurrency for spending points, reward/refund idempotency, overnight schedules, city/override pricing, access boundaries, catering notice/encryption, invoice credit rendering, and the customer→kitchen→rewards browser flow. Production-peak load and two-metre tablet readability still require representative hardware/traffic validation; these checks are not load or field studies.
+
+## Automation safeguards (8 November 2026)
+
+Order routing continues to enforce service area, opening status, serving windows and stock at checkout/payment. Reorder suggestions use only the signed-in customer's accepted, non-cancelled orders, hide closed outlets and currently unavailable dishes, and never add anything to the cart.
+
+Prep prediction validates the model structure, numeric values and non-negative workload coefficients. Missing, malformed, non-finite or non-positive predictions use the queue/portion fallback. For workloads outside the synthetic training ranges, the promise uses the higher of the model and the queue fallback. The outlet minimum always applies. The estimate source is retained on the order; none of these safeguards claims calibrated statistical confidence.
+
+After an outlet has at least 20 valid ready timestamps, the estimate also cannot be below the observed 90th-percentile accepted-to-ready duration from its latest 200 ready/handed-off orders accepted in the last 28 days. Cancelled orders, missing/invalid/future timestamps and other outlets are excluded. This conservative floor automatically uses actual kitchen observations without claiming that the synthetic model has been retrained. It can overestimate small orders after large catering-like loads; managers should review actual kitchen capacity and timing quality. Fewer than 20 observations leaves this safeguard inactive; no history is fabricated.
+
+The ten-minute overdue worker still uses the original promise, creates one customer notice and one outlet-manager alert, and excludes ready/handed-off orders. Manager overrides retain the original promise and audit trail, cannot go below the estimate/minimum floor, and now reject blank/control-character reasons. WhatsApp/SMS remain a prepared provider bridge: pending is not delivered, failed submissions retry with backoff, and an unconfigured provider does not prevent in-app notices.
+
+Regression coverage includes corrupted models, unfamiliar load, insufficient/history-isolated/stale measurements, cancelled-order recommendations, closed outlets and meaningful manager explanations, alongside the existing alert deduplication, stock routing and message-failure tests. Real kitchen calibration, provider delivery and production-load validation remain separate release requirements.
+
+## Dedicated staff workspace (8 November 2026)
+
+`/staff` and `/staff/signin` provide an assigned-account entrance without customer shopping navigation. Staff authentication rejects customer accounts and unassigned outlet staff before creating a session. Existing customer sign-in also takes authenticated staff to `/staff`. No public staff registration is offered. These routes are noindex and excluded from robots crawling; API role checks are the actual access protection.
+
+Kitchen staff land on their live outlet queue and have availability controls plus paginated order history. Managers also have performance reports, cancellations and timing overrides; admins can select outlets and use central catalogue/catering tools. Catering managers see their catering desk. History filters confirmed/cancelled orders by stage, shows preparation details and loads older batches of 50. Pending payments stay out of kitchen history. A failed queue refresh blocks kitchen mutations until a successful refresh; no empty queue is shown before the first successful load.
+
+Create an actual assigned staff account with the existing secure password prompt:
+
+```sh
+cd backend
+../.venv/bin/python provision_manager.py STAFF_EMAIL OUTLET_ID kitchen
+# Other supported roles: manager, catering_manager
+```
+
+Use an operator-approved email/outlet and a unique password. No production staff account was invented or created during implementation. This is administrator provisioning, not an invitation-email or password-recovery service. Staff history and authentication tests use isolated synthetic accounts; browser layout tests use mocked API fixtures, separately from backend access-control tests.
+
+### Persistent outlet staff accounts
+
+`provision_staff_accounts.py` creates Ayaan/Meera (Kondapur), Kabir/Nisha (Gachibowli), and Arjun/Sana (Madhapur), pairing a kitchen operator and manager at each outlet. Their `@dastan.local` identities are sign-in names, not deliverable mailboxes. Accounts are ordinary persistent users, not test-fixture or seed-only users. Each gets a separately generated random password stored as Argon2 in the database; names/emails remain encrypted with keyed lookup indexes. The one-time local credential handover is mode 0600 and gitignored. Existing identities are never reset or silently reassigned. Keep the handover in the operator's password manager and remove the local copy after distribution.
+
+Confirmed prepaid or eligible COD orders appear in the assigned outlet queue with a preparation promise. Preparing, ready-for-pickup and rider-handoff actions update the same order; customer tracking polls every four seconds and kitchen queues every five. Handoff requires outstanding COD collection confirmation. Handoff is not proof of delivery; no customer-delivered status or rider GPS is fabricated. Gateway payment is still simulated, and external messaging still needs provider configuration.

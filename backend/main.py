@@ -23,7 +23,7 @@ from personal_data import lookup, cipher
 from email_delivery import verification, order_email, configured as email_configured
 from notifications import enqueue
 from models import EmailDelivery, EmailVerification, Notification, EstimateChange, ConsentRecord, Invoice, GoogleIdentity, Assignment, Dish, Order, Outlet, Payment, Session, SessionLocal, User
-from prediction import predict
+from prediction import predict, observed_floor
 
 @asynccontextmanager
 async def lifespan(app):
@@ -39,7 +39,7 @@ hasher = PasswordHasher()
 @app.middleware('http')
 async def private_responses(request, call_next):
     response = await call_next(request)
-    if request.url.path.startswith(('/auth/', '/account/', '/orders', '/kitchen/', '/manager/', '/admin/', '/party', '/catering/')):
+    if request.url.path.startswith(('/auth/', '/account/', '/orders', '/kitchen/', '/manager/', '/admin/', '/party', '/catering/', '/staff/')):
         response.headers['Cache-Control'] = 'private, no-store'
     return response
 
@@ -138,6 +138,23 @@ def login(body: Credentials, request: Request, response: Response, connection=De
             fail('Email or password is incorrect.', 401)
     except VerificationError:
         fail('Email or password is incorrect.', 401)
+    return login_session(user, response, connection)
+
+
+@app.post('/auth/staff/login')
+def staff_login(body: Credentials, request: Request, response: Response, connection=Depends(database)):
+    if request.headers.get('origin') not in (None, origin):
+        fail('Origin not allowed.', 403)
+    user = connection.scalar(select(User).where(User.email_hash == lookup(body.email)))
+    try:
+        if not user or not hasher.verify(user.password, body.password):
+            fail('Email or password is incorrect.', 401)
+    except VerificationError:
+        fail('Email or password is incorrect.', 401)
+    if user.role not in ('kitchen','manager','catering_manager','admin'):
+        fail('Use an assigned staff account to enter this workspace.', 403)
+    if user.role != 'admin' and not connection.get(Outlet, user.outlet_id):
+        fail('Ask your administrator to assign an outlet to this account.', 403)
     return login_session(user, response, connection)
 
 
@@ -384,9 +401,18 @@ def checkout_quote(body: Checkout, user=Depends(current_user), connection=Depend
 
 def accept(order, connection):
     outlet = connection.get(Outlet, order.outlet_id)
-    queue = len(list(connection.scalars(select(Order.id).where(Order.outlet_id == order.outlet_id, Order.status.in_(['NEW', 'PREPARING'])))))
+    queue = len(list(connection.scalars(select(Order.id).where(Order.outlet_id == order.outlet_id, Order.id != order.id, Order.status.in_(['NEW', 'PREPARING'])))))
     hour = datetime.now(ZoneInfo('Asia/Kolkata')).hour
     order.minutes, order.prediction = predict(order.lines, queue, outlet.minimum, hour in (12, 13, 19, 20, 21))
+    # Only physical ready timestamps supply observations; overrides are not observations.
+    recent = connection.execute(select(Order.accepted, Order.ready_at).where(
+        Order.outlet_id == order.outlet_id, Order.status.in_(['READY', 'HANDED_OFF']),
+        Order.accepted >= time.time() - 28 * 86400, Order.ready_at > Order.accepted,
+        Order.ready_at <= time.time()).order_by(Order.ready_at.desc()).limit(200))
+    floor = observed_floor([(ready - accepted) / 60 for accepted, ready in recent])
+    if floor is not None:
+        order.minutes = max(order.minutes, floor)
+        order.prediction += '; recent outlet prep safeguard'
     order.ai_minutes = order.minutes
     order.status, order.accepted = 'NEW', time.time()
     order.original_promise = order.accepted + order.minutes * 60
@@ -493,6 +519,24 @@ def my_order(order_id: int, user=Depends(current_user), connection=Depends(datab
     if not order:
         fail('Order not found.', 404)
     return order_data(order)
+
+
+@app.get('/staff/orders')
+def staff_order_history(status: Literal['ALL','NEW','PREPARING','READY','HANDED_OFF','CANCELLED']='ALL',
+                        outlet_id: int | None=None, before: int | None=None,
+                        user=Depends(current_user), connection=Depends(database)):
+    if user.role not in ('kitchen','manager','admin'):
+        fail('Order staff access required.',403)
+    if user.role != 'admin':
+        if not user.outlet_id or (outlet_id is not None and outlet_id != user.outlet_id):
+            fail('This outlet is not assigned to you.',403)
+        outlet_id=user.outlet_id
+    query=select(Order).where(Order.status!='PENDING_PAYMENT')
+    if outlet_id is not None: query=query.where(Order.outlet_id==outlet_id)
+    if status!='ALL': query=query.where(Order.status==status)
+    if before is not None: query=query.where(Order.id<before)
+    rows=list(connection.scalars(query.order_by(Order.id.desc()).limit(51)))
+    return {'orders':[order_data(o) for o in rows[:50]],'next_before':rows[49].id if len(rows)>50 else None}
 
 
 @app.get('/kitchen/orders')
@@ -664,10 +708,13 @@ def view_invoice(order_id: int, download: bool = False, format: Literal['html','
 def recommendations(outlet_id: int, user=Depends(current_user), connection=Depends(database)):
     role(user,'customer')
     counts = {}
-    recent = connection.scalars(select(Order).where(Order.user_id==user.id, Order.accepted.is_not(None)).order_by(Order.id.desc()).limit(100))
+    recent = connection.scalars(select(Order).where(Order.user_id==user.id, Order.accepted.is_not(None), Order.status.in_(['NEW','PREPARING','READY','HANDED_OFF'])).order_by(Order.id.desc()).limit(100))
     for position, order in enumerate(recent):
         for line in order.lines:
             counts[line['dish_id']] = counts.get(line['dish_id'],0) + line['quantity'] / (1 + position / 10)
+    outlet = connection.get(Outlet, outlet_id)
+    if not outlet or not outlet.opened:
+        return []
     available = {dish['id']:dish for dish in menu(connection,outlet_id)}
     return [{**available[key], 'reason':'Based on your previous orders'} for key in sorted(counts,key=lambda k:(-counts[k],k)) if key in available][:4]
 
@@ -683,9 +730,18 @@ def notifications(user=Depends(current_user), connection=Depends(database)):
 
 
 class EstimateInput(BaseModel):
+    model_config = ConfigDict(extra='forbid')
     minutes: int = Field(ge=1,le=1440)
     reason: str = Field(min_length=5,max_length=300)
     version: int
+
+    @field_validator('reason')
+    @classmethod
+    def meaningful_reason(cls, value):
+        value = value.strip()
+        if len(value) < 5 or any(ord(c) < 32 for c in value):
+            raise ValueError('Explain the updated preparation time')
+        return value
 
 
 @app.patch('/manager/orders/{order_id}/estimate')

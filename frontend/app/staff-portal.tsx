@@ -1,0 +1,11 @@
+'use client';
+import {useState,FormEvent} from 'react';
+import Link from 'next/link';
+import {api,User} from './api';
+import {Staff} from './staff';
+export function StaffPortal({user,ready,onUser}:{user:User|null;ready:boolean;onUser:(user:User|null)=>void}){
+ const [busy,setBusy]=useState(false),[error,setError]=useState('');
+ async function signIn(e:FormEvent<HTMLFormElement>){e.preventDefault();setBusy(true);setError('');const data=new FormData(e.currentTarget);try{onUser(await api<User>('/auth/staff/login','POST',{email:data.get('email'),password:data.get('password')}));}catch(e){setError(e instanceof Error?e.message:'Could not sign in.');}finally{setBusy(false);}}
+ async function signOut(){setBusy(true);setError('');try{await api('/auth/logout','POST');onUser(null);}catch(e){setError(e instanceof Error?e.message:'Could not sign out.');}finally{setBusy(false);}}
+ return <div className="staff-portal"><a className="skip-link" href="#staff-main">Skip to workspace</a><header><Link className="brand" href="/staff">Dum &amp; Dastaan</Link><nav aria-label="Staff navigation"><span>Staff workspace</span>{user&&<button className="secondary" disabled={busy} onClick={signOut}>Sign out</button>}</nav></header><main id="staff-main">{error&&<p role="alert" className="error">{error}</p>}{!ready?<p role="status">Checking your session…</p>:!user?<section className="auth"><h1>Kitchen &amp; staff sign-in</h1><p>Use the account assigned by your administrator. Your role determines which outlet and tools you can access.</p><form onSubmit={signIn}><label>Staff email<input name="email" type="email" autoComplete="username" required/></label><label>Password<input name="password" type="password" autoComplete="current-password" minLength={10} required/></label><button disabled={busy}>{busy?'Signing in…':'Sign in to workspace'}</button></form><p>Need access? Ask your administrator to create an outlet staff account.</p><Link href="/menu">Customer menu</Link></section>:user.role==='customer'?<section className="auth"><h1>Staff access only</h1><p>This is a customer account. Sign out to use an assigned staff account.</p><Link className="button-link" href="/menu">Return to customer menu</Link></section>:<Staff user={user}/>}</main></div>;
+}

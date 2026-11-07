@@ -153,3 +153,57 @@ def test_repeat_customer_metric_and_blank_catering_reply(clients):
     data=clients['admin'].get('/manager/dashboard?days=7').json()['outlets'][0]
     assert data['repeat_customers']==1 and data['customers']==1 and data['prep_samples']==2
     assert clients['admin'].patch('/catering/requests/1',json={'status':'CONFIRMED','note':'     ','version':0}).status_code==422
+
+
+def test_staff_login_and_order_history_isolation(clients):
+    guest=clients['guest']
+    assert guest.post('/auth/staff/login',json={'email':'customer@demo.test','password':'DemoPass123!'}).status_code==403
+    assert guest.post('/auth/staff/login',json={'email':'kondapur@demo.test','password':'wrongpassword'}).status_code==401
+    assert guest.post('/auth/staff/login',json={'email':'kondapur@demo.test','password':'DemoPass123!'}).status_code==200
+    assert guest.get('/auth/me').json()['role']=='kitchen'
+    first=create(clients,method='cod');second=create(clients,method='cod',outlet_id=2)
+    pending=create(clients)
+    own=clients['kondapur'].get('/staff/orders')
+    assert own.status_code==200 and [o['id'] for o in own.json()['orders']]==[first['id']]
+    assert own.headers['cache-control']=='private, no-store'
+    assert clients['kondapur'].get('/staff/orders?outlet_id=2').status_code==403
+    assert clients['customer'].get('/staff/orders').status_code==403
+    assert clients['admin'].get('/staff/orders?outlet_id=2').json()['orders'][0]['id']==second['id']
+    assert clients['kondapur'].get('/staff/orders?status=HANDED_OFF').json()['orders']==[]
+    handoff(clients,first,True)
+    assert clients['kondapur'].get('/staff/orders?status=HANDED_OFF').json()['orders'][0]['id']==first['id']
+    assert clients['kondapur'].get(f"/staff/orders?before={first['id']}").json()['orders']==[]
+    assert clients['kondapur'].get('/staff/orders?status=INVALID').status_code==422
+
+
+def test_persistent_staff_provisioning_and_counter_flow(clients,tmp_path,monkeypatch):
+    import json
+    import provision_staff_accounts as staff_setup
+    monkeypatch.setattr(staff_setup,'SessionLocal',clients['database'])
+    credentials=tmp_path/'staff-private.json'
+    assert staff_setup.provision(credentials)['created']==6
+    records=json.loads(credentials.read_text())['accounts']
+    assert len({r['password'] for r in records})==6
+    assert credentials.stat().st_mode & 0o777==0o600
+    assert staff_setup.provision(tmp_path/'second-private.json')['created']==0
+    with clients['database']() as db:
+        for record in records:
+            account=db.scalar(select(User).where(User.email_hash==main.lookup(record['email'])))
+            assert account.password.startswith('$argon2') and account.password!=record['password']
+            assert main.hasher.verify(account.password,record['password'])
+        raw=str(db.execute(text("SELECT email,name FROM users WHERE role='kitchen'")).all())
+        assert 'ayaan@dastan.local' not in raw and 'Ayaan Khan' not in raw
+    staff=TestClient(main.app);record=records[0]
+    assert staff.post('/auth/staff/login',json={'email':record['email'],'password':record['password']}).status_code==200
+    staff.headers['x-csrf-token']=staff.cookies['csrf']
+    order=create(clients,method='cod',outlet_id=1)
+    assert any(o['id']==order['id'] for o in staff.get('/kitchen/orders').json())
+    for state in ['PREPARING','READY','HANDED_OFF']:
+        response=staff.patch(f"/kitchen/orders/{order['id']}/status",json={'version':order['version'],'status':state,'cash_collected':True,'rider_reference':'RIDER-COUNTER-1'})
+        assert response.status_code==200,response.text
+        order=response.json()
+        customer=clients['customer'].get(f"/orders/{order['id']}").json()
+        assert customer['status']==state and customer['minutes']>=20
+    assert order['ready_at'] and order['handed_off_at']
+    assert all(o['id']!=order['id'] for o in staff.get('/kitchen/orders').json())
+    assert staff.get('/staff/orders?status=HANDED_OFF').json()['orders'][0]['id']==order['id']

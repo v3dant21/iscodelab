@@ -587,3 +587,14 @@ footer nav { font-size: 12px; justify-content: flex-end; margin-bottom: 12px; }
 
 .staff-workspace .board>section>.empty { padding: 8px 0; margin: 0; text-align: left; }
 .menu-editor { scroll-margin-top: 110px; }
+
+/* Dedicated operational workspace, without customer bag/navigation. */
+.staff-portal main { max-width: 1600px; margin: 0 auto; padding: 24px; }
+.staff-portal header nav { display: flex; align-items: center; gap: 20px; }
+.staff-order-row { padding: 18px 0; border-bottom: 1px solid var(--line, #e8dacf); }
+.staff-order-row summary { display: flex; flex-wrap: wrap; gap: 12px 24px; cursor: pointer; min-height: 48px; align-items: center; }
+.staff-order-row summary strong { font-size: 22px; }
+.staff-orders > label { max-width: 320px; }
+.staff-orders .list { margin: 20px 0; }
+@media(max-width: 760px) { .staff-portal main { padding: 16px; } .staff-portal header { gap: 12px; } .staff-portal header nav { gap: 12px; } .staff-portal header nav span { display: none; } }
+.staff-portal header nav > button { display: inline-flex; }
